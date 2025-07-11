@@ -1,70 +1,71 @@
-"use client";
-import React, { useState, useEffect } from "react";
-import Link from "next/link";
-import CustomSelect from "./CustomSelect";
-import { menuData } from "./menuData";
-import Dropdown from "./Dropdown";
-import { useAppSelector } from "@/redux/store";
-import { useSelector } from "react-redux";
-import { selectTotalPrice } from "@/redux/features/cart-slice";
-import { useCartModalContext } from "@/app/context/CartSidebarModalContext";
-import Image from "next/image";
+'use client'
+import React, { useState, useEffect } from 'react'
+import Link from 'next/link'
+import CustomSelect from './CustomSelect'
+import { menuData, menuLanguage, menuLocation } from './menuData'
+import Dropdown from './Dropdown'
+import DropdownForHead from './DropdownForHead'
+import { useAppSelector } from '@/redux/store'
+import { useSelector } from 'react-redux'
+import { selectTotalPrice } from '@/redux/features/cart-slice'
+import { useCartModalContext } from '@/app/context/CartSidebarModalContext'
+import Image from 'next/image'
 
 const Header = () => {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [navigationOpen, setNavigationOpen] = useState(false);
-  const [stickyMenu, setStickyMenu] = useState(false);
-  const { openCartModal } = useCartModalContext();
+  const [searchQuery, setSearchQuery] = useState('')
+  const [navigationOpen, setNavigationOpen] = useState(false)
+  const [stickyMenu, setStickyMenu] = useState(false)
+  const { openCartModal } = useCartModalContext()
 
-  const product = useAppSelector((state) => state.cartReducer.items);
-  const totalPrice = useSelector(selectTotalPrice);
+  const product = useAppSelector((state) => state.cartReducer.items)
+  const totalPrice = useSelector(selectTotalPrice)
 
   const handleOpenCartModal = () => {
-    openCartModal();
-  };
+    openCartModal()
+  }
 
   // Sticky menu
   const handleStickyMenu = () => {
     if (window.scrollY >= 80) {
-      setStickyMenu(true);
+      setStickyMenu(true)
     } else {
-      setStickyMenu(false);
+      setStickyMenu(false)
     }
-  };
+  }
 
   useEffect(() => {
-    window.addEventListener("scroll", handleStickyMenu);
-  });
+    window.addEventListener('scroll', handleStickyMenu)
+  })
 
   const options = [
-    { label: "All Categories", value: "0" },
-    { label: "Desktop", value: "1" },
-    { label: "Laptop", value: "2" },
-    { label: "Monitor", value: "3" },
-    { label: "Phone", value: "4" },
-    { label: "Watch", value: "5" },
-    { label: "Mouse", value: "6" },
-    { label: "Tablet", value: "7" },
-  ];
+    { label: 'All Categories', value: '0' },
+    { label: 'Desktop', value: '1' },
+    { label: 'Laptop', value: '2' },
+    { label: 'Monitor', value: '3' },
+    { label: 'Phone', value: '4' },
+    { label: 'Watch', value: '5' },
+    { label: 'Mouse', value: '6' },
+    { label: 'Tablet', value: '7' },
+  ]
 
   return (
     <header
       className={`fixed left-0 top-0 w-full z-9999 bg-white transition-all ease-in-out duration-300 ${
-        stickyMenu && "shadow"
+        stickyMenu && 'shadow'
       }`}
     >
       <div className="max-w-[1170px] mx-auto px-4 sm:px-7.5 xl:px-0">
         {/* <!-- header top start --> */}
         <div
           className={`flex flex-col lg:flex-row gap-5 items-end lg:items-center xl:justify-between ease-out duration-200 ${
-            stickyMenu ? "py-4" : "py-6"
+            stickyMenu ? 'py-4' : 'py-6'
           }`}
         >
           {/* <!-- header top left --> */}
           <div className="xl:w-auto flex-col sm:flex-row w-full flex sm:justify-between sm:items-center gap-5 sm:gap-10">
             <Link className="flex-shrink-0" href="/">
               <Image
-                src="/images/logo/logo.svg"
+                src="/images/logo/logo-2.png"
                 alt="Logo"
                 width={219}
                 height={36}
@@ -118,7 +119,7 @@ const Header = () => {
           {/* <!-- header top right --> */}
           <div className="flex w-full lg:w-auto items-center gap-7.5">
             <div className="hidden xl:flex items-center gap-3.5">
-              <svg
+              {/* <svg
                 width="24"
                 height="24"
                 viewBox="0 0 24 24"
@@ -141,7 +142,7 @@ const Header = () => {
                   d="M13.4861 5.32955C13.5999 4.93128 14.015 4.70066 14.4133 4.81445L14.2072 5.53559C14.4133 4.81445 14.4136 4.81455 14.414 4.81465L14.4147 4.81486L14.4162 4.81531L14.4196 4.81628L14.4273 4.81859L14.4471 4.82476C14.4622 4.82958 14.481 4.83586 14.5035 4.84383C14.5484 4.85976 14.6077 4.88243 14.6805 4.91363C14.8262 4.97607 15.0253 5.07249 15.2698 5.2172C15.7593 5.50688 16.4275 5.98806 17.2124 6.77303C17.9974 7.558 18.4786 8.22619 18.7683 8.71565C18.913 8.96016 19.0094 9.15923 19.0718 9.30491C19.103 9.37772 19.1257 9.43708 19.1416 9.48199C19.1496 9.50444 19.1559 9.52327 19.1607 9.53835L19.1669 9.55814L19.1692 9.56589L19.1702 9.56922L19.1706 9.57075L19.1708 9.57148C19.1709 9.57184 19.171 9.57219 18.4499 9.77823L19.171 9.57219C19.2848 9.97047 19.0542 10.3856 18.6559 10.4994C18.261 10.6122 17.8496 10.3864 17.7317 9.99438L17.728 9.9836C17.7227 9.96858 17.7116 9.93899 17.6931 9.89579C17.6561 9.80946 17.589 9.66823 17.4774 9.47963C17.2544 9.10289 16.8517 8.53364 16.1518 7.83369C15.4518 7.13374 14.8826 6.73103 14.5058 6.50806C14.3172 6.39645 14.176 6.32935 14.0897 6.29235C14.0465 6.27383 14.0169 6.2628 14.0019 6.25747L13.9911 6.25377C13.599 6.13589 13.3733 5.72445 13.4861 5.32955Z"
                   fill="#3C50E0"
                 />
-              </svg>
+              </svg> */}
 
               <div>
                 <span className="block text-2xs text-dark-4 uppercase">
@@ -158,7 +159,95 @@ const Header = () => {
 
             <div className="flex w-full lg:w-auto justify-between items-center gap-5">
               <div className="flex items-center gap-5">
-                <Link href="/signin" className="flex items-center gap-2.5">
+                <nav className="flex items-center gap-2.5">
+                  <svg
+                    className="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                    />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                    />
+                  </svg>
+                  <ul className="flex xl:items-center flex-col xl:flex-row gap-5 xl:gap-6">
+                    {menuLocation.map((menuItem, i) =>
+                      menuItem.submenu ? (
+                        <DropdownForHead
+                          key={i}
+                          menuItem={menuItem}
+                          stickyMenu={stickyMenu}
+                        />
+                      ) : (
+                        <li
+                          key={i}
+                          className="group relative before:w-0 before:h-[3px]  before:absolute before:left-0 before:top-0 before:rounded-b-[3px] before:ease-out before:duration-200 hover:before:w-full "
+                        >
+                          <Link
+                            href={menuItem.path}
+                            className={`hover:text-blue text-custom-sm font-medium text-dark flex ${
+                              stickyMenu ? 'xl:py-4' : 'xl:py-6'
+                            }`}
+                          >
+                            {menuItem.title}
+                          </Link>
+                        </li>
+                      )
+                    )}
+                  </ul>
+                </nav>
+
+                <span className="hidden xl:block w-px h-7.5 bg-gray-4"></span>
+
+                <nav className="flex items-center gap-2.5">
+                  <svg
+                    className="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle cx="12" cy="12" r="10" />
+                    <line x1="2" y1="12" x2="22" y2="12" />
+                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+                  </svg>
+                  <ul className="flex xl:items-center flex-col xl:flex-row gap-5 xl:gap-6">
+                    {menuLanguage.map((menuItem, i) =>
+                      menuItem.submenu ? (
+                        <DropdownForHead
+                          key={i}
+                          menuItem={menuItem}
+                          stickyMenu={stickyMenu}
+                        />
+                      ) : (
+                        <li
+                          key={i}
+                          className="group relative before:w-0 before:h-[3px]  before:absolute before:left-0 before:top-0 before:rounded-b-[3px] before:ease-out before:duration-200 hover:before:w-full "
+                        >
+                          <Link
+                            href={menuItem.path}
+                            className={`hover:text-blue text-custom-sm font-medium text-dark flex ${
+                              stickyMenu ? 'xl:py-4' : 'xl:py-6'
+                            }`}
+                          >
+                            {menuItem.title}
+                          </Link>
+                        </li>
+                      )
+                    )}
+                  </ul>
+                </nav>
+
+                {/* <Link href="/signin" className="flex items-center gap-2.5">
                   <svg
                     width="24"
                     height="24"
@@ -182,15 +271,15 @@ const Header = () => {
 
                   <div>
                     <span className="block text-2xs text-dark-4 uppercase">
-                      account
+                      Location
                     </span>
                     <p className="font-medium text-custom-sm text-dark">
                       Sign In
                     </p>
                   </div>
-                </Link>
+                </Link> */}
 
-                <button
+                {/* <button
                   onClick={handleOpenCartModal}
                   className="flex items-center gap-2.5"
                 >
@@ -239,7 +328,7 @@ const Header = () => {
                       ${totalPrice}
                     </p>
                   </div>
-                </button>
+                </button> */}
               </div>
 
               {/* <!-- Hamburger Toggle BTN --> */}
@@ -253,17 +342,17 @@ const Header = () => {
                   <span className="du-block absolute right-0 w-full h-full">
                     <span
                       className={`block relative top-0 left-0 bg-dark rounded-sm w-0 h-0.5 my-1 ease-in-out duration-200 delay-[0] ${
-                        !navigationOpen && "!w-full delay-300"
+                        !navigationOpen && '!w-full delay-300'
                       }`}
                     ></span>
                     <span
                       className={`block relative top-0 left-0 bg-dark rounded-sm w-0 h-0.5 my-1 ease-in-out duration-200 delay-150 ${
-                        !navigationOpen && "!w-full delay-400"
+                        !navigationOpen && '!w-full delay-400'
                       }`}
                     ></span>
                     <span
                       className={`block relative top-0 left-0 bg-dark rounded-sm w-0 h-0.5 my-1 ease-in-out duration-200 delay-200 ${
-                        !navigationOpen && "!w-full delay-500"
+                        !navigationOpen && '!w-full delay-500'
                       }`}
                     ></span>
                   </span>
@@ -271,12 +360,12 @@ const Header = () => {
                   <span className="block absolute right-0 w-full h-full rotate-45">
                     <span
                       className={`block bg-dark rounded-sm ease-in-out duration-200 delay-300 absolute left-2.5 top-0 w-0.5 h-full ${
-                        !navigationOpen && "!h-0 delay-[0] "
+                        !navigationOpen && '!h-0 delay-[0] '
                       }`}
                     ></span>
                     <span
                       className={`block bg-dark rounded-sm ease-in-out duration-200 delay-400 absolute left-0 top-2.5 w-full h-0.5 ${
-                        !navigationOpen && "!h-0 dealy-200"
+                        !navigationOpen && '!h-0 dealy-200'
                       }`}
                     ></span>
                   </span>
@@ -317,7 +406,7 @@ const Header = () => {
                         <Link
                           href={menuItem.path}
                           className={`hover:text-blue text-custom-sm font-medium text-dark flex ${
-                            stickyMenu ? "xl:py-4" : "xl:py-6"
+                            stickyMenu ? 'xl:py-4' : 'xl:py-6'
                           }`}
                         >
                           {menuItem.title}
@@ -388,7 +477,7 @@ const Header = () => {
         </div>
       </div>
     </header>
-  );
-};
+  )
+}
 
-export default Header;
+export default Header
