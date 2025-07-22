@@ -1,24 +1,24 @@
-"use client";
-import React from "react";
-import { Product } from "@/types/product";
-import { useModalContext } from "@/app/context/QuickViewModalContext";
-import { updateQuickView } from "@/redux/features/quickView-slice";
-import { addItemToCart } from "@/redux/features/cart-slice";
-import { addItemToWishlist } from "@/redux/features/wishlist-slice";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "@/redux/store";
-import Link from "next/link";
-import Image from "next/image";
+'use client'
+import React from 'react'
+import { Product } from '@/types/product'
+import { useModalContext } from '@/app/context/QuickViewModalContext'
+import { updateQuickView } from '@/redux/features/quickView-slice'
+import { addItemToCart } from '@/redux/features/cart-slice'
+import { addItemToWishlist } from '@/redux/features/wishlist-slice'
+import { useDispatch } from 'react-redux'
+import { AppDispatch } from '@/redux/store'
+import Link from 'next/link'
+import Image from 'next/image'
 
 const SingleGridItem = ({ item }: { item: Product }) => {
-  const { openModal } = useModalContext();
+  const { openModal } = useModalContext()
 
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useDispatch<AppDispatch>()
 
   // update the QuickView state
   const handleQuickViewUpdate = () => {
-    dispatch(updateQuickView({ ...item }));
-  };
+    dispatch(updateQuickView({ ...item }))
+  }
 
   // add to cart
   const handleAddToCart = () => {
@@ -27,18 +27,18 @@ const SingleGridItem = ({ item }: { item: Product }) => {
         ...item,
         quantity: 1,
       })
-    );
-  };
+    )
+  }
 
   const handleItemToWishList = () => {
     dispatch(
       addItemToWishlist({
         ...item,
-        status: "available",
+        status: 'available',
         quantity: 1,
       })
-    );
-  };
+    )
+  }
 
   return (
     <div className="group">
@@ -46,10 +46,10 @@ const SingleGridItem = ({ item }: { item: Product }) => {
         <Image src={item.imgs.previews[0]} alt="" width={250} height={250} />
 
         <div className="absolute left-0 bottom-0 translate-y-full w-full flex items-center justify-center gap-2.5 pb-5 ease-linear duration-200 group-hover:translate-y-0">
-          <button
+          {/* <button
             onClick={() => {
-              openModal();
-              handleQuickViewUpdate();
+              openModal()
+              handleQuickViewUpdate()
             }}
             id="newOne"
             aria-label="button for quick view"
@@ -76,16 +76,19 @@ const SingleGridItem = ({ item }: { item: Product }) => {
                 fill=""
               />
             </svg>
-          </button>
+          </button> */}
 
           <button
-            onClick={() => handleAddToCart()}
+            onClick={() => {
+              openModal()
+              handleQuickViewUpdate()
+            }}
             className="inline-flex font-medium text-custom-sm py-[7px] px-5 rounded-[5px] bg-blue text-white ease-out duration-200 hover:bg-blue-dark"
           >
-            Add to cart
+            View Detail
           </button>
 
-          <button
+          {/* <button
             onClick={() => handleItemToWishList()}
             aria-label="button for favorite select"
             id="favOne"
@@ -106,45 +109,8 @@ const SingleGridItem = ({ item }: { item: Product }) => {
                 fill=""
               />
             </svg>
-          </button>
+          </button> */}
         </div>
-      </div>
-
-      <div className="flex items-center gap-2.5 mb-2">
-        <div className="flex items-center gap-1">
-          <Image
-            src="/images/icons/icon-star.svg"
-            alt="star icon"
-            width={15}
-            height={15}
-          />
-          <Image
-            src="/images/icons/icon-star.svg"
-            alt="star icon"
-            width={15}
-            height={15}
-          />
-          <Image
-            src="/images/icons/icon-star.svg"
-            alt="star icon"
-            width={15}
-            height={15}
-          />
-          <Image
-            src="/images/icons/icon-star.svg"
-            alt="star icon"
-            width={15}
-            height={15}
-          />
-          <Image
-            src="/images/icons/icon-star.svg"
-            alt="star icon"
-            width={15}
-            height={15}
-          />
-        </div>
-
-        <p className="text-custom-sm">({item.reviews})</p>
       </div>
 
       <h3 className="font-medium text-dark ease-out duration-200 hover:text-blue mb-1.5">
@@ -152,11 +118,15 @@ const SingleGridItem = ({ item }: { item: Product }) => {
       </h3>
 
       <span className="flex items-center gap-2 font-medium text-lg">
-        <span className="text-dark">${item.discountedPrice}</span>
-        <span className="text-dark-4 line-through">${item.price}</span>
+        <span className="text-dark">
+          Rp {item.discountedPrice?.toLocaleString('id-ID')}
+        </span>
+        <span className="text-dark-4 line-through">
+          Rp{item.price?.toLocaleString('id-ID')}
+        </span>
       </span>
     </div>
-  );
-};
+  )
+}
 
-export default SingleGridItem;
+export default SingleGridItem
