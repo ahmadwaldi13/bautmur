@@ -1,0 +1,18 @@
+/* whatsapp-floating.css */
+
+/* Animasi pulse untuk tombol WhatsApp */
+@keyframes whatsapp-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(37, 211, 102, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+  }
+}
+
+.whatsapp-pulse-btn {
+  animation: whatsapp-pulse 2s infinite;
+}

@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import '../css/euclid-circular-a-font.css'
 import '../css/style.css'
 import '../css/hero-carouse.css'
+import '../css/wa-style.css'
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
 
@@ -17,6 +18,7 @@ import NewProductPopup from '@/components/PopUpAds'
 
 import ScrollToTop from '@/components/Common/ScrollToTop'
 import PreLoader from '@/components/Common/PreLoader'
+import WhatsAppFloatingButton from '@/components/WhatsAppFloatingButton'
 
 export default function RootLayout({
   children,
@@ -52,6 +54,10 @@ export default function RootLayout({
                 </ModalProvider>
               </CartModalProvider>
             </ReduxProvider>
+            <WhatsAppFloatingButton
+              phoneNumber="6281234567890"
+              message="Halo, saya tertarik dengan produk di website Anda"
+            />
             <ScrollToTop />
             <Footer />
           </>
