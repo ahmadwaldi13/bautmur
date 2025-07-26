@@ -1,6 +1,6 @@
-import React from "react";
-import { Testimonial } from "@/types/testimonial";
-import Image from "next/image";
+import React from 'react'
+import { Testimonial } from '@/types/testimonial'
+import Image from 'next/image'
 
 const SingleItem = ({ testimonial }: { testimonial: Testimonial }) => {
   return (
@@ -53,11 +53,10 @@ const SingleItem = ({ testimonial }: { testimonial: Testimonial }) => {
 
         <div>
           <h3 className="font-medium text-dark">{testimonial.authorName}</h3>
-          <p className="text-custom-sm">{testimonial.authorRole}</p>
         </div>
       </a>
     </div>
-  );
-};
+  )
+}
 
-export default SingleItem;
+export default SingleItem

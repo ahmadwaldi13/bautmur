@@ -1,48 +1,21 @@
-import { Testimonial } from "@/types/testimonial";
+import { Testimonial } from '@/types/testimonial'
 
 const testimonialsData: Testimonial[] = [
   {
-    review: `Lorem ipsum dolor sit amet, adipiscing elit. Donec
-    malesuada justo vitaeaugue suscipit beautiful vehicula`,
-    authorName: "Davis Dorwart",
-    authorImg: "/images/users/user-01.jpg",
-    authorRole: "Serial Entrepreneur",
+    review: `Tempat untuk mencari segala macam baut, paku beton, dynabolt, berbagai macam ukuran, terlengkap dan murah. Pelayanan cepat, ramah, dan profesional`,
+    authorName: 'Davis Dorwart',
+    authorImg: '/images/users/user-01.jpg',
   },
   {
-    review: `Lorem ipsum dolor sit amet, adipiscing elit. Donec
-    malesuada justo vitaeaugue suscipit beautiful vehicula`,
-    authorName: "Wilson Dias",
-    authorImg: "/images/users/user-02.jpg",
-    authorRole: "Backend Developer",
+    review: `Barang terbilang lengkap. Bisa eceran & grosir. Penjaga toko semua sigap & cepat 👍 …`,
+    authorName: 'Wilson Dias',
+    authorImg: '/images/users/user-02.jpg',
   },
   {
-    review: `Lorem ipsum dolor sit amet, adipiscing elit. Donec
-    malesuada justo vitaeaugue suscipit beautiful vehicula`,
-    authorName: "Miracle Exterm",
-    authorImg: "/images/users/user-03.jpg",
-    authorRole: "Serial Entrepreneur",
+    review: `Tempat mencari segala macam jenis baut dan sekrup yg lengkap dan murah.. Harga untuk grosir dan ecer tergantung qty.. Toko baut lain di Bandung banyak yg ambil dari tempat ini..`,
+    authorName: 'Miracle Exterm',
+    authorImg: '/images/users/user-03.jpg',
   },
-  {
-    review: `Lorem ipsum dolor sit amet, adipiscing elit. Donec
-    malesuada justo vitaeaugue suscipit beautiful vehicula`,
-    authorName: "Thomas Frank",
-    authorImg: "/images/users/user-01.jpg",
-    authorRole: "Entrepreneur",
-  },
-  {
-    review: `Lorem ipsum dolor sit amet, adipiscing elit. Donec
-    malesuada justo vitaeaugue suscipit beautiful vehicula`,
-    authorName: "Dave Smith",
-    authorImg: "/images/users/user-02.jpg",
-    authorRole: "Serial Entrepreneur",
-  },
-  {
-    review: `Lorem ipsum dolor sit amet, adipiscing elit. Donec
-    malesuada justo vitaeaugue suscipit beautiful vehicula`,
-    authorName: "Davis Dorwart",
-    authorImg: "/images/users/user-03.jpg",
-    authorRole: "Serial Entrepreneur",
-  },
-];
+]
 
-export default testimonialsData;
+export default testimonialsData
