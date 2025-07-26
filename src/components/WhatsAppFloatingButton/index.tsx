@@ -18,7 +18,7 @@ const WhatsAppFloatingButton: React.FC<WhatsAppFloatingButtonProps> = ({
   }
 
   return (
-    <div className="fixed left-4 bottom-20 md:left-5 md:bottom-24 z-[1000]">
+    <div className="fixed left-4 bottom-4 md:left-5 md:bottom-4 z-[1000]">
       <button
         onClick={handleWhatsAppClick}
         className="whatsapp-pulse-btn bg-[#25D366] border-none rounded-full w-12 h-12 md:w-16 md:h-16 flex items-center justify-center cursor-pointer shadow-[0_4px_12px_rgba(37,211,102,0.4)] transition-all duration-300 ease-in-out hover:scale-110 hover:shadow-[0_6px_20px_rgba(37,211,102,0.6)]"
