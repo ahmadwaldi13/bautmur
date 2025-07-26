@@ -3,24 +3,24 @@ import Image from 'next/image'
 
 const featureData = [
   {
-    img: '/images/icons/material.svg', // Rekomendasi: Icon yang menggambarkan kualitas bahan/logam
-    title: 'Material Premium',
-    description: 'Baja pilihan & anti-korosi',
+    img: '/images/icons/product.svg', // Rekomendasi: Icon yang menggambarkan kualitas bahan/logam
+    title: 'PRODUK',
+    description: 'Kualitas Produk Terjamin',
   },
   {
-    img: '/images/icons/precision.svg', // Rekomendasi: Icon presisi, penggaris, atau kaliber
-    title: 'Ukuran Akurat',
-    description: 'Standar ISO & DIN',
+    img: '/images/icons/service.svg', // Rekomendasi: Icon presisi, penggaris, atau kaliber
+    title: 'LAYANAN',
+    description: 'Telpon, Email, dan Whatsapp',
   },
   {
-    img: '/images/icons/durability.svg', // Rekomendasi: Icon tameng, kekuatan, atau roda gigi
-    title: 'Daya Tahan Tinggi',
-    description: 'Tahan beban berat & ekstrem',
+    img: '/images/icons/price.svg', // Rekomendasi: Icon tameng, kekuatan, atau roda gigi
+    title: 'HARGA',
+    description: 'Harga Yang Bersaing',
   },
   {
-    img: '/images/icons/variety.svg', // Rekomendasi: Icon katalog, variasi, atau tiga baut berbeda
-    title: 'Varian Terlengkap',
-    description: 'Ribuan jenis baut',
+    img: '/images/icons/team.svg', // Rekomendasi: Icon katalog, variasi, atau tiga baut berbeda
+    title: 'TIM',
+    description: 'Tim Yang Profesional',
   },
 ]
 
