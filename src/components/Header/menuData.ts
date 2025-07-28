@@ -25,7 +25,7 @@ export const menuData: Menu[] = [
     id: 4,
     title: 'Gallery',
     newTab: false,
-    path: '/gallerys',
+    path: '/gallery',
   },
   {
     id: 5,
