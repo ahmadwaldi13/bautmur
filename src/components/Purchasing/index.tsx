@@ -10,10 +10,14 @@ import Partnership from './Pathership'
 import Link from 'next/link'
 import { FaWhatsapp } from 'react-icons/fa'
 
+const breadcrumbData = [
+  { title: 'Home', path: '/' },
+  { title: 'purchasing', path: '/purchasing' },
+]
 const Purchasing = () => {
   return (
     <>
-      <Breadcrumb title={'Purchasing'} pages={['purchasing']} />
+      <Breadcrumb title={'Purchasing'} pages={breadcrumbData} />
 
       <section className="overflow-hidden py-20 bg-gray-2">
         <div className="max-w-[1200px] w-full mx-auto px-4 sm:px-8 xl:px-0">

@@ -5,10 +5,15 @@ import Image from 'next/image'
 import Breadcrumb from '../Common/Breadcrumb'
 import { gallery } from './Gallery'
 
+const breadcrumbData = [
+  { title: 'Home', path: '/' },
+  { title: 'gallery', path: '/gallery' },
+]
+
 const Gallery = () => {
   return (
     <>
-      <Breadcrumb title={'Gallery'} pages={['Gallery']} />
+      <Breadcrumb title={'Gallery'} pages={breadcrumbData} />
 
       <section className="overflow-hidden py-20 bg-gray-2">
         <div className="max-w-[1170px] w-full mx-auto px-4 sm:px-8 xl:px-0">
