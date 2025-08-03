@@ -5,7 +5,9 @@ import { Metadata } from 'next'
 export const metadata: Metadata = {
   title: 'Product Page | Sinar Terang',
   description: 'This is product Page for Baut Mur',
-  // other metadata
+  icons: {
+    icon: '/logo-page.png',
+  },
 }
 
 const ShopDetailsPage = () => {

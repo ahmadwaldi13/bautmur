@@ -54,12 +54,9 @@ const ShopDetails = () => {
   const handlePreviewSlider = () => {
     openPreviewModal()
   }
-
-  // Jika produk tidak valid, tampilkan pesan
   if (!isValidProduct(product)) {
     return (
       <>
-        <Breadcrumb title={'Shop Details'} pages={['shop details']} />
         <div className="text-center py-20">
           <p>Please add product</p>
           <p className="text-sm text-gray-500 mt-2">
@@ -69,16 +66,20 @@ const ShopDetails = () => {
       </>
     )
   }
-  ;<div className="lg:min-h-[512px] rounded-lg shadow-1 bg-gray-2 p-4 sm:p-7.5 relative flex items-center justify-center"></div>
+
+  const breadcrumbData = [
+    { title: 'Home', path: '/' },
+    { title: 'Product Detail', path: '/product Detail' },
+  ]
+
   return (
     <>
-      <Breadcrumb title={'Shop Details'} pages={['shop details']} />
-
+      <Breadcrumb title={'product detail'} pages={breadcrumbData} />
       {product.title === '' ? (
         'Please add product'
       ) : (
         <>
-          <section className="overflow-hidden relative pb-20 pt-5 lg:pt-20 xl:pt-28">
+          <section className="overflow-hidden relative pb-20 pt-24 md:pt-28 lg:pt-32">
             <div className="max-w-[1170px] w-full mx-auto px-4 sm:px-8 xl:px-0">
               <div className="flex flex-col lg:flex-row gap-7.5 xl:gap-17.5">
                 <div className="lg:max-w-[570px] w-full">
@@ -111,12 +112,13 @@ const ShopDetails = () => {
                         alt="products-details"
                         width={400}
                         height={400}
+                        className="w-full h-auto object-contain"
                       />
                     </div>
                   </div>
 
                   {/* ?  &apos;border-blue &apos; :  &apos;border-transparent&apos; */}
-                  <div className="flex flex-wrap sm:flex-nowrap gap-4.5 mt-6">
+                  <div className="flex flex-wrap sm:flex-nowrap gap-4.5 mt-6 p-3">
                     {product.imgs?.thumbnails.map((item, key) => (
                       <button
                         onClick={() => setPreviewImg(key)}
@@ -132,6 +134,7 @@ const ShopDetails = () => {
                           height={50}
                           src={item}
                           alt="thumbnail"
+                          className="w-full h-auto object-contain"
                         />
                       </button>
                     ))}

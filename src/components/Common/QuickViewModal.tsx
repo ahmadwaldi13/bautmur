@@ -200,11 +200,14 @@ const QuickViewModal = () => {
 
                   <span className="flex items-center gap-2">
                     <span className="font-semibold text-dark text-xl xl:text-heading-4">
-                      Rp {product.discountedPrice?.toLocaleString('id-ID')}
-                    </span>
-                    <span className="font-medium text-dark-4 text-lg xl:text-2xl line-through">
                       Rp {product.price?.toLocaleString('id-ID')}
                     </span>
+                    {product.discountedPrice !== 0 && (
+                      <span className="font-medium text-dark-4 text-lg xl:text-2xl line-through">
+                        Rp {product.discountedPrice?.toLocaleString('id-ID')}
+                      </span>
+                    )}
+                    \
                   </span>
                 </div>
               </div>

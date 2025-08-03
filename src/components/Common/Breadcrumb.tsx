@@ -1,7 +1,18 @@
-import Link from "next/link";
-import React from "react";
+import Link from 'next/link'
+import React from 'react'
 
-const Breadcrumb = ({ title, pages }) => {
+// Definisikan tipe data untuk props agar lebih aman
+type BreadcrumbPage = {
+  title: string
+  path: string
+}
+
+type BreadcrumbProps = {
+  title: string
+  pages: BreadcrumbPage[]
+}
+
+const Breadcrumb = ({ title, pages }: BreadcrumbProps) => {
   return (
     <div className="overflow-hidden shadow-breadcrumb pt-[209px] sm:pt-[155px] lg:pt-[95px] xl:pt-[165px]">
       <div className="border-t border-gray-3">
@@ -11,23 +22,35 @@ const Breadcrumb = ({ title, pages }) => {
               {title}
             </h1>
 
-            <ul className="flex items-center gap-2">
-              <li className="text-custom-sm hover:text-blue">
-                <Link href="/">Home /</Link>
-              </li>
+            <ul className="flex flex-wrap items-center gap-2">
+              {/* Loop untuk menampilkan breadcrumb yang bisa diklik */}
+              {pages.map((page, index) => (
+                <li
+                  key={index}
+                  className="flex items-center gap-2 text-custom-sm capitalize"
+                >
+                  {/* Jika bukan item terakhir, buat menjadi Link */}
+                  {index < pages.length - 1 ? (
+                    <Link href={page.path} className="hover:text-blue">
+                      {page.title}
+                    </Link>
+                  ) : (
+                    // Item terakhir (halaman aktif) hanya teks dan berwarna biru
+                    <span className="text-blue">{page.title}</span>
+                  )}
 
-              {pages.length > 0 &&
-                pages.map((page, key) => (
-                  <li className="text-custom-sm last:text-blue capitalize" key={key}>
-                    {page} 
-                  </li>
-                ))}
+                  {/* Tampilkan pemisah jika bukan item terakhir */}
+                  {index < pages.length - 1 && (
+                    <span className="text-gray-500">/</span>
+                  )}
+                </li>
+              ))}
             </ul>
           </div>
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Breadcrumb;
+export default Breadcrumb

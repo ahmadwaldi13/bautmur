@@ -9,11 +9,17 @@ export const menuData: Menu[] = [
     newTab: false,
     path: '/',
   },
+  // {
+  //   id: 2,
+  //   title: 'Products 1',
+  //   newTab: false,
+  //   path: '/shop-with-sidebar',
+  // },
   {
     id: 2,
     title: 'Products',
     newTab: false,
-    path: '/shop-with-sidebar',
+    path: '/products',
   },
   {
     id: 3,
@@ -21,6 +27,7 @@ export const menuData: Menu[] = [
     newTab: false,
     path: '/contact',
   },
+
   {
     id: 4,
     title: 'Gallery',
