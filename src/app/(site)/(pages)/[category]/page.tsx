@@ -1,24 +1,20 @@
+'use client'
+import { use } from 'react'
 import { notFound } from 'next/navigation'
 import Breadcrumb from '@/components/Common/Breadcrumb'
 import jmarketData from '@/components/JMarket/jmarketData'
 // Import komponen baru kita
 import SubCategoryCard from '@/components/Cards/SubCategoryCard'
 
-import { Metadata } from 'next'
-export const metadata: Metadata = {
-  title: 'Categories Page | Sinar Terang',
-  description: 'This is JMarket Page for NextCommerce Template',
-  icons: {
-    icon: '/logo-page.png',
-  },
-}
-
 const getCategoryDetails = (slug: string) =>
   jmarketData.find((c) => c.slug === slug)
-type PageProps = { params: { category: string } }
+
+type PageProps = {
+  params: Promise<{ category: string }>
+}
 
 const SubCategoryListPage = ({ params }: PageProps) => {
-  const { category: categorySlug } = params
+  const { category: categorySlug } = use(params)
   const categoryDetails = getCategoryDetails(categorySlug)
 
   if (!categoryDetails) {

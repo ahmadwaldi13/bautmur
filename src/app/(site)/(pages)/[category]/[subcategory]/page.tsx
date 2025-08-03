@@ -1,6 +1,6 @@
 'use client'
-import { notFound } from 'next/navigation'
 import { use } from 'react'
+import { notFound } from 'next/navigation'
 import Breadcrumb from '@/components/Common/Breadcrumb'
 import Products from '@/components/Products'
 import productData from '@/components/Categories/categories'
@@ -19,7 +19,7 @@ type PageProps = {
 }
 
 const ProductSubcategoryPage = ({ params }: PageProps) => {
-  // Gunakan React.use() untuk unwrap Promise di client component
+  // Gunakan use() untuk unwrap Promise params
   const { category: categorySlug, subcategory: subcategorySlug } = use(params)
 
   const categoryTitle = getCategoryTitle(categorySlug)
