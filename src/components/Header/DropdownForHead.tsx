@@ -15,13 +15,13 @@ const DropdownForHead = ({ menuItem, stickyMenu }) => {
     >
       <a
         href="#"
-        className={`hover:text-blue text-custom-sm font-medium text-dark flex items-center gap-1.5 capitalize cursor-pointer ${
+        className={`hover:text-[#FB4141] text-custom-sm font-medium text-dark flex items-center gap-1.5 capitalize cursor-pointer ${
           stickyMenu ? 'xl:py-4' : 'xl:py-6'
-        } ${pathUrl.includes(menuItem.title) && '!text-blue'}`}
+        } ${pathUrl.includes(menuItem.title) && '!text-[#FB4141'}`}
       >
         {menuItem.title}
         <svg
-          className="fill-current hover:fill-blue cursor-pointer transition-transform duration-200 hidden"
+          className="fill-current hover:fill-[#FB4141] cursor-pointer transition-transform duration-200 hidden"
           width="16"
           height="16"
           viewBox="0 0 16 16"
@@ -43,8 +43,8 @@ const DropdownForHead = ({ menuItem, stickyMenu }) => {
           <li key={i}>
             <Link
               href={item.path}
-              className={`flex text-custom-sm hover:text-blue hover:bg-gray-1 py-[7px] px-4.5 transition-colors ${
-                pathUrl === item.path && 'text-blue bg-gray-1'
+              className={`flex text-custom-sm hover:text-[#FB4141] hover:bg-gray-1 py-[7px] px-4.5 transition-colors ${
+                pathUrl === item.path && 'text-[#FB4141] bg-gray-1'
               }`}
             >
               {item.title}

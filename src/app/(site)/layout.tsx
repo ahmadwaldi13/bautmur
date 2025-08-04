@@ -6,6 +6,7 @@ import '../css/hero-carouse.css'
 import '../css/wa-style.css'
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
+import { Maven_Pro, Lato } from 'next/font/google'
 
 import { ModalProvider } from '../context/QuickViewModalContext'
 import { CartModalProvider } from '../context/CartSidebarModalContext'
@@ -20,6 +21,20 @@ import ScrollToTop from '@/components/Common/ScrollToTop'
 import PreLoader from '@/components/Common/PreLoader'
 import WhatsAppFloatingButton from '@/components/WhatsAppFloatingButton'
 
+const mavenPro = Maven_Pro({
+  subsets: ['latin'],
+  weight: ['700'],
+  variable: '--font-maven-pro',
+  display: 'swap',
+})
+
+const lato = Lato({
+  subsets: ['latin'],
+  weight: ['400', '700', '900'],
+  variable: '--font-lato',
+  display: 'swap',
+})
+
 export default function RootLayout({
   children,
 }: {
@@ -32,7 +47,11 @@ export default function RootLayout({
   }, [])
 
   return (
-    <html lang="en" suppressHydrationWarning={true}>
+    <html
+      lang="en"
+      suppressHydrationWarning={true}
+      className={`${mavenPro.variable} ${lato.variable}`}
+    >
       <body>
         {loading ? (
           <PreLoader />

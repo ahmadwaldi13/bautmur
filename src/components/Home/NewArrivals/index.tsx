@@ -33,7 +33,7 @@ const NewArrival = () => {
               </svg>
               This Week’s
             </span>
-            <h2 className="font-semibold text-xl xl:text-heading-5 text-dark">
+            <h2 className="font-maven text-xl xl:text-heading-5 text-dark">
               New Arrivals
             </h2>
           </div>

@@ -23,7 +23,7 @@ const SingleItem = ({ item }: { item: Product }) => {
     <div className="group">
       <div className="relative overflow-hidden shadow-[0_0_15px_rgba(0,0,0,0.1)] rounded-lg bg-[#F6F7FB] min-h-[403px]">
         <div className="text-center px-4 py-7.5">
-          <h3 className="font-medium text-dark ease-out duration-200 hover:text-blue mb-1.5">
+          <h3 className="font-medium text-dark ease-out duration-200 hover:text-[#FB4141] mb-1.5">
             <Link href="/shop-details"> {item.title} </Link>
           </h3>
         </div>
@@ -44,7 +44,7 @@ const SingleItem = ({ item }: { item: Product }) => {
               openModal()
               handleQuickViewUpdate()
             }}
-            className="inline-flex font-medium text-custom-sm py-[7px] px-5 rounded-[5px] bg-blue text-white ease-out duration-200 hover:bg-blue-dark"
+            className="inline-flex font-medium text-custom-sm py-[7px] px-5 rounded-[5px] bg-[#FB4141] text-white ease-out duration-200 hover:bg-red-dark"
           >
             View
           </button>

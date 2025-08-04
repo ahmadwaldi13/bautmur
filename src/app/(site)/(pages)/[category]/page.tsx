@@ -23,7 +23,7 @@ const SubCategoryListPage = ({ params }: PageProps) => {
 
   const breadcrumbPages = [
     { title: 'Home', path: '/' },
-    { title: 'Products', path: '/jmarket' },
+    { title: 'Products', path: '/products' },
     { title: categoryDetails.title, path: `/${categorySlug}` },
   ]
 

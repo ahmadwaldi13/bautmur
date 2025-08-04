@@ -36,7 +36,7 @@ const JMarket = () => {
 
                 {/* 👇 PERBAIKAN 2: Menambahkan 'text-center' untuk menengahkan judul */}
                 <div className="p-3 text-center">
-                  <h6 className="text-xl font-bold text-dark transition-colors duration-300 group-hover:text-blue">
+                  <h6 className="text-xl font-bold text-dark transition-colors duration-300 group-hover:text-[#FB4141]">
                     {jmarket.title}
                   </h6>
                 </div>

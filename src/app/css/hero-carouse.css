@@ -4,18 +4,13 @@
    HERO CAROUSEL STYLES
 ======================================== */
 
-/* Main Carousel Container - Tinggi diperbesar */
-.hero-carousel {
-  height: 600px;
-  width: 100%;
-}
+/* Main Carousel Container */
 
-/* Slide Container with Background - Tinggi diperbesar */
+/* Slide Container with Background */
 .hero-slide {
   position: relative;
-  width: 100%;
-  height: 600px;
-  background-size: contain;
+  aspect-ratio: 20/9;
+  background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   display: flex;
@@ -136,14 +131,6 @@
 
 /* Large Desktop */
 @media (min-width: 1200px) {
-  .hero-carousel {
-    height: 650px;
-  }
-
-  .hero-slide {
-    height: 650px;
-  }
-
   .hero-title {
     font-size: clamp(2rem, 3.5vw, 3.2rem);
   }
@@ -159,12 +146,7 @@
 
 /* Tablet */
 @media (max-width: 1024px) {
-  .hero-carousel {
-    height: 520px;
-  }
-
   .hero-slide {
-    height: 520px;
     padding: 0 15px;
   }
 
@@ -184,13 +166,9 @@
 
 /* Mobile Large */
 @media (max-width: 768px) {
-  .hero-carousel {
-    height: 480px;
-  }
-
   .hero-slide {
-    height: 480px;
     padding: 0 12px;
+    aspect-ratio: 16 / 9;
   }
 
   .hero-title {
@@ -228,15 +206,11 @@
 
 /* Mobile Small */
 @media (max-width: 480px) {
-  .hero-carousel {
-    height: 420px;
-  }
-
   .hero-slide {
-    height: 420px;
     padding: 0 10px;
+    /* Ganti aspect-ratio menjadi lebih tinggi lagi untuk mobile kecil */
+    aspect-ratio: 3 / 2;
   }
-
   .hero-content {
     max-width: 100%;
   }

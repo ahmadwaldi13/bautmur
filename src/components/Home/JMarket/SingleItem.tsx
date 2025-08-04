@@ -25,7 +25,7 @@ const SingleItem = ({ item }: { item: JMarket }) => {
 
       {/* Bagian judul dipindahkan ke bawah dengan padding dan style kartu */}
       <div className="p-5 text-center bg-white">
-        <h3 className="font-semibold text-lg text-dark transition-colors duration-300 group-hover:text-blue">
+        <h3 className="font-semibold text-lg text-dark transition-colors duration-300 group-hover:text-[#FB4141]">
           {item.title}
         </h3>
       </div>
