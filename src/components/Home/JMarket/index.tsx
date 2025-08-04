@@ -159,7 +159,7 @@ const JMarket = () => {
 
   return (
     <>
-      <section className="overflow-hidden pt-17.5">
+      <section className="overflow-hidden pt-15">
         <div className="max-w-[1170px] w-full mx-auto px-4 sm:px-8 xl:px-0 pb-15">
           {/* --- Bagian Judul Tetap Ada --- */}
           <div className="mb-10">

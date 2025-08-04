@@ -3,11 +3,11 @@ import SingleItem from './SingleItem'
 import Image from 'next/image'
 import Link from 'next/link'
 // import shopData from "@/components/Shop/shopData";
-import newProduct from '@/components/Shop/newProduct'
+import bestSeller from '@/components/Shop/bestSeller'
 
 const BestSeller = () => {
   return (
-    <section className="overflow-hidden">
+    <section className="overflow-hidden pt-15">
       <div className="max-w-[1170px] w-full mx-auto px-4 sm:px-8 xl:px-0">
         {/* <!-- section title --> */}
         <div className="mb-10 flex items-center justify-between">
@@ -28,8 +28,7 @@ const BestSeller = () => {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7.5">
-          {/* <!-- Best Sellers item --> */}
-          {newProduct.slice(1, 7).map((item, key) => (
+          {bestSeller.slice(1, 7).map((item, key) => (
             <SingleItem item={item} key={key} />
           ))}
         </div>

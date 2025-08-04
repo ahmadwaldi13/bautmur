@@ -15,12 +15,12 @@ const Home = () => {
       <Hero />
       <JMarket />
       <NewArrival />
-      <PromoBanner />
+      {/* <PromoBanner /> */}
       <BestSeller />
       {/* <CounDown /> */}
       <Testimonials />
       <Sponsors />
-      <Newsletter />
+      {/* <Newsletter /> */}
     </main>
   )
 }

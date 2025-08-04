@@ -24,7 +24,7 @@ const newProduct: Product[] = [
     },
   },
   {
-    title: 'Mur Baja 8.8',
+    title: 'Baut B/M 8.8 MM',
     reviews: 15,
     price: 1000,
     discountedPrice: 0,

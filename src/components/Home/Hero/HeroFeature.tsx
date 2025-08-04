@@ -4,23 +4,45 @@ import Image from 'next/image'
 const featureData = [
   {
     img: '/images/icons/product.svg',
-    title: 'PRODUK',
-    description: 'Kualitas Produk Terjamin',
+    title: 'STOK',
+    description: 'Stok Lengkap',
   },
   {
     img: '/images/icons/service.svg',
     title: 'LAYANAN',
-    description: 'Telpon Email Whatsapp',
+    description:
+      'Layanan Pelanggan Responsif Melalui Telepon, Email, dan WhatsAap',
   },
   {
-    img: '/images/icons/price.svg',
-    title: 'HARGA',
-    description: 'Harga Yang Bersaing',
+    img: '/images/icons/pengalaman.svg',
+    title: 'PENGALAMAN',
+    description:
+      'Berpengalaman Puluhan Tahun dalam memasok proyek, supplier industri, dll',
+  },
+  {
+    img: '/images/icons/pengiriman.svg',
+    title: 'PENGIRIMAN',
+    description: 'Pengiriman Gratis* (Area Bandung)',
+  },
+  {
+    img: '/images/icons/kecepatan.svg',
+    title: 'KECEPATAN',
+    description: 'Kecepatan Dalam Pelayanan',
+  },
+  {
+    img: '/images/icons/pengemasan.svg',
+    title: 'PENGEMASAN',
+    description: 'Pengemasan Rapi untuk Luar Pulau',
+  },
+  {
+    img: '/images/icons/kualitas.svg',
+    title: 'KUALITAS',
+    description: 'Kualitas Produk Terjamin ',
   },
   {
     img: '/images/icons/team.svg',
     title: 'TIM',
-    description: 'Tim Yang Profesional',
+    description: 'Memiliki Tim Profesional',
   },
 ]
 

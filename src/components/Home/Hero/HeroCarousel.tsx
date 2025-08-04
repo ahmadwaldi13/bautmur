@@ -36,7 +36,7 @@ const HeroCarousel = () => {
           <div
             className="hero-slide"
             style={{
-              backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(${item.path})`,
+              backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.3)), url(${item.path})`,
             }}
           >
             <div className="hero-content">
