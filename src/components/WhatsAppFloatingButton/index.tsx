@@ -13,7 +13,7 @@ const WhatsAppFloatingButton: React.FC<WhatsAppFloatingButtonProps> = ({
 }) => {
   const handleWhatsAppClick = () => {
     const encodedMessage = encodeURIComponent(message)
-    const whatsappUrl = `https://linktr.ee/sinarterangb`
+    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`
     window.open(whatsappUrl, '_blank')
   }
 

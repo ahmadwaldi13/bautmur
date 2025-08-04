@@ -74,7 +74,7 @@ export default function RootLayout({
               </CartModalProvider>
             </ReduxProvider>
             <WhatsAppFloatingButton
-              phoneNumber="6285794683694"
+              phoneNumber="6285624203634"
               message="Halo, saya tertarik dengan produk di website Anda"
             />
             <ScrollToTop />
