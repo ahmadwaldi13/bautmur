@@ -177,7 +177,7 @@ const productData: ProductCategory[] = [
         reviews: 15,
         price: 1000,
         discountedPrice: 0,
-        id: 12,
+        id: 13,
         imgs: {
           thumbnails: ['/images/products2/Mur-Nylon-Nylon-Mur-Lock.jpg'],
           previews: ['/images/products2/Mur-Nylon-Nylon-Mur-Lock.jpg'],
@@ -188,7 +188,7 @@ const productData: ProductCategory[] = [
         reviews: 15,
         price: 1000,
         discountedPrice: 0,
-        id: 13,
+        id: 14,
         imgs: {
           thumbnails: ['/images/products2/Mur-Topi-Cap-Nut-1.jpg'],
           previews: ['/images/products2/Mur-Topi-Cap-Nut-1.jpg'],
