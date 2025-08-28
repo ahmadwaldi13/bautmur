@@ -1,24 +1,27 @@
 'use client'
-
 import { useState } from 'react'
 
-const CategoryItem = ({ category }) => {
-  const [selected, setSelected] = useState(false)
+const CategoryItem = ({ category, isSelected, onChange }) => {
+  const handleSelect = () => {
+    onChange(category.id)
+  }
+
   return (
     <button
       className={`${
-        selected && 'text-blue'
-      } group flex items-center justify-between ease-out duration-200 hover:text-blue `}
-      onClick={() => setSelected(!selected)}
+        isSelected ? 'text-red' : ''
+      } group flex items-center justify-between ease-out duration-200 hover:text-red-dark `}
+      onClick={handleSelect}
     >
       <div className="flex items-center gap-2">
         <div
           className={`cursor-pointer flex items-center justify-center rounded w-4 h-4 border ${
-            selected ? 'border-blue bg-blue' : 'bg-white border-gray-3'
+            isSelected ? 'border-red bg-red' : 'bg-white border-gray-3'
           }`}
         >
+          {/* ... SVG Checkmark ... */}
           <svg
-            className={selected ? 'block' : 'hidden'}
+            className={isSelected ? 'block' : 'hidden'}
             width="10"
             height="10"
             viewBox="0 0 10 10"
@@ -34,42 +37,38 @@ const CategoryItem = ({ category }) => {
             />
           </svg>
         </div>
-
-        <span>{category.name}</span>
+        <span>{category.nama_kategori}</span>{' '}
       </div>
-
-      <span
+      {/* <span
         className={`${
-          selected ? 'text-white bg-blue' : 'bg-gray-2'
+          isSelected ? 'text-white bg-blue' : 'bg-gray-2'
         } inline-flex rounded-[30px] text-custom-xs px-2 ease-out duration-200 group-hover:text-white group-hover:bg-blue`}
       >
-        {category.products}
-      </span>
+        {category.count ?? 0}{' '}
+      </span> */}
     </button>
   )
 }
 
-const CategoryDropdown = ({ categories }) => {
+// DIUBAH: Komponen utama sekarang menerima props baru
+const CategoryDropdown = ({ categories, selectedIds, onCategoryChange }) => {
   const [toggleDropdown, setToggleDropdown] = useState(true)
 
   return (
     <div className="bg-white shadow-1 rounded-lg">
       <div
-        onClick={(e) => {
-          e.preventDefault()
-          setToggleDropdown(!toggleDropdown)
-        }}
+        onClick={() => setToggleDropdown(!toggleDropdown)}
         className={`cursor-pointer flex items-center justify-between py-3 pl-6 pr-5.5 ${
           toggleDropdown && 'shadow-filter'
         }`}
       >
-        <p className="text-dark">JMarket</p>
+        <p className="text-dark">Category</p>
         <button
-          aria-label="button for category dropdown"
           className={`text-dark ease-out duration-200 ${
             toggleDropdown && 'rotate-180'
           }`}
         >
+          {/* ... SVG Arrow ... */}
           <svg
             className="fill-current"
             width="24"
@@ -88,15 +87,18 @@ const CategoryDropdown = ({ categories }) => {
         </button>
       </div>
 
-      {/* dropdown && 'shadow-filter */}
-      {/* <!-- dropdown menu --> */}
       <div
-        className={`flex-col gap-3 py-6 pl-6 pr-5.5 ${
+        className={`flex flex-col gap-3 py-6 pl-6 pr-5.5 ${
           toggleDropdown ? 'flex' : 'hidden'
         }`}
       >
-        {categories.map((category, key) => (
-          <CategoryItem key={key} category={category} />
+        {categories.map((category) => (
+          <CategoryItem
+            key={category.id}
+            category={category}
+            isSelected={selectedIds.includes(category.id)}
+            onChange={onCategoryChange}
+          />
         ))}
       </div>
     </div>

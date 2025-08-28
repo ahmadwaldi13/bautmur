@@ -1,0 +1,54 @@
+{
+    "Header": {
+        "search_placeholder": "我正在购物...",
+        "all_categories": "所有类别",
+        "support": "全天候支持",
+        "location": "位置",
+        "language": "语言"
+    },
+    "Homepage": {
+        "best_sellers_subtitle": "本月",
+        "best_sellers_title": "畅销产品",
+        "browse_by_category": "按类别浏览"
+    },
+    "ShopSidebar": {
+        "filters": "筛选",
+        "clean_all": "全部清除",
+        "jmarket": "J-Market 市场",
+        "category": "类别",
+        "sub_jmarket": "子市场",
+        "showing_products_of": "显示 {totalItems} 件商品中的 {startItem}-{endItem} 件"
+    },
+    "ProductDetails": {
+        "product_detail": "产品详情",
+        "additional_information": "附加信息",
+        "related_products": "您可能也喜欢",
+        "description": "产品描述",
+        "price": "价格",
+        "specifications": {
+            "material": "材料",
+            "thread": "螺纹",
+            "packaging": "包装",
+            "category": "类别",
+            "type": "类型",
+            "key_size": "扳手尺寸",
+            "sku": "SKU",
+            "reference": "其他名称/参考",
+            "jmarket": "J-Market 市场",
+            "sub_jmarket": "子市场"
+        }
+    },
+    "General": {
+        "view_all": "查看全部",
+        "view_detail": "查看详情",
+        "home": "首页",
+        "products": "产品",
+        "not_found": "未找到产品。",
+        "loading": "加载中...",
+        "error": "发生错误"
+    },
+    "PromoPopup": {
+        "save": "节省",
+        "ends_in": "剩余时间:"
+    }
+}
