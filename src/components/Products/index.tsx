@@ -1,49 +1,169 @@
 'use client'
 import React, { useState, useEffect } from 'react'
-
-// Import komponen-komponen UI Anda
+import axios from 'axios'
 import CustomSelect from './CustomSelect'
-import CategoryDropdown from './CategoryDropdown'
-import GenderDropdown from './GenderDropdown'
+import JmarketDropdown from './JmarketDropdown'
 import SingleGridItem from '../Shop/SingleGridItem'
 import SingleListItem from '../Shop/SingleListItem'
+import CategoryDropdown from './CategoryDropdown'
+import SubJmarketDropdown from './SubJmarketDropdown'
+import SkeletonItem from '../Shop/SkeletonItem'
+import { useSearchParams } from 'next/navigation'
 
-const ShopWithSidebar = ({ products }) => {
+const TOKEN = process.env.NEXT_PUBLIC_API_TOKEN
+const ITEMS_PER_PAGE = 9
+
+const ShopWithSidebar = ({ categoryId }) => {
+  const searchParams = useSearchParams()
+
+  const searchQuery = searchParams.get('q')
+
   const [productStyle, setProductStyle] = useState('grid')
   const [productSidebar, setProductSidebar] = useState(false)
   const [stickyMenu, setStickyMenu] = useState(false)
 
-  const itemsWithDuplicateKey = products.filter((p) => p.id === 12)
+  const [products, setProducts] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
 
-  if (itemsWithDuplicateKey.length > 1) {
-    console.error(
-      'DEBUG: DITEMUKAN PRODUK DUPLIKAT DENGAN ID 12!',
-      itemsWithDuplicateKey
-    )
-  }
-
-  // =================================================================
-  // START: STATE DAN LOGIKA UNTUK PAGINATION
-  // =================================================================
   const [currentPage, setCurrentPage] = useState(1)
-  const ITEMS_PER_PAGE = 9 // Tentukan berapa produk per halaman. Sesuaikan jika perlu.
+  const [totalPages, setTotalPages] = useState(1)
+  const [totalItems, setTotalItems] = useState(0)
 
-  // Kalkulasi untuk menentukan item mana yang akan ditampilkan
-  const indexOfLastItem = currentPage * ITEMS_PER_PAGE
-  const indexOfFirstItem = indexOfLastItem - ITEMS_PER_PAGE
-  const currentItems = products.slice(indexOfFirstItem, indexOfLastItem)
+  const [jmarketOptions, setJmarketOptions] = useState([])
+  const [selectedJmarkets, setSelectedJmarkets] = useState<number[]>([])
 
-  // Kalkulasi jumlah total halaman
-  const totalPages = Math.ceil(products.length / ITEMS_PER_PAGE)
+  const [kategoriOptions, setKategoriOptions] = useState([])
+  const [selectedKategoris, setSelectedKategoris] = useState<number[]>([])
 
-  // Fungsi untuk mengubah halaman
+  const [subJmarketOptions, setSubJmarketOptions] = useState([])
+  const [selectedSubJmarkets, setSelectedSubJmarkets] = useState<number[]>([])
+
+  useEffect(() => {
+    const fetchFilterOptions = async () => {
+      try {
+        const jmarketApiUrl = 'http://api.bautmur.id/api/v1/website/jmarkets'
+        const kategoriApiUrl = 'http://api.bautmur.id/api/v1/website/kategoris'
+        const subJmarketApiUrl =
+          'http://api.bautmur.id/api/v1/website/sub-jmarkets'
+
+        const [jmarketResponse, kategoriResponse, subJmarketResponse] =
+          await Promise.all([
+            axios.get(jmarketApiUrl, {
+              headers: { Authorization: `Bearer ${TOKEN}` },
+            }),
+            axios.get(kategoriApiUrl, {
+              headers: { Authorization: `Bearer ${TOKEN}` },
+            }),
+            axios.get(subJmarketApiUrl, {
+              headers: { Authorization: `Bearer ${TOKEN}` },
+            }),
+          ])
+
+        setJmarketOptions(jmarketResponse.data.data)
+        setKategoriOptions(kategoriResponse.data.data)
+        setSubJmarketOptions(subJmarketResponse.data.data)
+      } catch (err) {
+        console.error('Gagal mengambil opsi filter:', err)
+      }
+    }
+    fetchFilterOptions()
+  }, [])
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      setLoading(true)
+      setError(null)
+      try {
+        let API_URL = ''
+        const filterFields = []
+
+        if (searchQuery) {
+          filterFields.push({ nama_barang: { like: searchQuery } })
+        }
+
+        if (selectedJmarkets.length > 0) {
+          filterFields.push({ j_market_ids: { in: selectedJmarkets } })
+        } else if (categoryId) {
+          filterFields.push({ j_market_ids: { in: [parseInt(categoryId)] } })
+        }
+        if (selectedJmarkets.length > 0) {
+          filterFields.push({ j_market_ids: { in: selectedJmarkets } })
+        }
+        if (selectedKategoris.length > 0) {
+          filterFields.push({ kategori_ids: { in: selectedKategoris } })
+        }
+        if (selectedSubJmarkets.length > 0) {
+          filterFields.push({ sub_j_market_ids: { in: selectedSubJmarkets } })
+        }
+
+        if (filterFields.length > 0) {
+          const filterObject = { fields: filterFields, relation: 'and' }
+          const encodedFilter = encodeURIComponent(JSON.stringify(filterObject))
+          API_URL = `http://api.bautmur.id/api/v1/website/barangs?filter=${encodedFilter}&page=${currentPage}&limit=${ITEMS_PER_PAGE}`
+        } else {
+          API_URL = `http://api.bautmur.id/api/v1/website/barangs/jmarket/${categoryId}?page=${currentPage}&limit=${ITEMS_PER_PAGE}`
+        }
+
+        const response = await axios.get(API_URL, {
+          headers: { Authorization: `Bearer ${TOKEN}` },
+        })
+
+        const responseData = response.data
+        setProducts(responseData.data ?? [])
+        setTotalPages(responseData.pagination?.last_page ?? 1)
+        setTotalItems(responseData.pagination?.total ?? 0)
+      } catch (err) {
+        setError('Gagal mengambil data produk.')
+        console.error(err)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchProducts()
+  }, [
+    categoryId,
+    currentPage,
+    selectedJmarkets,
+    selectedKategoris,
+    selectedSubJmarkets,
+    searchQuery,
+  ])
+
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber)
-    window.scrollTo(0, 0) // Scroll ke atas setiap ganti halaman
+    window.scrollTo(0, 0)
   }
-  // =================================================================
-  // END: STATE DAN LOGIKA UNTUK PAGINATION
-  // =================================================================
+
+  // Handler untuk filter JMarket
+  const handleJmarketChange = (jmarketId: number) => {
+    setSelectedJmarkets((prev) =>
+      prev.includes(jmarketId)
+        ? prev.filter((id) => id !== jmarketId)
+        : [...prev, jmarketId]
+    )
+    setCurrentPage(1)
+  }
+
+  // BARU: Handler untuk filter Kategori
+  const handleKategoriChange = (kategoriId: number) => {
+    setSelectedKategoris((prev) =>
+      prev.includes(kategoriId)
+        ? prev.filter((id) => id !== kategoriId)
+        : [...prev, kategoriId]
+    )
+    setCurrentPage(1)
+  }
+
+  const handleSubJmarketChange = (subJmarketId: number) => {
+    setSelectedSubJmarkets((prev) =>
+      prev.includes(subJmarketId)
+        ? prev.filter((id) => id !== subJmarketId)
+        : [...prev, subJmarketId]
+    )
+    setCurrentPage(1)
+  }
 
   useEffect(() => {
     const handleStickyMenu = () => {
@@ -62,32 +182,21 @@ const ShopWithSidebar = ({ products }) => {
     return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [productSidebar])
 
+  const startItem = (currentPage - 1) * ITEMS_PER_PAGE + 1
+  const endItem = Math.min(currentPage * ITEMS_PER_PAGE, totalItems)
+
+  const handleClearFilters = () => {
+    setSelectedJmarkets([])
+    setSelectedKategoris([])
+    setSelectedSubJmarkets([])
+
+    setCurrentPage(1)
+  }
+
   const options = [
     { label: 'Latest Products', value: '0' },
     { label: 'Best Selling', value: '1' },
     { label: 'Old Products', value: '2' },
-  ]
-  const jmarket = [
-    {
-      name: 'Kontraktor',
-      products: 10,
-    },
-    {
-      name: 'Manufaktur',
-      products: 5,
-    },
-    // ... data lainnya
-  ]
-  const subJmarket = [
-    {
-      name: 'Aluminium',
-      products: 10,
-    },
-    {
-      name: 'Kaca',
-      products: 12,
-    },
-    // ... data lainnya
   ]
 
   return (
@@ -95,7 +204,6 @@ const ShopWithSidebar = ({ products }) => {
       <section className="overflow-hidden relative pb-20 pt-5 lg:pt-20 xl:pt-28 bg-[#f3f4f6]">
         <div className="max-w-[1170px] w-full mx-auto px-4 sm:px-8 xl:px-0">
           <div className="flex gap-7.5">
-            {/* Sidebar */}
             <div
               className={`sidebar-content fixed xl:z-1 z-9999 left-0 top-0 xl:translate-x-0 xl:static max-w-[310px] xl:max-w-[270px] w-full ease-out duration-200 ${
                 productSidebar
@@ -103,28 +211,66 @@ const ShopWithSidebar = ({ products }) => {
                   : '-translate-x-full'
               }`}
             >
-              {/* Konten Sidebar Anda ... */}
               <button
                 onClick={() => setProductSidebar(!productSidebar)}
                 aria-label="button for product sidebar toggle"
                 className={`xl:hidden absolute -right-12.5 sm:-right-8 flex items-center justify-center w-8 h-8 rounded-md bg-white shadow-1 ${
                   stickyMenu
-                    ? 'lg:top-20 sm:top-34.5 top-35'
-                    : 'lg:top-24 sm:top-39 top-37'
+                    ? 'lg:top-24 sm:top-40 top-40' // <-- Angka ditambah
+                    : 'lg:top-28 sm:top-44 top-44' // <-- Angka ditambah
                 }`}
               >
-                {/* SVG Icon */}
+                <svg
+                  className="fill-current"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fillRule="evenodd"
+                    clipRule="evenodd"
+                    d="M10.0068 3.44714C10.3121 3.72703 10.3328 4.20146 10.0529 4.5068L5.70494 9.25H20C20.4142 9.25 20.75 9.58579 20.75 10C20.75 10.4142 20.4142 10.75 20 10.75H4.00002C3.70259 10.75 3.43327 10.5742 3.3135 10.302C3.19374 10.0298 3.24617 9.71246 3.44715 9.49321L8.94715 3.49321C9.22704 3.18787 9.70147 3.16724 10.0068 3.44714Z"
+                    fill=""
+                  />
+                  <path
+                    fillRule="evenodd"
+                    clipRule="evenodd"
+                    d="M20.6865 13.698C20.5668 13.4258 20.2974 13.25 20 13.25L4.00001 13.25C3.5858 13.25 3.25001 13.5858 3.25001 14C3.25001 14.4142 3.5858 14.75 4.00001 14.75L18.2951 14.75L13.9472 19.4932C13.6673 19.7985 13.6879 20.273 13.9932 20.5529C14.2986 20.8328 14.773 20.8121 15.0529 20.5068L20.5529 14.5068C20.7539 14.2876 20.8063 13.9703 20.6865 13.698Z"
+                    fill=""
+                  />
+                </svg>
               </button>
               <form onSubmit={(e) => e.preventDefault()}>
                 <div className="flex flex-col gap-6">
                   <div className="bg-white shadow-1 rounded-lg py-4 px-5">
                     <div className="flex items-center justify-between">
                       <p>Filters:</p>
-                      <button className="text-blue">Clean All</button>
+                      <button
+                        type="button"
+                        className="text-red"
+                        onClick={handleClearFilters}
+                      >
+                        Clean All
+                      </button>
                     </div>
                   </div>
-                  <CategoryDropdown categories={jmarket} />
-                  <GenderDropdown genders={subJmarket} />
+                  <JmarketDropdown
+                    jmarkets={jmarketOptions}
+                    selectedIds={selectedJmarkets}
+                    onJmarketChange={handleJmarketChange}
+                  />
+                  <CategoryDropdown
+                    categories={kategoriOptions}
+                    selectedIds={selectedKategoris}
+                    onCategoryChange={handleKategoriChange}
+                  />
+                  <SubJmarketDropdown
+                    subJmarkets={subJmarketOptions}
+                    selectedIds={selectedSubJmarkets}
+                    onSubJmarketChange={handleSubJmarketChange}
+                  />
                 </div>
               </form>
             </div>
@@ -139,18 +285,15 @@ const ShopWithSidebar = ({ products }) => {
                       {/* UPDATE: Teks jumlah produk dinamis */}
                       Showing{' '}
                       <span className="text-dark font-medium">
-                        {indexOfFirstItem + 1}-
-                        {Math.min(indexOfLastItem, products.length)}
+                        {startItem}-{endItem}
                       </span>{' '}
                       of <span className="font-medium">{products.length}</span>{' '}
                       Products
                     </p>
                   </div>
-                  {/* Tombol Grid/List ... */}
                 </div>
               </div>
 
-              {/* Grid/List Produk */}
               <div
                 className={`${
                   productStyle === 'grid'
@@ -158,18 +301,30 @@ const ShopWithSidebar = ({ products }) => {
                     : 'flex flex-col gap-7.5'
                 }`}
               >
-                {/* UPDATE: Gunakan 'currentItems' untuk render produk */}
-                {currentItems &&
-                  currentItems.map(
-                    (
-                      item // Anda bahkan tidak perlu 'key' dari map lagi
-                    ) =>
-                      productStyle === 'grid' ? (
-                        <SingleGridItem item={item} key={item.id} />
-                      ) : (
-                        <SingleListItem item={item} key={item.id} />
-                      )
-                  )}
+                {loading ? (
+                  Array.from({ length: ITEMS_PER_PAGE }).map((_, index) => (
+                    <SkeletonItem key={index} />
+                  ))
+                ) : error ? (
+                  <div className="col-span-full text-center text-red-500 bg-white p-10 rounded-lg shadow-md">
+                    <h3 className="font-bold text-xl mb-2">
+                      Terjadi Kesalahan
+                    </h3>
+                    <p>{error}</p>
+                  </div>
+                ) : products.length === 0 ? (
+                  <div className="col-span-full text-center text-gray-600 bg-white p-10 rounded-lg shadow-md">
+                    <p>Produk tidak ditemukan.</p>
+                  </div>
+                ) : (
+                  products.map((item) =>
+                    productStyle === 'grid' ? (
+                      <SingleGridItem item={item} key={item.id} />
+                    ) : (
+                      <SingleListItem item={item} key={item.id} />
+                    )
+                  )
+                )}
               </div>
 
               {/* UPDATE: Tombol pagination dinamis */}
@@ -182,9 +337,8 @@ const ShopWithSidebar = ({ products }) => {
                         aria-label="pagination left"
                         onClick={() => handlePageChange(currentPage - 1)}
                         disabled={currentPage === 1}
-                        className="flex items-center justify-center w-8 h-9 ease-out duration-200 rounded-[3px] hover:text-white hover:bg-blue disabled:text-gray-400 disabled:cursor-not-allowed"
+                        className="flex items-center justify-center w-8 h-9 ease-out duration-200 rounded-[3px] hover:text-white hover:bg-red-dark disabled:text-gray-400 disabled:cursor-not-allowed"
                       >
-                        {/* SVG Left Arrow */}
                         <svg
                           className="fill-current"
                           width="18"
@@ -196,7 +350,6 @@ const ShopWithSidebar = ({ products }) => {
                       </button>
                     </li>
 
-                    {/* Loop untuk Nomor Halaman */}
                     {Array.from({ length: totalPages }, (_, i) => i + 1).map(
                       (pageNumber) => (
                         <li key={pageNumber}>
@@ -204,8 +357,8 @@ const ShopWithSidebar = ({ products }) => {
                             onClick={() => handlePageChange(pageNumber)}
                             className={`flex py-1.5 px-3.5 duration-200 rounded-[3px] ${
                               currentPage === pageNumber
-                                ? 'bg-blue text-white'
-                                : 'hover:text-white hover:bg-blue'
+                                ? 'bg-red text-white'
+                                : 'hover:text-white hover:bg-red-dark'
                             }`}
                           >
                             {pageNumber}
@@ -214,15 +367,13 @@ const ShopWithSidebar = ({ products }) => {
                       )
                     )}
 
-                    {/* Tombol Next */}
                     <li>
                       <button
                         aria-label="pagination right"
                         onClick={() => handlePageChange(currentPage + 1)}
                         disabled={currentPage === totalPages}
-                        className="flex items-center justify-center w-8 h-9 ease-out duration-200 rounded-[3px] hover:text-white hover:bg-blue disabled:text-gray-400 disabled:cursor-not-allowed"
+                        className="flex items-center justify-center w-8 h-9 ease-out duration-200 rounded-[3px] hover:text-white hover:bg-red-dark disabled:text-gray-400 disabled:cursor-not-allowed"
                       >
-                        {/* SVG Right Arrow */}
                         <svg
                           className="fill-current"
                           width="18"

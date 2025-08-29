@@ -7,8 +7,18 @@ import { usePathname } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
 import { popupAds } from './popupAds'
+import axios from 'axios'
+import CountdownTimer from './CountDownTimer'
+
+const API_URL = 'http://api.bautmur.id/api/v1/website/promos/banner'
+const TOKEN = process.env.NEXT_PUBLIC_API_TOKEN
 
 export default function LandscapePromoPopup() {
+  const [promoProducts, setPromoProducts] = useState<any>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+  const [popupSettings, setPopupSettings] = useState<any | null>(null)
+
   const [isVisible, setIsVisible] = useState(false)
   const [isAnimating, setIsAnimating] = useState(false)
   const [mounted, setMounted] = useState(false)
@@ -16,15 +26,63 @@ export default function LandscapePromoPopup() {
   const [isClosed, setIsClosed] = useState(false)
   const pathname = usePathname()
 
-  // Ambil produk yang statusnya true (untuk promo)
-  const promoProducts = popupAds.filter((product) => product.status === true)
+  useEffect(() => {
+    if (!TOKEN) {
+      setError('API Token tidak ditemukan.')
+      setLoading(false)
+      return
+    }
+
+    const fetchPopupPromos = async () => {
+      try {
+        setLoading(true)
+        setError(null)
+        const response = await axios.get(API_URL, {
+          headers: { Authorization: `Bearer ${TOKEN}` },
+        })
+
+        const apiData = response.data.data
+
+        if (
+          apiData.banner_active &&
+          apiData.items &&
+          apiData.items.length > 0
+        ) {
+          setPopupSettings(apiData.settings)
+
+          const transformedProducts = apiData.items.map((item) => ({
+            ...item,
+            id: item.barang_id,
+            name: item.nama_barang,
+            path: item.image_url,
+            price_normal: parseFloat(item.harga_asal),
+            persen_promo: `${parseInt(item.persentase_diskon)}%`,
+            promo_name: apiData.settings.banner_title,
+            description:
+              item.promo_keterangan || apiData.settings.banner_description,
+          }))
+
+          setPromoProducts(transformedProducts)
+        } else {
+          setPopupSettings(null) //
+          setPromoProducts([])
+        }
+      } catch (err: any) {
+        setError(err.message || 'Gagal mengambil data popup promo.')
+        console.error('Fetch Popup Promo Error:', err)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchPopupPromos()
+  }, [])
 
   useEffect(() => {
     setMounted(true)
   }, [])
 
   useEffect(() => {
-    // Hanya tampil di halaman home dan jika ada produk promo
     if (pathname === '/' && promoProducts.length > 0 && mounted && !isClosed) {
       const timer = setTimeout(() => {
         setIsVisible(true)
@@ -35,7 +93,6 @@ export default function LandscapePromoPopup() {
     }
   }, [pathname, promoProducts, mounted, isClosed])
 
-  // Auto slide setiap 5 detik
   useEffect(() => {
     if (isVisible && promoProducts.length > 1) {
       const interval = setInterval(() => {
@@ -59,9 +116,7 @@ export default function LandscapePromoPopup() {
   }
 
   const nextSlide = () => {
-    setCurrentSlide(
-      (prev) => (prev - 1 + promoProducts.length) % promoProducts.length
-    )
+    setCurrentSlide((prev) => (prev + 1) % promoProducts.length)
   }
 
   const prevSlide = () => {
@@ -70,8 +125,13 @@ export default function LandscapePromoPopup() {
     )
   }
 
-  // Jika bukan halaman home, tidak ada produk promo, atau tidak visible, return null
-  if (pathname !== '/' || promoProducts.length === 0 || !isVisible || !mounted)
+  if (
+    pathname !== '/' ||
+    promoProducts.length === 0 ||
+    !popupSettings ||
+    !isVisible ||
+    !mounted
+  )
     return null
 
   const currentProduct = promoProducts[currentSlide]
@@ -110,7 +170,8 @@ export default function LandscapePromoPopup() {
     currentProduct.persen_promo
   )
 
-  // Render menggunakan portal ke document.body
+  const slug = currentProduct.nama_barang.toLowerCase().replace(/\s+/g, '-')
+
   return createPortal(
     <div
       className={`fixed inset-0 flex items-center justify-center bg-black transition-all duration-300`}
@@ -135,8 +196,7 @@ export default function LandscapePromoPopup() {
         `}
         style={{
           zIndex: 1000000,
-          background:
-            'linear-gradient(135deg, #1d4ed8 0%, #1e40af 50%, #1e3a8a 100%)',
+          background: `linear-gradient(135deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.3) 100%), ${popupSettings.banner_color}`,
         }}
       >
         {/* Tombol Tutup */}
@@ -144,7 +204,7 @@ export default function LandscapePromoPopup() {
           onClick={closePopup}
           className="absolute top-2 right-2 z-20 w-7 h-7 bg-white/30 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-white/40 transition-all duration-200
           md:top-3 md:right-3 md:w-8 md:h-8
-          lg:top-4 lg:right-4 lg:w-8 lg:h-8" // Ukuran dan posisi tombol tutup di desktop
+          lg:top-4 lg:right-4 lg:w-8 lg:h-8"
         >
           <svg
             className="w-4 h-4"
@@ -161,18 +221,15 @@ export default function LandscapePromoPopup() {
           </svg>
         </button>
 
-        {/* Konten Utama - Mobile: Kolom, Tablet/Desktop: Baris */}
         <div className="flex flex-col md:flex-row h-full w-full">
-          {/* Sisi Kanan - Gambar Produk (Mobile: Atas, Tablet/Desktop: Kanan) */}
           <div className="w-full md:w-1/3 relative bg-white/10 backdrop-blur-sm flex items-center justify-center p-4 md:p-0">
-            {/* Panah Navigasi - Hanya jika ada beberapa produk */}
             {promoProducts.length > 1 && (
               <>
                 <button
                   onClick={prevSlide}
                   className="absolute left-2 top-1/2 transform -translate-y-1/2 z-10 w-8 h-8 bg-white/30 backdrop-blur-sm rounded-full shadow-lg flex items-center justify-center text-white hover:bg-white/40
                   md:left-3
-                  lg:left-4" // Posisi panah navigasi di desktop
+                  lg:left-4"
                 >
                   <svg
                     className="w-4 h-4"
@@ -212,25 +269,22 @@ export default function LandscapePromoPopup() {
               </>
             )}
 
-            {/* Gambar Produk */}
             <div className="relative mb-4 md:mb-0">
               <Image
                 src={currentProduct.path}
                 alt={currentProduct.name}
-                width={200} // Ukuran lebih kecil untuk mobile
-                height={200} // Ukuran lebih kecil untuk mobile
+                width={200}
+                height={200}
                 className="w-48 h-48 object-cover rounded-xl shadow-2xl border-4 border-white/20
                 md:w-[200px] md:h-[200px]
-                lg:w-[280px] lg:h-[280px]" // Ukuran gambar di desktop (kembali ke ukuran aslinya)
+                lg:w-[280px] lg:h-[280px]"
               />
 
-              {/* Badge Diskon */}
               <div className="absolute -top-3 -right-3 bg-white text-red px-3 py-1 rounded-full font-bold shadow-lg text-sm">
                 -{currentProduct.persen_promo}
               </div>
             </div>
 
-            {/* Indikator Slide */}
             {promoProducts.length > 1 && (
               <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
                 {promoProducts.map((_, index) => (
@@ -245,59 +299,52 @@ export default function LandscapePromoPopup() {
               </div>
             )}
           </div>
-
-          {/* Sisi Kiri - Info Produk (Mobile: Bawah, Tablet/Desktop: Kiri) */}
           <div
             className="w-full md:w-2/3 p-4 md:p-8 flex flex-col justify-center bg-black/20 backdrop-blur-sm text-center md:text-left
           lg:p-12"
           >
             {' '}
-            {/* Padding di desktop */}
-            {/* Header Sederhana */}
             <h2
               className="text-white/80 text-base md:text-base mb-1 md:mb-1
             lg:text-lg lg:mb-2"
             >
               {' '}
-              {/* Ukuran teks di desktop */}
               {currentProduct.name}
             </h2>
             <h1
               className="text-3xl md:text-3xl font-bold text-white mb-4 md:mb-3 drop-shadow-lg
-            lg:text-5xl lg:mb-6"
+            lg:text-5xl lg:mb-6
+            flex flex-wrap items-center justify-center md:justify-start gap-x-4 gap-y-2"
             >
-              {' '}
-              {/* Ukuran teks di desktop */}
-              {currentProduct.promo_name.toUpperCase()}
+              <span>{currentProduct.promo_name.toUpperCase()}</span>
+              {currentProduct.time_remaining?.expires_at && (
+                <CountdownTimer
+                  expiryTimestamp={currentProduct.time_remaining.expires_at}
+                />
+              )}
             </h1>
-            {/* Deskripsi Sederhana */}
             <p
               className="text-white/90 text-sm md:text-sm mb-4 md:mb-5 max-w-lg mx-auto md:mx-0
             lg:text-lg lg:mb-8"
             >
               {' '}
-              {/* Ukuran teks di desktop */}
               {currentProduct.description}
             </p>
-            {/* Harga */}
             <div
               className="mb-4 md:mb-5
             lg:mb-8"
             >
               {' '}
-              {/* Margin di desktop */}
               <div
                 className="flex items-baseline space-x-2 md:space-x-2 mb-1 md:mb-1 justify-center md:justify-start
               lg:space-x-4 lg:mb-2"
               >
                 {' '}
-                {/* Spasi dan margin di desktop */}
                 <span
                   className="text-2xl md:text-2xl font-bold text-white drop-shadow-lg
                 lg:text-3xl"
                 >
                   {' '}
-                  {/* Ukuran teks di desktop */}
                   {formatRupiah(promoPrice)}
                 </span>
                 <span
@@ -305,7 +352,6 @@ export default function LandscapePromoPopup() {
                 lg:text-xl"
                 >
                   {' '}
-                  {/* Ukuran teks di desktop */}
                   {formatRupiah(currentProduct.price_normal)}
                 </span>
               </div>
@@ -314,19 +360,17 @@ export default function LandscapePromoPopup() {
               lg:text-base"
               >
                 {' '}
-                {/* Ukuran teks di desktop */}
                 Hemat {formatRupiah(savings)} ({currentProduct.persen_promo})
               </p>
             </div>
-            {/* Tombol */}
             <div className="space-y-4">
-              {/* Tombol "View Detail" */}
               <div>
+                `
                 <Link
-                  href={`/products/${currentProduct.id}`}
+                  href={`/product/${slug}/${currentProduct.id}`}
                   className="inline-block bg-white text-blue-700 hover:bg-gray-100 px-6 py-3 rounded-lg text-base font-bold transition-all duration-200 shadow-lg transform hover:scale-105 no-underline
                   md:px-6 md:py-3 md:text-base
-                  lg:px-8 lg:py-4 lg:text-lg" // Ukuran tombol di desktop
+                  lg:px-8 lg:py-4 lg:text-lg"
                   onClick={closePopup}
                 >
                   View Detail

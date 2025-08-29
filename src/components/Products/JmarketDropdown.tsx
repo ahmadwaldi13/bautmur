@@ -1,15 +1,14 @@
 'use client'
 import { useState } from 'react'
-
-const CategoryItem = ({ category, isSelected, onChange }) => {
+const JmarketItem = ({ jmarket, isSelected, onChange }) => {
   const handleSelect = () => {
-    onChange(category.id)
+    onChange(jmarket.id)
   }
 
   return (
     <button
       className={`${
-        isSelected ? 'text-red' : ''
+        isSelected && 'text-red'
       } group flex items-center justify-between ease-out duration-200 hover:text-red-dark `}
       onClick={handleSelect}
     >
@@ -37,21 +36,20 @@ const CategoryItem = ({ category, isSelected, onChange }) => {
             />
           </svg>
         </div>
-        <span>{category.nama_kategori}</span>{' '}
+        <span>{jmarket.nama}</span>
       </div>
       {/* <span
         className={`${
           isSelected ? 'text-white bg-blue' : 'bg-gray-2'
         } inline-flex rounded-[30px] text-custom-xs px-2 ease-out duration-200 group-hover:text-white group-hover:bg-blue`}
       >
-        {category.count ?? 0}{' '}
+        {jmarket.count ?? 0}{' '}
       </span> */}
     </button>
   )
 }
 
-// DIUBAH: Komponen utama sekarang menerima props baru
-const CategoryDropdown = ({ categories, selectedIds, onCategoryChange }) => {
+const JmarketDropdown = ({ jmarkets, selectedIds, onJmarketChange }) => {
   const [toggleDropdown, setToggleDropdown] = useState(true)
 
   return (
@@ -62,7 +60,7 @@ const CategoryDropdown = ({ categories, selectedIds, onCategoryChange }) => {
           toggleDropdown && 'shadow-filter'
         }`}
       >
-        <p className="text-dark">Category</p>
+        <p className="text-dark">JMarket</p>
         <button
           className={`text-dark ease-out duration-200 ${
             toggleDropdown && 'rotate-180'
@@ -86,18 +84,17 @@ const CategoryDropdown = ({ categories, selectedIds, onCategoryChange }) => {
           </svg>
         </button>
       </div>
-
       <div
         className={`flex flex-col gap-3 py-6 pl-6 pr-5.5 ${
           toggleDropdown ? 'flex' : 'hidden'
         }`}
       >
-        {categories.map((category) => (
-          <CategoryItem
-            key={category.id}
-            category={category}
-            isSelected={selectedIds.includes(category.id)}
-            onChange={onCategoryChange}
+        {jmarkets.map((jmarket) => (
+          <JmarketItem
+            key={jmarket.id}
+            jmarket={jmarket}
+            isSelected={selectedIds.includes(jmarket.id)}
+            onChange={onJmarketChange}
           />
         ))}
       </div>
@@ -105,4 +102,4 @@ const CategoryDropdown = ({ categories, selectedIds, onCategoryChange }) => {
   )
 }
 
-export default CategoryDropdown
+export default JmarketDropdown

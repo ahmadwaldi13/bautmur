@@ -1,10 +1,74 @@
+'use client'
+
 import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import ProductItem from '@/components/Common/ProductItem'
 import newProduct from '@/components/Shop/newProduct'
+import { useState, useEffect } from 'react'
+import axios from 'axios'
+
+const API_URL = 'http://api.bautmur.id/api/v1/website/barangs'
+const requestParams = {
+  limit: 8,
+  sort_by: JSON.stringify({ created_at: -1 }),
+}
+const TOKEN = process.env.NEXT_PUBLIC_API_TOKEN
 
 const NewArrival = () => {
+  const [products, setProducts] = useState<any>([])
+  const [loading, setLoading] = useState<boolean>(true)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    if (!TOKEN) {
+      setError('API Token tidak ditemukan.')
+      setLoading(false)
+      return
+    }
+
+    const fetchJMarkets = async () => {
+      try {
+        setLoading(true)
+        setError(null)
+
+        const response = await axios.get(API_URL, {
+          headers: {
+            Authorization: `Bearer ${TOKEN}`,
+            'Content-Type': 'application/json',
+          },
+          params: requestParams,
+        })
+
+        const results = response.data
+
+        if (results && Array.isArray(results.data)) {
+          setProducts(results.data)
+        } else {
+          console.error(
+            "Struktur data API tidak sesuai, properti 'data' tidak ditemukan atau bukan array.",
+            results
+          )
+          setProducts([])
+        }
+      } catch (err: any) {
+        console.error('Terjadi kesalahan saat fetch new product:', err)
+        if (axios.isAxiosError(err)) {
+          if (err.response?.status === 401) {
+            setError('Otorisasi gagal. Token Anda mungkin tidak valid.')
+          } else {
+            setError(err.response?.data?.message || err.message)
+          }
+        } else {
+          setError('Terjadi kesalahan yang tidak diketahui')
+        }
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchJMarkets()
+  }, [])
   return (
     <section className="overflow-hidden pt-15">
       <div className="max-w-[1170px] w-full mx-auto px-4 sm:px-8 xl:px-0">
@@ -47,10 +111,23 @@ const NewArrival = () => {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-7.5 gap-y-9">
-          {/* <!-- New Arrivals item --> */}
-          {newProduct.map((item, key) => (
-            <ProductItem item={item} key={key} />
-          ))}
+          {loading ? (
+            // Menggunakan skeleton sederhana saat loading
+            Array.from({ length: 8 }).map((_, index) => (
+              <div key={index} className="animate-pulse">
+                <div className="bg-gray-300 rounded-lg aspect-[3/4]"></div>
+                <div className="mt-2 h-4 w-3/4 bg-gray-300 rounded"></div>
+                <div className="mt-1 h-5 w-1/2 bg-gray-300 rounded"></div>
+              </div>
+            ))
+          ) : error ? (
+            <p className="col-span-full text-center text-red-500">{error}</p>
+          ) : (
+            // Pastikan item memiliki properti 'id' yang unik
+            products.map((item: any) => (
+              <ProductItem key={item.id} item={item} />
+            ))
+          )}
         </div>
       </div>
     </section>

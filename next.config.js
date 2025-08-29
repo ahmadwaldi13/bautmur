@@ -1,4 +1,14 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
+const nextConfig = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'http',
+        hostname: 'api.bautmur.id',
+        pathname: '/storage/**',
+      },
+    ],
+  },
+}
 
-module.exports = nextConfig;
+module.exports = nextConfig

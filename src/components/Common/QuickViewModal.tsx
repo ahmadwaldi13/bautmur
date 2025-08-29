@@ -30,16 +30,16 @@ const QuickViewModal = () => {
   }
 
   // add to cart
-  const handleAddToCart = () => {
-    dispatch(
-      addItemToCart({
-        ...product,
-        quantity,
-      })
-    )
+  // const handleAddToCart = () => {
+  //   dispatch(
+  //     addItemToCart({
+  //       ...product,
+  //       quantity,
+  //     })
+  //   )
 
-    closeModal()
-  }
+  //   closeModal()
+  // }
 
   useEffect(() => {
     // closing modal while clicking outside
@@ -59,6 +59,10 @@ const QuickViewModal = () => {
       setQuantity(1)
     }
   }, [isModalOpen, closeModal])
+
+  if (!product || !product.id) {
+    return null
+  }
 
   return (
     <div
@@ -94,7 +98,7 @@ const QuickViewModal = () => {
             <div className="max-w-[526px] w-full">
               <div className="flex gap-5">
                 <div className="flex flex-col gap-5">
-                  {product.imgs.thumbnails?.map((img, key) => (
+                  {/* {product.imgs.thumbnails?.map((img, key) => (
                     <button
                       onClick={() => setActivePreview(key)}
                       key={key}
@@ -110,7 +114,20 @@ const QuickViewModal = () => {
                         className="aspect-square"
                       />
                     </button>
-                  ))}
+                  ))} */}
+
+                  <button
+                    className={`flex items-center justify-center w-20 h-20 overflow-hidden rounded-lg bg-gray-1 ease-out duration-200 hover:border-2 hover:border-[#FB4141] 'border-2 border-[#FB4141]'
+                      }`}
+                  >
+                    <Image
+                      src={product.image_url}
+                      alt="thumbnail"
+                      width={61}
+                      height={61}
+                      className="aspect-square"
+                    />
+                  </button>
                 </div>
 
                 <div className="relative z-1 overflow-hidden flex items-center justify-center w-full sm:min-h-[508px] bg-gray-1 rounded-lg border border-gray-3">
@@ -138,7 +155,7 @@ const QuickViewModal = () => {
                     </button>
 
                     <Image
-                      src={product?.imgs?.previews?.[activePreview]}
+                      src={product.image_url}
                       alt="products-details"
                       width={400}
                       height={400}
@@ -149,12 +166,14 @@ const QuickViewModal = () => {
             </div>
 
             <div className="max-w-[445px] w-full">
-              <span className="inline-block text-custom-xs font-medium text-white py-1 px-3 bg-green mb-6.5">
-                SALE 20% OFF
-              </span>
+              {/* {product.discountedPrice !== 0 && (
+                <span className="inline-block text-custom-xs font-medium text-white py-1 px-3 bg-green mb-6.5">
+                  SALE 20% OFF
+                </span>
+              )} */}
 
               <h3 className="font-semibold text-xl xl:text-heading-5 text-dark mb-4">
-                {product.title}
+                {product.nama_barang}
               </h3>
 
               <div className="flex flex-wrap items-center gap-5 mb-6">
@@ -188,8 +207,8 @@ const QuickViewModal = () => {
               </div>
 
               <p>
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has.
+                {product.deskripsi ??
+                  'Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi provident exercitationem similique neque autem. Debitis amet iusto obcaecati tenetur autem!'}
               </p>
 
               <div className="flex flex-wrap justify-between gap-5 mt-6 mb-7.5">
@@ -200,14 +219,13 @@ const QuickViewModal = () => {
 
                   <span className="flex items-center gap-2">
                     <span className="font-semibold text-dark text-xl xl:text-heading-4">
-                      Rp {product.price?.toLocaleString('id-ID')}
+                      Rp {product.harga?.toLocaleString('id-ID')}
                     </span>
                     {product.discountedPrice !== 0 && (
                       <span className="font-medium text-dark-4 text-lg xl:text-2xl line-through">
-                        Rp {product.discountedPrice?.toLocaleString('id-ID')}
+                        {product.discountedPrice?.toLocaleString('id-ID')}
                       </span>
                     )}
-                    \
                   </span>
                 </div>
               </div>

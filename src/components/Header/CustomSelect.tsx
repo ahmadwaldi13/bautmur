@@ -1,52 +1,66 @@
-import React, { useState, useEffect } from "react";
+// File: CustomSelect.tsx (Versi Controlled Component)
+'use client'
+import React, { useState, useEffect } from 'react'
 
-const CustomSelect = ({ options }) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState(options[0]);
+const CustomSelect = ({ options, value, onChange }) => {
+  const [isOpen, setIsOpen] = useState(false)
+
+  // BARU: Mencari objek opsi yang sedang aktif berdasarkan `value` dari props.
+  // Ini digunakan untuk menampilkan label yang benar.
+  const selectedOption = options.find((option) => option.value === value) ||
+    options[0] || { label: 'Loading...', value: '' }
 
   const toggleDropdown = () => {
-    setIsOpen(!isOpen);
-  };
+    setIsOpen(!isOpen)
+  }
 
+  // DIMODIFIKASI: handleOptionClick sekarang memanggil `onChange` dari props.
+  // Ia mengirimkan `value` dari opsi yang diklik ke parent (Header).
   const handleOptionClick = (option) => {
-    setSelectedOption(option);
-    toggleDropdown();
-  };
+    if (onChange) {
+      onChange(option.value) // Kirim nilainya ke parent (Header)
+    }
+    setIsOpen(false) // Selalu tutup dropdown setelah memilih
+  }
 
+  // PERBAIKAN: useEffect untuk klik di luar agar lebih aman
   useEffect(() => {
-    // closing modal while clicking outside
     function handleClickOutside(event) {
-      if (!event.target.closest(".dropdown-content")) {
-        toggleDropdown();
+      if (isOpen && !event.target.closest('.dropdown-content')) {
+        setIsOpen(false) // Hanya tutup, jangan toggle
       }
     }
 
-    if (isOpen) {
-      document.addEventListener("mousedown", handleClickOutside);
-    }
-
+    document.addEventListener('mousedown', handleClickOutside)
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [isOpen]) // Tambahkan `isOpen` sebagai dependency
 
   return (
-    <div className="dropdown-content custom-select relative" style={{ width: "200px" }}>
+    <div
+      className="dropdown-content custom-select relative"
+      style={{ width: '200px' }}
+    >
       <div
         className={`select-selected whitespace-nowrap ${
-          isOpen ? "select-arrow-active" : ""
+          isOpen ? 'select-arrow-active' : ''
         }`}
         onClick={toggleDropdown}
       >
-        {selectedOption.label}
+        {/* Menampilkan label dari `selectedOption` yang ditemukan */}
+        {selectedOption ? selectedOption.label : 'Select...'}
       </div>
-      <div className={`select-items ${isOpen ? "" : "select-hide"}`}>
-        {options.slice(1, -1).map((option, index) => (
+      <div className={`select-items ${isOpen ? '' : 'select-hide'}`}>
+        {/* Menampilkan semua opsi */}
+        {options.map((option) => (
           <div
-            key={index}
+            key={option.value}
             onClick={() => handleOptionClick(option)}
             className={`select-item ${
-              selectedOption === option ? "same-as-selected" : ""
+              selectedOption && selectedOption.value === option.value
+                ? 'same-as-selected'
+                : ''
             }`}
           >
             {option.label}
@@ -54,7 +68,7 @@ const CustomSelect = ({ options }) => {
         ))}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default CustomSelect;
+export default CustomSelect
