@@ -10,7 +10,7 @@ import { popupAds } from './popupAds'
 import axios from 'axios'
 import CountdownTimer from './CountDownTimer'
 
-const API_URL = 'http://localhost:8000/api/v1/website/promos/banner'
+const API_URL = 'http://api.bautmur.id/api/v1/website/promos/banner'
 const TOKEN = process.env.NEXT_PUBLIC_API_TOKEN
 
 export default function LandscapePromoPopup() {

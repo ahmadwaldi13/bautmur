@@ -9,7 +9,7 @@ import bestSeller from '@/components/Shop/bestSeller'
 import axios from 'axios'
 import SingleItemSkeleton from './SingleItemSkeleton'
 
-const API_URL = 'http://localhost:8000/api/v1/website/barangs'
+const API_URL = 'http://api.bautmur.id/api/v1/website/barangs'
 const requestParams = {
   limit: 6,
 }

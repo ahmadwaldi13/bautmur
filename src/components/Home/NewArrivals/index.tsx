@@ -8,7 +8,7 @@ import newProduct from '@/components/Shop/newProduct'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 
-const API_URL = 'http://localhost:8000/api/v1/website/barangs'
+const API_URL = 'http://api.bautmur.id/api/v1/website/barangs'
 const requestParams = {
   limit: 8,
   sort_by: JSON.stringify({ created_at: -1 }),

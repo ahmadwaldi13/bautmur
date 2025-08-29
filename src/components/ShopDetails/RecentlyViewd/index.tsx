@@ -20,7 +20,7 @@ const RecentlyViewdItems = ({ primaryCategoryId, currentProductId }) => {
 
       setLoading(true)
       try {
-        const relatedApiUrl = `http://localhost:8000/api/v1/website/barangs/jmarket/${primaryCategoryId}?limit=9`
+        const relatedApiUrl = `http://api.bautmur.id/api/v1/website/barangs/jmarket/${primaryCategoryId}?limit=9`
         const relatedResponse = await axios.get(relatedApiUrl, {
           headers: { Authorization: `Bearer ${TOKEN}` },
         })
@@ -32,7 +32,7 @@ const RecentlyViewdItems = ({ primaryCategoryId, currentProductId }) => {
         let finalProducts = related.slice(0, 8)
 
         if (finalProducts.length < 8) {
-          const fallbackApiUrl = `http://localhost:8000/api/v1/website/barangs?limit=20`
+          const fallbackApiUrl = `http://api.bautmur.id/api/v1/website/barangs?limit=20`
 
           const fallbackResponse = await axios.get(fallbackApiUrl, {
             headers: { Authorization: `Bearer ${TOKEN}` },

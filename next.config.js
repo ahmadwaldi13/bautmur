@@ -4,9 +4,8 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'http',
-        hostname: 'localhost',
-        port: '8000',
-        pathname: '/storage/**', // Izinkan semua gambar dari folder /storage
+        hostname: 'api.bautmur.id',
+        pathname: '/storage/**',
       },
     ],
   },

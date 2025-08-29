@@ -23,7 +23,7 @@ const ShopDetails = ({ product }) => {
       if (!product) return
       setIsPromoLoading(true)
       try {
-        const API_URL = `http://localhost:8000/api/v1/website/promos/banner`
+        const API_URL = `http://api.bautmur.id/api/v1/website/promos/banner`
         const response = await axios.get(API_URL, {
           headers: { Authorization: `Bearer ${TOKEN}` },
         })

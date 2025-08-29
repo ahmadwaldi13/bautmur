@@ -72,7 +72,7 @@ const Header = () => {
   useEffect(() => {
     const fetchJmarketOptions = async () => {
       try {
-        const API_URL = 'http://localhost:8000/api/v1/website/jmarkets'
+        const API_URL = 'http://api.bautmur.id/api/v1/website/jmarkets'
         const response = await axios.get(API_URL, {
           headers: { Authorization: `Bearer ${TOKEN}` },
         })

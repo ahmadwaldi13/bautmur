@@ -42,10 +42,10 @@ const ShopWithSidebar = ({ categoryId }) => {
   useEffect(() => {
     const fetchFilterOptions = async () => {
       try {
-        const jmarketApiUrl = 'http://localhost:8000/api/v1/website/jmarkets'
-        const kategoriApiUrl = 'http://localhost:8000/api/v1/website/kategoris'
+        const jmarketApiUrl = 'http://api.bautmur.id/api/v1/website/jmarkets'
+        const kategoriApiUrl = 'http://api.bautmur.id/api/v1/website/kategoris'
         const subJmarketApiUrl =
-          'http://localhost:8000/api/v1/website/sub-jmarkets'
+          'http://api.bautmur.id/api/v1/website/sub-jmarkets'
 
         const [jmarketResponse, kategoriResponse, subJmarketResponse] =
           await Promise.all([
@@ -100,9 +100,9 @@ const ShopWithSidebar = ({ categoryId }) => {
         if (filterFields.length > 0) {
           const filterObject = { fields: filterFields, relation: 'and' }
           const encodedFilter = encodeURIComponent(JSON.stringify(filterObject))
-          API_URL = `http://localhost:8000/api/v1/website/barangs?filter=${encodedFilter}&page=${currentPage}&limit=${ITEMS_PER_PAGE}`
+          API_URL = `http://api.bautmur.id/api/v1/website/barangs?filter=${encodedFilter}&page=${currentPage}&limit=${ITEMS_PER_PAGE}`
         } else {
-          API_URL = `http://localhost:8000/api/v1/website/barangs/jmarket/${categoryId}?page=${currentPage}&limit=${ITEMS_PER_PAGE}`
+          API_URL = `http://api.bautmur.id/api/v1/website/barangs/jmarket/${categoryId}?page=${currentPage}&limit=${ITEMS_PER_PAGE}`
         }
 
         const response = await axios.get(API_URL, {

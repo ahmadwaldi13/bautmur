@@ -1,15 +1,15 @@
 import { notFound } from 'next/navigation'
 import { Metadata } from 'next'
 import ShopDetails from '@/components/ShopDetails'
-import { getProductDetails } from '@/components/Common/getProductDetails' // <-- Impor dari file baru kita
+import { getProductDetails } from '@/components/Common/getProductDetails'
 
-// Fungsi untuk metadata dinamis, memanggil fungsi yang sama
 export async function generateMetadata({
   params,
 }: {
-  params: { id: string }
+  params: Promise<{ id: string; slug: string }>
 }): Promise<Metadata> {
-  const product = await getProductDetails(params.id)
+  const { id } = await params
+  const product = await getProductDetails(id)
 
   if (!product) {
     return { title: 'Product Not Found' }
@@ -22,17 +22,19 @@ export async function generateMetadata({
   }
 }
 
-// Komponen Halaman yang sangat bersih
-const ProductDetailPage = async ({ params }: { params: { id: string } }) => {
-  // 1. Ambil data
-  const productData = await getProductDetails(params.id)
+const ProductDetailPage = async ({
+  params,
+}: {
+  params: Promise<{ id: string; slug: string }>
+}) => {
+  const { id } = await params
 
-  // 2. Handle jika data tidak ada
+  const productData = await getProductDetails(id)
+
   if (!productData) {
     notFound()
   }
 
-  // 3. Render komponen tampilan dengan data sebagai prop
   return (
     <main>
       <ShopDetails product={productData} />
