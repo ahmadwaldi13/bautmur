@@ -2,55 +2,74 @@
 import React, { use, useEffect, useState } from 'react'
 import Breadcrumb from '../Common/Breadcrumb'
 import Image from 'next/image'
-import Newsletter from '../Common/Newsletter'
 import RecentlyViewdItems from './RecentlyViewd'
 import { usePreviewSlider } from '@/app/context/PreviewSliderContext'
-import { useAppSelector } from '@/redux/store'
+import axios from 'axios'
 
-const ShopDetails = () => {
+const TOKEN = process.env.NEXT_PUBLIC_API_TOKEN
+
+const ShopDetails = ({ product }) => {
   const { openPreviewModal } = usePreviewSlider()
   const [previewImg, setPreviewImg] = useState(0)
 
   const [activeTab, setActiveTab] = useState('tabOne')
 
+  const [activePromo, setActivePromo] = useState(null)
+  const [isPromoLoading, setIsPromoLoading] = useState(true)
+
+  // useEffect untuk memeriksa promo (logika ini tetap sama)
+  useEffect(() => {
+    const checkPromo = async () => {
+      if (!product) return
+      setIsPromoLoading(true)
+      try {
+        const API_URL = `http://localhost:8000/api/v1/website/promos/banner`
+        const response = await axios.get(API_URL, {
+          headers: { Authorization: `Bearer ${TOKEN}` },
+        })
+
+        const promoData = response.data.data
+
+        if (promoData && promoData.banner_active) {
+          const promoItem = promoData.items.find(
+            (item) => item.barang_id === product.id
+          )
+          if (promoItem) {
+            // Log hanya akan jalan SEKALI setiap kali promo baru ditemukan
+            console.log('DATA PROMO DITEMUKAN DAN DISIMPAN:', promoItem)
+            setActivePromo({
+              ...promoItem,
+              settings: promoData.settings,
+            })
+          }
+        }
+      } catch (error) {
+        console.error('Gagal memeriksa data promo:', error)
+      } finally {
+        setIsPromoLoading(false)
+      }
+    }
+
+    checkPromo()
+  }, [product])
+
   const tabs = [
     {
       id: 'tabOne',
-      title: 'Description',
-    },
-    {
-      id: 'tabTwo',
       title: 'Additional Information',
     },
   ]
 
-  const alreadyExist = localStorage.getItem('productDetails')
-  const productFromStorage = useAppSelector(
-    (state) => state.productDetailsReducer.value
-  )
-
   const isValidProduct = (prod) => {
-    return prod && prod.title && prod.title.trim() !== '' && prod.id !== 0
+    return (
+      prod &&
+      prod.nama_barang &&
+      prod.nama_barang.trim() !== '' &&
+      prod.id !== 0 &&
+      prod.image_url
+    )
   }
 
-  let product = productFromStorage
-
-  // Jika Redux kosong, baru ambil dari localStorage
-  if (!isValidProduct(product) && alreadyExist) {
-    const parsedProduct = JSON.parse(alreadyExist)
-    if (isValidProduct(parsedProduct)) {
-      product = parsedProduct
-    }
-  }
-
-  useEffect(() => {
-    // Selalu update localStorage dengan data terbaru dari Redux
-    if (isValidProduct(productFromStorage)) {
-      localStorage.setItem('productDetails', JSON.stringify(productFromStorage))
-    }
-  }, [productFromStorage])
-
-  // Pass the product here when you get the real data.
   const handlePreviewSlider = () => {
     openPreviewModal()
   }
@@ -67,14 +86,32 @@ const ShopDetails = () => {
     )
   }
 
-  const breadcrumbData = [
+  const breadcrumbPages = [
     { title: 'Home', path: '/' },
-    { title: 'Product Detail', path: '/product Detail' },
+    { title: 'Products', path: '/products' },
   ]
+
+  if (product.j_markets && product.j_markets.length > 0) {
+    const primaryCategory = product.j_markets[0]
+    const categorySlug = primaryCategory.nama.toLowerCase().replace(/\s+/g, '-')
+
+    breadcrumbPages.push({
+      title: primaryCategory.nama,
+      path: `/products/${categorySlug}/${primaryCategory.id}`,
+    })
+  }
+
+  breadcrumbPages.push({
+    title: product.nama_barang,
+    path: `/product/${product.slug}/${product.id}`,
+  })
+
+  const primaryCategoryId = product.j_markets?.[0]?.id
+  const currentProductId = product.id
 
   return (
     <>
-      <Breadcrumb title={'product detail'} pages={breadcrumbData} />
+      <Breadcrumb title={'product detail'} pages={breadcrumbPages} />
       {product.title === '' ? (
         'Please add product'
       ) : (
@@ -108,8 +145,8 @@ const ShopDetails = () => {
                       </button>
 
                       <Image
-                        src={product.imgs?.previews[previewImg]}
-                        alt="products-details"
+                        src={product.image_url || '/images/placeholder.png'}
+                        alt={product.nama_barang || 'image'}
                         width={400}
                         height={400}
                         className="w-full h-auto object-contain"
@@ -119,25 +156,19 @@ const ShopDetails = () => {
 
                   {/* ?  &apos;border-blue &apos; :  &apos;border-transparent&apos; */}
                   <div className="flex flex-wrap sm:flex-nowrap gap-4.5 mt-6 p-3">
-                    {product.imgs?.thumbnails.map((item, key) => (
-                      <button
-                        onClick={() => setPreviewImg(key)}
-                        key={key}
-                        className={`flex items-center justify-center w-15 sm:w-25 h-15 sm:h-25 overflow-hidden rounded-lg bg-gray-2 shadow-1 ease-out duration-200 border-2 hover:border-blue ${
-                          key === previewImg
-                            ? 'border-blue'
-                            : 'border-transparent'
-                        }`}
-                      >
-                        <Image
-                          width={50}
-                          height={50}
-                          src={item}
-                          alt="thumbnail"
-                          className="w-full h-auto object-contain"
-                        />
-                      </button>
-                    ))}
+                    <button
+                      onClick={() => setPreviewImg(product.id)}
+                      key={product.id}
+                      className={`flex items-center justify-center w-15 sm:w-25 h-15 sm:h-25 overflow-hidden rounded-lg bg-gray-2 shadow-1 ease-out duration-200 border-2 hover:border-blue border-blue`}
+                    >
+                      <Image
+                        width={50}
+                        height={50}
+                        src={product.image_url || '/images/placeholder.png'}
+                        alt="thumbnail"
+                        className="w-full h-auto object-contain"
+                      />
+                    </button>
                   </div>
                 </div>
 
@@ -145,23 +176,41 @@ const ShopDetails = () => {
                 <div className="max-w-[539px] w-full">
                   <div className="flex items-center justify-between mb-3">
                     <h2 className="font-semibold text-xl sm:text-2xl xl:text-custom-3 text-dark">
-                      {product.title}
+                      {product.nama_barang}
                     </h2>
 
-                    <div className="inline-flex font-medium text-custom-sm text-white bg-blue rounded py-0.5 px-2.5">
-                      30% OFF
-                    </div>
+                    {!isPromoLoading && activePromo && (
+                      <div className="inline-flex font-medium text-custom-sm text-white bg-blue rounded py-0.5 px-2.5">
+                        {parseInt(activePromo.persentase_diskon)}% OFF
+                      </div>
+                    )}
                   </div>
 
                   <h3 className="font-medium text-custom-1 mb-4.5">
-                    <span className="text-sm sm:text-base text-dark">
-                      Price: Rp{' '}
-                      {product.discountedPrice?.toLocaleString('id-ID')}{' '}
-                    </span>
-                    <span className="line-through mr-3">
-                      {' '}
-                      Rp {product.price?.toLocaleString('id-ID')}
-                    </span>
+                    {!isPromoLoading && activePromo ? (
+                      <>
+                        {/* Tampilan JIKA ADA PROMO */}
+                        <span className="text-dark font-bold">
+                          Rp{' '}
+                          {parseInt(activePromo.harga_promo).toLocaleString(
+                            'id-ID'
+                          )}
+                        </span>
+                        <span className="line-through text-gray-500 ml-3">
+                          Rp{' '}
+                          {parseInt(activePromo.harga_asal).toLocaleString(
+                            'id-ID'
+                          )}
+                        </span>
+                      </>
+                    ) : (
+                      <>
+                        {/* Tampilan JIKA TIDAK ADA PROMO */}
+                        <span className="text-dark font-bold">
+                          Rp {product.harga?.toLocaleString('id-ID')}
+                        </span>
+                      </>
+                    )}
                   </h3>
 
                   <div className="space-y-3">
@@ -188,7 +237,6 @@ const ShopDetails = () => {
                         Free delivery information available
                       </span>
                     </div>
-
                     <div className="flex items-center gap-3">
                       <svg
                         width="20"
@@ -212,7 +260,6 @@ const ShopDetails = () => {
                         Detailed product specifications
                       </span>
                     </div>
-
                     <div className="flex items-center gap-3">
                       <svg
                         width="20"
@@ -236,6 +283,18 @@ const ShopDetails = () => {
                         Product information and care guide
                       </span>
                     </div>
+                    {product.diskripsi ?? (
+                      <div className="mt-6">
+                        <div className="bg-gray-100/70 rounded-lg">
+                          <h6 className="font-semibold text-lg text-dark mb-2 mt-3">
+                            Description
+                          </h6>
+                          <div className="prose prose-sm sm:prose-base max-w-none text-gray-700 leading-relaxed">
+                            <p>{product.deskripsi}</p>
+                          </div>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -261,194 +320,137 @@ const ShopDetails = () => {
                 ))}
               </div>
 
-              <div>
-                <div
-                  className={`flex-col sm:flex-row gap-7.5 xl:gap-12.5 mt-12.5 ${
-                    activeTab === 'tabOne' ? 'flex' : 'hidden'
-                  }`}
-                >
-                  <div className="max-w-[670px] w-full">
-                    <h2 className="font-medium text-2xl text-dark mb-7">
-                      Specifications:
-                    </h2>
-
-                    <p className="mb-6">
-                      Lorem Ipsum is simply dummy text of the printing and
-                      typesetting industry. Lorem Ipsum has been the
-                      industry&apos;s standard dummy text ever since the 1500s,
-                      when an unknown printer took a galley of type and
-                      scrambled it to make a type specimen book.
-                    </p>
-                    <p className="mb-6">
-                      It has survived not only five centuries, but also the leap
-                      into electronic typesetting, remaining essentially
-                      unchanged. It was popularised in the 1960s.
-                    </p>
-                    <p>
-                      with the release of Letraset sheets containing Lorem Ipsum
-                      passages, and more recently with desktop publishing
-                      software like Aldus PageMaker including versions.
-                    </p>
-                  </div>
-
-                  <div className="max-w-[447px] w-full">
-                    <h2 className="font-medium text-2xl text-dark mb-7">
-                      Care & Maintenance:
-                    </h2>
-
-                    <p className="mb-6">
-                      Lorem Ipsum is simply dummy text of the printing and
-                      typesetting industry. Lorem Ipsum has been the
-                      industry&apos;s standard dummy text ever since the 1500s,
-                      when an unknown printer took a galley of type and
-                      scrambled it to make a type specimen book.
-                    </p>
-                    <p>
-                      It has survived not only five centuries, but also the leap
-                      into electronic typesetting, remaining essentially
-                      unchanged. It was popularised in the 1960s.
-                    </p>
-                  </div>
-                </div>
-              </div>
-              {/* <!-- tab content one end --> */}
-
               {/* <!-- tab content two start --> */}
               <div>
                 <div
                   className={`rounded-xl bg-white shadow-1 p-4 sm:p-6 mt-10 ${
-                    activeTab === 'tabTwo' ? 'block' : 'hidden'
+                    activeTab === 'tabOne' ? 'block' : 'hidden'
                   }`}
                 >
-                  {/* <!-- info item --> */}
+                  {/* */}
                   <div className="rounded-md even:bg-gray-1 flex py-4 px-4 sm:px-5">
                     <div className="max-w-[450px] min-w-[140px] w-full">
-                      <p className="text-sm sm:text-base text-dark">Brand</p>
-                    </div>
-                    <div className="w-full">
-                      <p className="text-sm sm:text-base text-dark">Apple</p>
-                    </div>
-                  </div>
-
-                  {/* <!-- info item --> */}
-                  <div className="rounded-md even:bg-gray-1 flex py-4 px-4 sm:px-5">
-                    <div className="max-w-[450px] min-w-[140px] w-full">
-                      <p className="text-sm sm:text-base text-dark">Model</p>
+                      <p className="text-sm sm:text-base text-dark">Bahan</p>
                     </div>
                     <div className="w-full">
                       <p className="text-sm sm:text-base text-dark">
-                        iPhone 14 Plus
+                        {product.bahan?.nama || '-'}
                       </p>
                     </div>
                   </div>
 
-                  {/* <!-- info item --> */}
+                  {/* */}
                   <div className="rounded-md even:bg-gray-1 flex py-4 px-4 sm:px-5">
                     <div className="max-w-[450px] min-w-[140px] w-full">
-                      <p className="text-sm sm:text-base text-dark">
-                        Display Size
-                      </p>
+                      <p className="text-sm sm:text-base text-dark">Drat</p>
                     </div>
                     <div className="w-full">
                       <p className="text-sm sm:text-base text-dark">
-                        6.7 inches
+                        {product.drat || '-'}
                       </p>
                     </div>
                   </div>
 
-                  {/* <!-- info item --> */}
+                  {/* */}
                   <div className="rounded-md even:bg-gray-1 flex py-4 px-4 sm:px-5">
                     <div className="max-w-[450px] min-w-[140px] w-full">
-                      <p className="text-sm sm:text-base text-dark">
-                        Display Type
-                      </p>
+                      <p className="text-sm sm:text-base text-dark">Kemasan</p>
                     </div>
                     <div className="w-full">
                       <p className="text-sm sm:text-base text-dark">
-                        Super Retina XDR OLED, HDR10, Dolby Vision, 800 nits
-                        (HBM), 1200 nits (peak)
+                        {product.kemasan?.join(', ') || '-'}
                       </p>
                     </div>
                   </div>
 
-                  {/* <!-- info item --> */}
+                  {/* */}
                   <div className="rounded-md even:bg-gray-1 flex py-4 px-4 sm:px-5">
                     <div className="max-w-[450px] min-w-[140px] w-full">
-                      <p className="text-sm sm:text-base text-dark">
-                        Display Resolution
-                      </p>
+                      <p className="text-sm sm:text-base text-dark">Kategori</p>
                     </div>
                     <div className="w-full">
                       <p className="text-sm sm:text-base text-dark">
-                        1284 x 2778 pixels, 19.5:9 ratio
+                        {product.kategori?.nama_kategori || '-'}
                       </p>
                     </div>
                   </div>
 
-                  {/* <!-- info item --> */}
+                  {/* */}
                   <div className="rounded-md even:bg-gray-1 flex py-4 px-4 sm:px-5">
                     <div className="max-w-[450px] min-w-[140px] w-full">
-                      <p className="text-sm sm:text-base text-dark">Chipset</p>
+                      <p className="text-sm sm:text-base text-dark">Jenis</p>
                     </div>
                     <div className="w-full">
                       <p className="text-sm sm:text-base text-dark">
-                        Apple A15 Bionic (5 nm)
+                        {product.jenis?.nama || '-'}
                       </p>
                     </div>
                   </div>
 
-                  {/* <!-- info item --> */}
+                  {/* --- BARU: Menambahkan J-Market --- */}
                   <div className="rounded-md even:bg-gray-1 flex py-4 px-4 sm:px-5">
                     <div className="max-w-[450px] min-w-[140px] w-full">
-                      <p className="text-sm sm:text-base text-dark">Memory</p>
+                      <p className="text-sm sm:text-base text-dark">J-Market</p>
                     </div>
                     <div className="w-full">
                       <p className="text-sm sm:text-base text-dark">
-                        128GB 6GB RAM | 256GB 6GB RAM | 512GB 6GB RAM
+                        {product.j_markets
+                          ?.map((market) => market.nama)
+                          .join(', ') || '-'}
                       </p>
                     </div>
                   </div>
 
-                  {/* <!-- info item --> */}
+                  {/* --- BARU: Menambahkan Sub J-Market --- */}
                   <div className="rounded-md even:bg-gray-1 flex py-4 px-4 sm:px-5">
                     <div className="max-w-[450px] min-w-[140px] w-full">
                       <p className="text-sm sm:text-base text-dark">
-                        Main Camera
+                        Sub J-Market
                       </p>
                     </div>
                     <div className="w-full">
                       <p className="text-sm sm:text-base text-dark">
-                        12MP + 12MP | 4K@24/25/30/60fps, stereo sound rec.
+                        {product.sub_j_markets
+                          ?.map((sub) => sub.nama)
+                          .join(', ') || '-'}
                       </p>
                     </div>
                   </div>
 
-                  {/* <!-- info item --> */}
+                  {/* */}
                   <div className="rounded-md even:bg-gray-1 flex py-4 px-4 sm:px-5">
                     <div className="max-w-[450px] min-w-[140px] w-full">
-                      <p className="text-sm sm:text-base text-dark">
-                        Selfie Camera
-                      </p>
+                      <p className="text-sm sm:text-base text-dark">Kunci</p>
                     </div>
                     <div className="w-full">
                       <p className="text-sm sm:text-base text-dark">
-                        12 MP | 4K@24/25/30/60fps, 1080p@25/30/60/120fps,
-                        gyro-EIS
+                        {product.kunci || '-'}
                       </p>
                     </div>
                   </div>
 
-                  {/* <!-- info item --> */}
+                  {/* */}
+                  <div className="rounded-md even:bg-gray-1 flex py-4 px-4 sm:px-5">
+                    <div className="max-w-[450px] min-w-[140px] w-full">
+                      <p className="text-sm sm:text-base text-dark">SKU</p>
+                    </div>
+                    <div className="w-full">
+                      <p className="text-sm sm:text-base text-dark">
+                        {product.sku || '-'}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* */}
                   <div className="rounded-md even:bg-gray-1 flex py-4 px-4 sm:px-5">
                     <div className="max-w-[450px] min-w-[140px] w-full">
                       <p className="text-sm sm:text-base text-dark">
-                        Battery Info
+                        Nama Lain/Referensi
                       </p>
                     </div>
                     <div className="w-full">
                       <p className="text-sm sm:text-base text-dark">
-                        Li-Ion 4323 mAh, non-removable | 15W wireless (MagSafe),
-                        7.5W wireless (Qi)
+                        {product.referensi || '-'}
                       </p>
                     </div>
                   </div>
@@ -457,9 +459,10 @@ const ShopDetails = () => {
             </div>
           </section>
 
-          <RecentlyViewdItems />
-
-          <Newsletter />
+          <RecentlyViewdItems
+            primaryCategoryId={primaryCategoryId}
+            currentProductId={product.id}
+          />
         </>
       )}
     </>

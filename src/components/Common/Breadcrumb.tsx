@@ -31,12 +31,12 @@ const Breadcrumb = ({ title, pages }: BreadcrumbProps) => {
                 >
                   {/* Jika bukan item terakhir, buat menjadi Link */}
                   {index < pages.length - 1 ? (
-                    <Link href={page.path} className="hover:text-blue">
+                    <Link href={page.path} className="hover:text-red-dark">
                       {page.title}
                     </Link>
                   ) : (
                     // Item terakhir (halaman aktif) hanya teks dan berwarna biru
-                    <span className="text-blue">{page.title}</span>
+                    <span className="text-red">{page.title}</span>
                   )}
 
                   {/* Tampilkan pemisah jika bukan item terakhir */}

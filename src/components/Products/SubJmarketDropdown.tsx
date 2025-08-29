@@ -1,9 +1,9 @@
 'use client'
 import { useState } from 'react'
 
-const CategoryItem = ({ category, isSelected, onChange }) => {
+const SubJmarketItem = ({ subJmarket, isSelected, onChange }) => {
   const handleSelect = () => {
-    onChange(category.id)
+    onChange(subJmarket.id)
   }
 
   return (
@@ -19,7 +19,7 @@ const CategoryItem = ({ category, isSelected, onChange }) => {
             isSelected ? 'border-red bg-red' : 'bg-white border-gray-3'
           }`}
         >
-          {/* ... SVG Checkmark ... */}
+          {/* SVG Checkmark */}
           <svg
             className={isSelected ? 'block' : 'hidden'}
             width="10"
@@ -37,38 +37,40 @@ const CategoryItem = ({ category, isSelected, onChange }) => {
             />
           </svg>
         </div>
-        <span>{category.nama_kategori}</span>{' '}
+        <span>{subJmarket.nama}</span>{' '}
+        {/* Sesuaikan dengan properti dari API ('nama') */}
       </div>
       {/* <span
         className={`${
           isSelected ? 'text-white bg-blue' : 'bg-gray-2'
         } inline-flex rounded-[30px] text-custom-xs px-2 ease-out duration-200 group-hover:text-white group-hover:bg-blue`}
       >
-        {category.count ?? 0}{' '}
+        {subJmarket.count ?? 0}{' '}
       </span> */}
     </button>
   )
 }
 
-// DIUBAH: Komponen utama sekarang menerima props baru
-const CategoryDropdown = ({ categories, selectedIds, onCategoryChange }) => {
+const SubJmarketDropdown = ({
+  subJmarkets,
+  selectedIds,
+  onSubJmarketChange,
+}) => {
   const [toggleDropdown, setToggleDropdown] = useState(true)
 
   return (
     <div className="bg-white shadow-1 rounded-lg">
       <div
         onClick={() => setToggleDropdown(!toggleDropdown)}
-        className={`cursor-pointer flex items-center justify-between py-3 pl-6 pr-5.5 ${
-          toggleDropdown && 'shadow-filter'
-        }`}
+        className="cursor-pointer flex items-center justify-between py-3 pl-6 pr-5.5"
       >
-        <p className="text-dark">Category</p>
+        <p className="text-dark">Sub JMarket</p>
         <button
           className={`text-dark ease-out duration-200 ${
             toggleDropdown && 'rotate-180'
           }`}
         >
-          {/* ... SVG Arrow ... */}
+          {/* SVG Arrow */}
           <svg
             className="fill-current"
             width="24"
@@ -86,18 +88,17 @@ const CategoryDropdown = ({ categories, selectedIds, onCategoryChange }) => {
           </svg>
         </button>
       </div>
-
       <div
         className={`flex flex-col gap-3 py-6 pl-6 pr-5.5 ${
           toggleDropdown ? 'flex' : 'hidden'
         }`}
       >
-        {categories.map((category) => (
-          <CategoryItem
-            key={category.id}
-            category={category}
-            isSelected={selectedIds.includes(category.id)}
-            onChange={onCategoryChange}
+        {subJmarkets.map((subJmarket) => (
+          <SubJmarketItem
+            key={subJmarket.id}
+            subJmarket={subJmarket}
+            isSelected={selectedIds.includes(subJmarket.id)}
+            onChange={onSubJmarketChange}
           />
         ))}
       </div>
@@ -105,4 +106,4 @@ const CategoryDropdown = ({ categories, selectedIds, onCategoryChange }) => {
   )
 }
 
-export default CategoryDropdown
+export default SubJmarketDropdown

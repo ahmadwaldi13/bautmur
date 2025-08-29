@@ -56,13 +56,12 @@ const HeroFeature = () => {
               className="flex items-center gap-4 bg-red-dark p-4 rounded-lg shadow-md min-h-[80px]"
               key={key}
             >
-              <div className="flex-shrink-0">
+              <div className="w-10 h-10 relative">
                 <Image
                   src={item.img}
                   alt={item.description}
-                  width={40}
-                  height={41}
-                  className="[filter:brightness(0)_invert(1)]"
+                  fill
+                  className="object-contain [filter:brightness(0)_invert(1)]"
                 />
               </div>
 
