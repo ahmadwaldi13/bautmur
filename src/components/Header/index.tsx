@@ -15,6 +15,7 @@ import { useCartModalContext } from '@/app/context/CartSidebarModalContext'
 import Image from 'next/image'
 
 const TOKEN = process.env.NEXT_PUBLIC_API_TOKEN
+const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE
 
 const Header = () => {
   const router = useRouter()
@@ -72,7 +73,7 @@ const Header = () => {
   useEffect(() => {
     const fetchJmarketOptions = async () => {
       try {
-        const API_URL = 'http://api.bautmur.id/api/v1/website/jmarkets'
+        const API_URL = `${apiBaseUrl}/api/v1/website/jmarkets`
         const response = await axios.get(API_URL, {
           headers: { Authorization: `Bearer ${TOKEN}` },
         })

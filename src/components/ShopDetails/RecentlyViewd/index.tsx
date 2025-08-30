@@ -6,6 +6,7 @@ import ProductItem from '@/components/Common/ProductItem'
 import SkeletonGridItem from './SkeletonGridItem'
 
 const TOKEN = process.env.NEXT_PUBLIC_API_TOKEN
+const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE
 
 const RecentlyViewdItems = ({ primaryCategoryId, currentProductId }) => {
   const [relatedProducts, setRelatedProducts] = useState([])
@@ -20,7 +21,7 @@ const RecentlyViewdItems = ({ primaryCategoryId, currentProductId }) => {
 
       setLoading(true)
       try {
-        const relatedApiUrl = `http://api.bautmur.id/api/v1/website/barangs/jmarket/${primaryCategoryId}?limit=9`
+        const relatedApiUrl = `${apiBaseUrl}/api/v1/website/barangs/jmarket/${primaryCategoryId}?limit=9`
         const relatedResponse = await axios.get(relatedApiUrl, {
           headers: { Authorization: `Bearer ${TOKEN}` },
         })
@@ -32,7 +33,7 @@ const RecentlyViewdItems = ({ primaryCategoryId, currentProductId }) => {
         let finalProducts = related.slice(0, 8)
 
         if (finalProducts.length < 8) {
-          const fallbackApiUrl = `http://api.bautmur.id/api/v1/website/barangs?limit=20`
+          const fallbackApiUrl = `${apiBaseUrl}/api/v1/website/barangs?limit=20`
 
           const fallbackResponse = await axios.get(fallbackApiUrl, {
             headers: { Authorization: `Bearer ${TOKEN}` },

@@ -19,7 +19,9 @@ interface DisplayJMarketItem {
   deskripsi: string
 }
 
-const API_URL = 'http://api.bautmur.id/api/v1/website/jmarkets'
+const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE
+
+const API_URL = `${apiBaseUrl}/api/v1/website/jmarkets`
 const TOKEN = process.env.NEXT_PUBLIC_API_TOKEN
 
 const JMarket = () => {

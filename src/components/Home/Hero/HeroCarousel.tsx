@@ -132,8 +132,9 @@ interface Banner {
   sequence: number
 }
 
-const API_URL = 'http://api.bautmur.id/api/v1/website/banners'
-const IMAGE_BASE_URL = 'http://api.bautmur.id/storage'
+const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE
+const API_URL = `${apiBaseUrl}/api/v1/website/banners`
+const IMAGE_BASE_URL = `${apiBaseUrl}/storage`
 const TOKEN = process.env.NEXT_PUBLIC_API_TOKEN
 
 const AUTOPLAY_DELAY = 4000
