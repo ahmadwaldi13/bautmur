@@ -213,12 +213,13 @@ const QuickViewModal = () => {
 
               <div className="flex flex-wrap justify-between gap-5 mt-6 mb-7.5">
                 <div>
-                  <h4 className="font-semibold text-lg text-dark mb-3.5">
+                  {/* <h4 className="font-semibold text-lg text-dark mb-3.5">
                     Price
                   </h4>
+                 */}
 
                   <span className="flex items-center gap-2">
-                    <span className="font-semibold text-dark text-xl xl:text-heading-4">
+                    {/* <span className="font-semibold text-dark text-xl xl:text-heading-4">
                       Rp {product.harga?.toLocaleString('id-ID')}
                     </span>
                     {product.discountedPrice !== 0 && (
@@ -226,6 +227,7 @@ const QuickViewModal = () => {
                         {product.discountedPrice?.toLocaleString('id-ID')}
                       </span>
                     )}
+                    */}
                   </span>
                 </div>
               </div>

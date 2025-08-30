@@ -35,8 +35,6 @@ const ShopDetails = ({ product }) => {
             (item) => item.barang_id === product.id
           )
           if (promoItem) {
-            // Log hanya akan jalan SEKALI setiap kali promo baru ditemukan
-            console.log('DATA PROMO DITEMUKAN DAN DISIMPAN:', promoItem)
             setActivePromo({
               ...promoItem,
               settings: promoData.settings,
@@ -207,7 +205,7 @@ const ShopDetails = ({ product }) => {
                       <>
                         {/* Tampilan JIKA TIDAK ADA PROMO */}
                         <span className="text-dark font-bold">
-                          Rp {product.harga?.toLocaleString('id-ID')}
+                          {/* Rp {product.harga?.toLocaleString('id-ID')} */}
                         </span>
                       </>
                     )}
