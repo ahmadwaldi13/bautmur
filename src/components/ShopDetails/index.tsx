@@ -7,6 +7,7 @@ import { usePreviewSlider } from '@/app/context/PreviewSliderContext'
 import axios from 'axios'
 
 const TOKEN = process.env.NEXT_PUBLIC_API_TOKEN
+const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE
 
 const ShopDetails = ({ product }) => {
   const { openPreviewModal } = usePreviewSlider()
@@ -17,13 +18,12 @@ const ShopDetails = ({ product }) => {
   const [activePromo, setActivePromo] = useState(null)
   const [isPromoLoading, setIsPromoLoading] = useState(true)
 
-  // useEffect untuk memeriksa promo (logika ini tetap sama)
   useEffect(() => {
     const checkPromo = async () => {
       if (!product) return
       setIsPromoLoading(true)
       try {
-        const API_URL = `http://api.bautmur.id/api/v1/website/promos/banner`
+        const API_URL = `${apiBaseUrl}/api/v1/website/promos/banner`
         const response = await axios.get(API_URL, {
           headers: { Authorization: `Bearer ${TOKEN}` },
         })

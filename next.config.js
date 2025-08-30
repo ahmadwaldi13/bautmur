@@ -3,6 +3,11 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
+        protocol: 'https',
+        hostname: 'api.bautmur.id',
+        pathname: '/storage/**',
+      },
+      {
         protocol: 'http',
         hostname: 'api.bautmur.id',
         pathname: '/storage/**',

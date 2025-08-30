@@ -9,7 +9,9 @@ import bestSeller from '@/components/Shop/bestSeller'
 import axios from 'axios'
 import SingleItemSkeleton from './SingleItemSkeleton'
 
-const API_URL = 'http://api.bautmur.id/api/v1/website/barangs'
+const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE
+
+const API_URL = `${apiBaseUrl}/api/v1/website/barangs`
 const requestParams = {
   limit: 6,
 }
