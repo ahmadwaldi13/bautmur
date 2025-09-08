@@ -19,6 +19,9 @@ export async function generateMetadata({
     title: `${product.nama_barang} | Sinar Terang`,
     description:
       product.deskripsi || `Detail untuk produk ${product.nama_barang}`,
+    icons: {
+      icon: '/logo-page.png',
+    },
   }
 }
 
