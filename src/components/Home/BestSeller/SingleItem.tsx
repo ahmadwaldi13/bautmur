@@ -31,7 +31,7 @@ const SingleItem = ({ item }: { item: any }) => {
 
         <div className="flex justify-center items-center">
           <Image
-            src={item.image_url}
+            src={item.image_url || '/images/products2/BN 8.8 MM.jpg'}
             alt={item.nama_barang || 'Product image'}
             width={280}
             height={280}

@@ -43,7 +43,12 @@ const SingleGridItem = ({ item }: { item: any }) => {
   return (
     <div className="group">
       <div className="relative overflow-hidden flex items-center justify-center rounded-lg bg-white shadow-1 min-h-[270px] mb-4">
-        <Image src={item.image_url} alt="" width={250} height={250} />
+        <Image
+          src={item.image_url || '/images/products2/BN 8.8 MM.jpg'}
+          alt={item.nama_barang || 'Gambar Produk'}
+          width={250}
+          height={250}
+        />
 
         <div className="absolute left-0 bottom-0 translate-y-full w-full flex items-center justify-center gap-2.5 pb-5 ease-linear duration-200 group-hover:translate-y-0">
           <button

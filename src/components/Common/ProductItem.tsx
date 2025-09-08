@@ -28,7 +28,7 @@ const ProductItem = ({ item }: { item: any }) => {
     <div className="group ">
       <div className="relative overflow-hidden shadow-[0_0_15px_rgba(0,0,0,0.1)] flex items-center justify-center rounded-lg bg-[#F6F7FB] min-h-[270px] mb-4 p-3">
         <Image
-          src={item.image_url || '/images/placeholder.png'}
+          src={item.image_url || '/images/products2/BN 8.8 MM.jpg'}
           alt={item.nama_barang || 'Gambar produk default'}
           width={250}
           height={250}

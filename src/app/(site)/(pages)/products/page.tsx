@@ -2,8 +2,8 @@ import JMarket from '@/components/JMarket'
 
 import { Metadata } from 'next'
 export const metadata: Metadata = {
-  title: 'JMarket Page | NextCommerce Nextjs E-commerce template',
-  description: 'This is JMarket Page for NextCommerce Template',
+  title: 'JMarket Page',
+  description: 'This is JMarket Page for Sinar Terang',
   icons: {
     icon: '/logo-page.png', // Path relatif dari folder public
   },

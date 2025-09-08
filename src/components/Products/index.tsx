@@ -8,6 +8,8 @@ import SingleListItem from '../Shop/SingleListItem'
 import CategoryDropdown from './CategoryDropdown'
 import SubJmarketDropdown from './SubJmarketDropdown'
 import SkeletonItem from '../Shop/SkeletonItem'
+import AllProductDropdown from './AllProductDropdown'
+
 import { useSearchParams } from 'next/navigation'
 
 const TOKEN = process.env.NEXT_PUBLIC_API_TOKEN
@@ -39,6 +41,8 @@ const ShopWithSidebar = ({ categoryId }) => {
 
   const [subJmarketOptions, setSubJmarketOptions] = useState([])
   const [selectedSubJmarkets, setSelectedSubJmarkets] = useState<number[]>([])
+
+  const [isAllProductsView, setIsAllProductsView] = useState(false)
 
   useEffect(() => {
     const fetchFilterOptions = async () => {
@@ -101,8 +105,12 @@ const ShopWithSidebar = ({ categoryId }) => {
           const filterObject = { fields: filterFields, relation: 'and' }
           const encodedFilter = encodeURIComponent(JSON.stringify(filterObject))
           API_URL = `${apiBaseUrl}/api/v1/website/barangs?filter=${encodedFilter}&page=${currentPage}&limit=${ITEMS_PER_PAGE}`
-        } else {
+        } else if (isAllProductsView) {
+          API_URL = `${apiBaseUrl}/api/v1/website/barangs?page=${currentPage}&limit=${ITEMS_PER_PAGE}`
+        } else if (categoryId) {
           API_URL = `${apiBaseUrl}/api/v1/website/barangs/jmarket/${categoryId}?page=${currentPage}&limit=${ITEMS_PER_PAGE}`
+        } else {
+          API_URL = `${apiBaseUrl}/api/v1/website/barangs?page=${currentPage}&limit=${ITEMS_PER_PAGE}`
         }
 
         const response = await axios.get(API_URL, {
@@ -129,7 +137,32 @@ const ShopWithSidebar = ({ categoryId }) => {
     selectedKategoris,
     selectedSubJmarkets,
     searchQuery,
+    isAllProductsView,
   ])
+
+  useEffect(() => {
+    if (categoryId) {
+      setSelectedJmarkets([parseInt(categoryId, 10)])
+      setIsAllProductsView(false)
+      setSelectedKategoris([])
+      setSelectedSubJmarkets([])
+    } else {
+      setIsAllProductsView(true)
+    }
+  }, [categoryId])
+
+  useEffect(() => {
+    const noFiltersSelected =
+      selectedJmarkets.length === 0 &&
+      selectedKategoris.length === 0 &&
+      selectedSubJmarkets.length === 0
+
+    if (noFiltersSelected) {
+      setIsAllProductsView(true)
+    } else {
+      setIsAllProductsView(false)
+    }
+  }, [selectedJmarkets, selectedKategoris, selectedSubJmarkets, categoryId])
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber)
@@ -138,6 +171,7 @@ const ShopWithSidebar = ({ categoryId }) => {
 
   // Handler untuk filter JMarket
   const handleJmarketChange = (jmarketId: number) => {
+    setIsAllProductsView(false)
     setSelectedJmarkets((prev) =>
       prev.includes(jmarketId)
         ? prev.filter((id) => id !== jmarketId)
@@ -145,9 +179,8 @@ const ShopWithSidebar = ({ categoryId }) => {
     )
     setCurrentPage(1)
   }
-
-  // BARU: Handler untuk filter Kategori
   const handleKategoriChange = (kategoriId: number) => {
+    setIsAllProductsView(false)
     setSelectedKategoris((prev) =>
       prev.includes(kategoriId)
         ? prev.filter((id) => id !== kategoriId)
@@ -155,8 +188,8 @@ const ShopWithSidebar = ({ categoryId }) => {
     )
     setCurrentPage(1)
   }
-
   const handleSubJmarketChange = (subJmarketId: number) => {
+    setIsAllProductsView(false)
     setSelectedSubJmarkets((prev) =>
       prev.includes(subJmarketId)
         ? prev.filter((id) => id !== subJmarketId)
@@ -185,11 +218,19 @@ const ShopWithSidebar = ({ categoryId }) => {
   const startItem = (currentPage - 1) * ITEMS_PER_PAGE + 1
   const endItem = Math.min(currentPage * ITEMS_PER_PAGE, totalItems)
 
-  const handleClearFilters = () => {
+  const handleViewAll = () => {
+    setIsAllProductsView(true)
     setSelectedJmarkets([])
     setSelectedKategoris([])
     setSelectedSubJmarkets([])
+    setCurrentPage(1)
+  }
 
+  const handleClearFilters = () => {
+    setIsAllProductsView(false)
+    setSelectedJmarkets([])
+    setSelectedKategoris([])
+    setSelectedSubJmarkets([])
     setCurrentPage(1)
   }
 
@@ -256,6 +297,10 @@ const ShopWithSidebar = ({ categoryId }) => {
                       </button>
                     </div>
                   </div>
+                  <AllProductDropdown
+                    onViewAll={handleViewAll}
+                    isActive={isAllProductsView}
+                  />
                   <JmarketDropdown
                     jmarkets={jmarketOptions}
                     selectedIds={selectedJmarkets}
