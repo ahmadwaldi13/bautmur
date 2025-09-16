@@ -150,7 +150,7 @@ const Header = () => {
           <div className="xl:w-auto flex-col sm:flex-row w-full flex sm:justify-between sm:items-center gap-5 sm:gap-10">
             <Link className="flex-shrink-0" href="/">
               <Image
-                src="/images/logo/logo-2.png"
+                src="/images/logo/sinar-terang-logo.png"
                 alt="Logo"
                 width={219}
                 height={36}
@@ -210,20 +210,6 @@ const Header = () => {
 
           {/* <!-- header top right --> */}
           <div className="flex w-full lg:w-auto items-center gap-7.5">
-            <div className="hidden xl:flex items-center gap-3.5">
-              <div>
-                <span className="block text-2xs text-dark-4 uppercase">
-                  24/7 SUPPORT
-                </span>
-                <p className="font-medium text-custom-sm text-dark">
-                  (+62) 0898-7882-778
-                </p>
-              </div>
-            </div>
-
-            {/* <!-- divider --> */}
-            <span className="hidden xl:block w-px h-7.5 bg-gray-4"></span>
-
             <div className="flex w-full lg:w-auto justify-end items-center gap-5">
               <div className="flex items-center gap-5">
                 <nav className="flex items-center gap-2.5">

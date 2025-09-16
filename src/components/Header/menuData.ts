@@ -40,6 +40,12 @@ export const menuData: Menu[] = [
     newTab: false,
     path: '/purchasing',
   },
+  {
+    id: 6,
+    title: 'Career',
+    newTab: false,
+    path: '/career',
+  },
   // {
   //   id: 6,
   //   title: 'pages',
@@ -157,13 +163,13 @@ export const menuLocation: MenuLocation[] = [
     submenu: [
       {
         id: 1,
-        title: 'Bandung',
+        title: 'Karapitan',
         newTab: false,
         path: '/bautmur/bandung',
       },
       {
         id: 2,
-        title: 'Jakarta',
+        title: 'Toha',
         newTab: false,
         path: '/bautmur/jakarta',
       },

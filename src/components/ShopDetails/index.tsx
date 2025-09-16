@@ -18,6 +18,8 @@ const ShopDetails = ({ product }) => {
   const [activePromo, setActivePromo] = useState(null)
   const [isPromoLoading, setIsPromoLoading] = useState(true)
 
+  console.info(product)
+
   useEffect(() => {
     const checkPromo = async () => {
       if (!product) return
@@ -63,8 +65,7 @@ const ShopDetails = ({ product }) => {
       prod &&
       prod.nama_barang &&
       prod.nama_barang.trim() !== '' &&
-      prod.id !== 0 &&
-      prod.image_url
+      prod.id !== 0
     )
   }
 
@@ -143,7 +144,9 @@ const ShopDetails = ({ product }) => {
                       </button>
 
                       <Image
-                        src={product.image_url || '/images/placeholder.png'}
+                        src={
+                          product.image_url || '/images/products2/BN 8.8 MM.jpg'
+                        }
                         alt={product.nama_barang || 'image'}
                         width={400}
                         height={400}
@@ -157,12 +160,14 @@ const ShopDetails = ({ product }) => {
                     <button
                       onClick={() => setPreviewImg(product.id)}
                       key={product.id}
-                      className={`flex items-center justify-center w-15 sm:w-25 h-15 sm:h-25 overflow-hidden rounded-lg bg-gray-2 shadow-1 ease-out duration-200 border-2 hover:border-blue border-blue`}
+                      className={`flex items-center justify-center w-15 sm:w-25 h-15 sm:h-25 overflow-hidden rounded-lg bg-gray-2 shadow-1 ease-out duration-200 border-2 hover:border-red-dark border-red`}
                     >
                       <Image
                         width={50}
                         height={50}
-                        src={product.image_url || '/images/placeholder.png'}
+                        src={
+                          product.image_url || '/images/products2/BN 8.8 MM.jpg'
+                        }
                         alt="thumbnail"
                         className="w-full h-auto object-contain"
                       />
@@ -172,7 +177,7 @@ const ShopDetails = ({ product }) => {
 
                 {/* <!-- product content --> */}
                 <div className="max-w-[539px] w-full">
-                  <div className="flex items-center justify-between mb-3">
+                  <div className="flex items-center justify-between mb-0">
                     <h2 className="font-semibold text-xl sm:text-2xl xl:text-custom-3 text-dark">
                       {product.nama_barang}
                     </h2>
@@ -183,6 +188,24 @@ const ShopDetails = ({ product }) => {
                       </div>
                     )}
                   </div>
+
+                  {product.referensi && (
+                    <span className="flex items-center gap-1.5 text-sm md:text-base text-gray-600 mb-2">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-4 w-4 text-gray-500"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                      <span>{product.referensi}</span>
+                    </span>
+                  )}
 
                   <h3 className="font-medium text-custom-1 mb-4.5">
                     {!isPromoLoading && activePromo ? (
