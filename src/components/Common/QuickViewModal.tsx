@@ -155,7 +155,9 @@ const QuickViewModal = () => {
                     </button>
 
                     <Image
-                      src={product.image_url}
+                      src={
+                        product.image_url || '/images/products2/BN 8.8 MM.jpg'
+                      }
                       alt="products-details"
                       width={400}
                       height={400}
