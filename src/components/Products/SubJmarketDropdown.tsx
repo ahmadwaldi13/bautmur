@@ -1,6 +1,6 @@
 'use client'
 import { useState } from 'react'
-
+import { useTranslation } from 'react-i18next'
 const SubJmarketItem = ({ subJmarket, isSelected, onChange }) => {
   const handleSelect = () => {
     onChange(subJmarket.id)
@@ -57,6 +57,7 @@ const SubJmarketDropdown = ({
   onSubJmarketChange,
 }) => {
   const [toggleDropdown, setToggleDropdown] = useState(true)
+  const { t } = useTranslation()
 
   return (
     <div className="bg-white shadow-1 rounded-lg">
@@ -64,7 +65,7 @@ const SubJmarketDropdown = ({
         onClick={() => setToggleDropdown(!toggleDropdown)}
         className="cursor-pointer flex items-center justify-between py-3 pl-6 pr-5.5"
       >
-        <p className="text-dark">Sub JMarket</p>
+        <p className="text-dark">{t('shopPage.subJmarket')}</p>
         <button
           className={`text-dark ease-out duration-200 ${
             toggleDropdown && 'rotate-180'

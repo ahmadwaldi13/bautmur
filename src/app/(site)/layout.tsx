@@ -8,6 +8,9 @@ import Header from '../../components/Header'
 import Footer from '../../components/Footer'
 import { Maven_Pro, Lato } from 'next/font/google'
 
+import { useParams } from 'next/navigation'
+import i18n from '../../../i18n'
+
 import { ModalProvider } from '../context/QuickViewModalContext'
 import { CartModalProvider } from '../context/CartSidebarModalContext'
 import { ReduxProvider } from '@/redux/provider'
@@ -42,9 +45,21 @@ export default function RootLayout({
 }) {
   const [loading, setLoading] = useState<boolean>(true)
 
+  // const params = useParams()
+  // console.info(params)
+  // const locale = typeof params.locale === 'string' ? params.locale : 'id'
+
+  // console.info(locale)
+
   useEffect(() => {
     setTimeout(() => setLoading(false), 1000)
   }, [])
+
+  // useEffect(() => {
+  //   if (locale) {
+  //     i18n.changeLanguage(locale)
+  //   }
+  // }, [locale])
 
   return (
     <html

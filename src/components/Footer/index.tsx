@@ -1,8 +1,11 @@
+'use client'
 import React from 'react'
 import Image from 'next/image'
+import { useTranslation } from 'react-i18next'
 
 const Footer = () => {
   const year = new Date().getFullYear()
+  const { t } = useTranslation()
 
   return (
     <footer className="overflow-hidden">
@@ -32,7 +35,7 @@ const Footer = () => {
                     />
                   </svg>
                 </span>
-                Jl. Karapitan No.16 B, Bandung 40261
+                {t('footer.karapitan_address')}
               </li>
 
               <li>
@@ -133,7 +136,7 @@ const Footer = () => {
                     />
                   </svg>
                 </span>
-                Jl. M. Toha No. 266, Bandung 40243
+                {t('footer.toha_address')}
               </li>
 
               <li>
@@ -213,14 +216,14 @@ const Footer = () => {
 
           <div className="w-full sm:w-auto">
             <h2 className="mb-7.5 text-custom-1 font-maven text-dark">
-              Opening Hours
+              {t('footer.opening_hours')}
             </h2>
 
             <ul className="flex flex-col gap-3">
-              <li>Monday - Friday</li>
+              <li>{t('footer.monday_friday')}</li>
               <li>08.00 - 17.00</li>
               <li></li>
-              <li>Saturday</li>
+              <li>{t('footer.saturday')}</li>
               <li>08.00 - 15.00</li>
             </ul>
           </div>

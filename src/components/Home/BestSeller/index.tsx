@@ -8,6 +8,7 @@ import Link from 'next/link'
 import bestSeller from '@/components/Shop/bestSeller'
 import axios from 'axios'
 import SingleItemSkeleton from './SingleItemSkeleton'
+import { useTranslation } from 'react-i18next'
 
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE
 
@@ -21,6 +22,7 @@ const BestSeller = () => {
   const [products, setProducts] = useState<any>([])
   const [loading, setLoading] = useState<boolean>(true)
   const [error, setError] = useState<string | null>(null)
+  const { t } = useTranslation()
 
   useEffect(() => {
     if (!TOKEN) {
@@ -84,10 +86,10 @@ const BestSeller = () => {
                 width={17}
                 height={17}
               />
-              This Month
+              {t('bestSellers.subtitle')}
             </span>
             <h2 className="font-maven text-xl xl:text-heading-5 text-dark">
-              Best Sellers
+              {t('bestSellers.title')}
             </h2>
           </div>
         </div>
@@ -110,7 +112,7 @@ const BestSeller = () => {
             href="/products"
             className="inline-flex font-medium text-custom-sm py-3 px-7 sm:px-12.5 rounded-md border-gray-3 border bg-gray-1 text-dark ease-out duration-200 hover:bg-dark hover:text-white hover:border-transparent"
           >
-            View All
+            {t('bestSellers.viewAll')}
           </Link>
         </div>
       </div>
