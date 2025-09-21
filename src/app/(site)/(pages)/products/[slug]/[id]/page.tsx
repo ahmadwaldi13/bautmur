@@ -1,4 +1,3 @@
-import Breadcrumb from '@/components/Common/Breadcrumb'
 import ShopWithSidebar from '@/components/Products'
 import { Metadata } from 'next'
 
@@ -17,19 +16,16 @@ const CategoryProductListPage = async ({
 }) => {
   const { slug, id } = await params
 
-  const breadcrumbPages = [
-    { title: 'Home', path: '/' },
-    { title: 'Products', path: '/products' },
-    { title: slug.replace(/-/g, ' '), path: `/products/${slug}/${id}` },
-  ]
-
   return (
     <>
-      <Breadcrumb
-        title={slug.replace(/-/g, ' ').replace(/\b\w/g, (l) => l.toUpperCase())}
-        pages={breadcrumbPages}
+      {/* Hapus pemanggilan <Breadcrumb> dari sini.
+        Cukup panggil <ShopWithSidebar> dan berikan props yang diperlukan.
+      */}
+      <ShopWithSidebar
+        categoryId={id}
+        breadcrumbSlug={slug}
+        breadcrumbId={id}
       />
-      <ShopWithSidebar categoryId={id} />
     </>
   )
 }

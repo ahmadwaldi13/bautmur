@@ -5,11 +5,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import axios from 'axios'
 import Breadcrumb from '../Common/Breadcrumb'
-
-const breadcrumbData = [
-  { title: 'Home', path: '/' },
-  { title: 'products', path: '/products' },
-]
+import { useTranslation } from 'react-i18next'
 
 interface DisplayJMarketItem {
   id: number
@@ -25,6 +21,13 @@ const API_URL = `${apiBaseUrl}/api/v1/website/jmarkets`
 const TOKEN = process.env.NEXT_PUBLIC_API_TOKEN
 
 const JMarket = () => {
+  const { t } = useTranslation()
+
+  const breadcrumbData = [
+    { title: t('breadcrumb.home'), path: '/' },
+    { title: t('breadcrumb.products'), path: '/products' },
+  ]
+
   const [jmarkets, setJmarkets] = useState<DisplayJMarketItem[]>([])
   const [loading, setLoading] = useState<boolean>(true)
   const [error, setError] = useState<string | null>(null)
@@ -104,7 +107,7 @@ const JMarket = () => {
     if (error) {
       return (
         <div className="text-center text-red-500">
-          <p>Terjadi Kesalahan:</p>
+          <p>{t('jmarketPage.errorTitle')}</p>
           <p>{error}</p>
         </div>
       )
@@ -114,7 +117,7 @@ const JMarket = () => {
     if (jmarkets.length === 0) {
       return (
         <div className="text-center text-gray-600">
-          <p>Belum ada produk yang tersedia saat ini.</p>
+          <p>{t('jmarketPage.emptyMessage')}</p>
         </div>
       )
     }
@@ -139,7 +142,7 @@ const JMarket = () => {
 
             <div className="p-3 text-center">
               <h6 className="text-xl font-bold text-dark transition-colors duration-300 group-hover:text-[#FB4141]">
-                {jmarket.nama}
+                {t(`jmarkets.${jmarket.nama}`)}
               </h6>
             </div>
           </Link>
@@ -150,7 +153,7 @@ const JMarket = () => {
 
   return (
     <>
-      <Breadcrumb title={'products'} pages={breadcrumbData} />
+      <Breadcrumb title={t('breadcrumb.products')} pages={breadcrumbData} />
       <section className="overflow-hidden bg-gray-2 py-20">
         <div className="mx-auto w-full max-w-[1170px] px-4 sm:px-8 xl:px-0">
           {renderContent()}

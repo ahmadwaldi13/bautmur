@@ -1,5 +1,8 @@
+'use client'
+
 import React from 'react'
 import Breadcrumb from '../Common/Breadcrumb'
+import { useTranslation } from 'react-i18next'
 
 const breadcrumbData = [
   { title: 'Home', path: '/' },
@@ -7,11 +10,17 @@ const breadcrumbData = [
 ]
 
 const Contact = () => {
+  const { t } = useTranslation() // 3. Panggil hook
+
+  const breadcrumbData = [
+    { title: t('breadcrumb.home'), path: '/' },
+    { title: t('breadcrumb.contact'), path: '/contact' },
+  ]
   // Data lokasi
   const locations = [
     {
       id: 'karapitan',
-      title: 'Toko Karapitan',
+      title: t('contactPage.karapitan_title'),
       address:
         'Jl. Karapitan No.16B, Paledang, Kec. Lengkong, Kota Bandung, Jawa Barat 40261',
       whatsapp: '+62 898 7882 778 & +6289607019252',
@@ -22,7 +31,7 @@ const Contact = () => {
     },
     {
       id: 'toha',
-      title: 'Toko M. Toha',
+      title: t('contactPage.toha_title'),
       address:
         'Jl. Moch. Toha No.266, Karasak, Kec. Astanaanyar, Kota Bandung, Jawa Barat 40243',
       whatsapp: '+62 838 2082 8672 & +62 8555 9283 526',
@@ -35,17 +44,14 @@ const Contact = () => {
 
   return (
     <>
-      <Breadcrumb title={'Contact'} pages={breadcrumbData} />
+      <Breadcrumb title={t('breadcrumb.contact')} pages={breadcrumbData} />
 
       <section className="overflow-hidden py-20 bg-gray-2">
         <div className="max-w-[1200px] w-full mx-auto px-4 sm:px-8 xl:px-0">
           {/* Header Section */}
           <div className="text-center mb-12">
             <p className="text-gray-600 max-w-2xl mx-auto">
-              Sinar Terang (ST) hadir sebagai penyedia pasokan produk fastener
-              untuk kontruksi, otomotif, furniture dan manufaktur, serta
-              perlangkapan dan peralatan untuk building materials di Jawa Barat
-              dan Indonesia dengan mapan, lengkap, cepat dan harga fleksibel.
+              {t('contactPage.description')}
             </p>
           </div>
 
@@ -205,7 +211,7 @@ const Contact = () => {
                       >
                         <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
                       </svg>
-                      Lihat Maps
+                      {t('contactPage.view_maps')}
                     </a>
 
                     <a
@@ -224,7 +230,7 @@ const Contact = () => {
                       >
                         <path d="M12 2L13.09 8.26L22 9L13.09 9.74L12 16L10.91 9.74L2 9L10.91 8.26L12 2Z" />
                       </svg>
-                      Arah
+                      {t('contactPage.directions')}
                     </a>
                   </div>
                 </div>

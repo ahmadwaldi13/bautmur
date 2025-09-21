@@ -1,6 +1,7 @@
 'use client'
-
+import { useTranslation } from 'react-i18next'
 const AllProductDropdown = ({ onViewAll, isActive }) => {
+  const { t } = useTranslation()
   return (
     <div className="bg-white shadow-1 rounded-lg">
       <div className="flex flex-col gap-3 py-6 pl-6 pr-5.5">
@@ -33,7 +34,7 @@ const AllProductDropdown = ({ onViewAll, isActive }) => {
                 />
               </svg>
             </div>
-            <span>All Products</span>
+            <span>{t('shopPage.allProducts')}</span>
           </div>
         </button>
       </div>

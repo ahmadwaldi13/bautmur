@@ -1,10 +1,13 @@
-// File: SingleItem.js (Versi BARU untuk Grid)
+'use client'
+
 import { JMarket, DisplayJMarketItem } from '@/types/jmarket'
 import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useTranslation } from 'react-i18next'
 
 const SingleItem = ({ item }: { item: DisplayJMarketItem }) => {
+  const { t } = useTranslation()
   return (
     item.is_active && (
       <Link
@@ -27,7 +30,7 @@ const SingleItem = ({ item }: { item: DisplayJMarketItem }) => {
         {/* Bagian judul dipindahkan ke bawah dengan padding dan style kartu */}
         <div className="p-5 text-center bg-white">
           <h3 className="font-semibold text-lg text-dark transition-colors duration-300 group-hover:text-[#FB4141]">
-            {item.nama}
+            {t(`jmarkets.${item.nama}`)}
           </h3>
         </div>
       </Link>

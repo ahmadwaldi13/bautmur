@@ -1,3 +1,4 @@
+'use client'
 import React from 'react'
 import Breadcrumb from '../Common/Breadcrumb'
 import {
@@ -9,15 +10,19 @@ import Image from 'next/image'
 import Partnership from './Pathership'
 import Link from 'next/link'
 import { FaWhatsapp } from 'react-icons/fa'
+import { useTranslation } from 'react-i18next'
 
-const breadcrumbData = [
-  { title: 'Home', path: '/' },
-  { title: 'purchasing', path: '/purchasing' },
-]
 const Purchasing = () => {
+  const { t } = useTranslation() // 3. Panggil hook
+
+  const breadcrumbData = [
+    { title: t('breadcrumb.home'), path: '/' },
+    { title: t('breadcrumb.purchasing'), path: '/purchasing' },
+  ]
+
   return (
     <>
-      <Breadcrumb title={'Purchasing'} pages={breadcrumbData} />
+      <Breadcrumb title={t('breadcrumb.purchasing')} pages={breadcrumbData} />
 
       <section className="overflow-hidden py-20 bg-gray-2">
         <div className="max-w-[1200px] w-full mx-auto px-4 sm:px-8 xl:px-0">
@@ -58,13 +63,12 @@ const Purchasing = () => {
                     />
                   </svg>
                 </div>
-                <h3 className="text-xl font-bold text-dark">Tentang Kami</h3>
+                <h3 className="text-xl font-bold text-dark">
+                  {t('purchasingPage.about_title')}
+                </h3>
               </div>
               <p className="text-dark-4 leading-relaxed">
-                Sinar Terang adalah distributor terpercaya yang mengkhususkan
-                diri dalam penyediaan fastener dan hardware konstruksi. Kami
-                melayani kebutuhan grosir untuk baut, mur, skrup, dan komponen
-                bangunan berkualitas tinggi dengan standar internasional.
+                {t('purchasingPage.about_desc')}
               </p>
             </div>
 
@@ -86,18 +90,17 @@ const Purchasing = () => {
                     />
                   </svg>
                 </div>
-                <h3 className="text-xl font-bold text-dark">Pengalaman</h3>
+                <h3 className="text-xl font-bold text-dark">
+                  {t('purchasingPage.experience_title')}
+                </h3>
               </div>
               <div className="mb-4">
                 <span className="inline-flex items-center bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-semibold">
-                  30+ Tahun Berpengalaman
+                  {t('purchasingPage.experience_badge')}
                 </span>
               </div>
               <p className="text-dark-4 leading-relaxed">
-                Dengan dedikasi selama tiga dekade, kami telah membangun
-                reputasi sebagai distributor hardware terdepan. Komitmen kami
-                terhadap kualitas dan kepuasan mitra bisnis menjadi fondasi
-                kesuksesan jangka panjang.
+                {t('purchasingPage.experience_desc')}
               </p>
             </div>
 
@@ -119,12 +122,12 @@ const Purchasing = () => {
                     />
                   </svg>
                 </div>
-                <h3 className="text-xl font-bold text-dark">Kemitraan</h3>
+                <h3 className="text-xl font-bold text-dark">
+                  {t('purchasingPage.partnership_title')}
+                </h3>
               </div>
               <p className="text-dark-4 leading-relaxed mb-6">
-                Sebagai supplier profesional, kami telah dipercaya oleh berbagai
-                perusahaan konstruksi dan industri terkemuka. Jaringan kemitraan
-                yang kuat menjadi bukti kredibilitas dan kualitas layanan kami.
+                {t('purchasingPage.partnership_desc')}
               </p>
             </div>
           </div>
@@ -132,11 +135,10 @@ const Purchasing = () => {
           <div className="bg-white rounded-3xl p-8 lg:p-12 shadow-xl">
             <div className="text-center mb-12">
               <h3 className="text-2xl lg:text-3xl font-bold text-dark mb-4">
-                Mitra Terpercaya Kami
+                {t('purchasingPage.partners_title')}
               </h3>
               <p className="text-lg text-dark-4 max-w-2xl mx-auto">
-                Dipercaya oleh perusahaan-perusahaan terkemuka dalam industri
-                konstruksi dan manufaktur
+                {t('purchasingPage.partners_desc')}
               </p>
             </div>
 
@@ -166,17 +168,16 @@ const Purchasing = () => {
           <div className="bg-white rounded-3xl p-8 lg:p-12 shadow-xl mt-12">
             <div className="text-center mb-12">
               <h3 className="text-2xl lg:text-3xl font-bold text-dark mb-4">
-                Hubungi Kami
+                {t('purchasingPage.contact_us_title')}
               </h3>
               <p className="text-lg text-dark-4 max-w-2xl mx-auto">
-                Berminat Menjadi Investor atau Mitra? Hubungi kami melalui media
-                sosial atau pindai kode QR di bawah untuk terhubung langsung:
+                {t('purchasingPage.contact_us_desc')}
               </p>
               <Link
                 href="https://u.wechat.com/kDB5pq01KmnEdTA5jlH9Y6g?s=2/"
                 className="text-primary hover:underline mt-2 block text-lg"
               >
-                Pindai QR Code untuk menghubungi kami
+                {t('purchasingPage.contact_us_scan')}
               </Link>
             </div>
 
@@ -197,11 +198,10 @@ const Purchasing = () => {
           <div className="mt-16 text-center">
             <div className="bg-blue rounded-3xl p-8 lg:p-12 text-white">
               <h3 className="text-2xl lg:text-3xl font-bold mb-4">
-                Hubungi Purchasing
+                {t('purchasingPage.contact_purchasing_title')}
               </h3>
               <p className="text-lg opacity-90 mb-8 max-w-2xl mx-auto">
-                Bergabunglah dengan jaringan mitra terpercaya kami dan wujudkan
-                pertumbuhan bisnis yang berkelanjutan
+                {t('purchasingPage.contact_purchasing_desc')}
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
