@@ -1,52 +1,55 @@
+'use client'
+
 import React from 'react'
 import Image from 'next/image'
+import { useTranslation } from 'react-i18next'
 
 const featureData = [
   {
     img: '/images/icons/product.svg',
     title: 'STOK',
-    description: 'Stok Lengkap',
+    descriptionKey: 'features.stock',
   },
   {
     img: '/images/icons/service.svg',
     title: 'LAYANAN',
-    description:
-      'Layanan Pelanggan Responsif Melalui Telepon, Email, dan WhatsAap',
+    descriptionKey: 'features.service',
   },
   {
     img: '/images/icons/pengalaman.svg',
     title: 'PENGALAMAN',
-    description:
-      'Berpengalaman Puluhan Tahun dalam memasok proyek, supplier industri, dll',
+    descriptionKey: 'features.experience',
   },
   {
     img: '/images/icons/pengiriman.svg',
     title: 'PENGIRIMAN',
-    description: 'Pengiriman Gratis* (Area Bandung)',
+    descriptionKey: 'features.shipping',
   },
   {
     img: '/images/icons/kecepatan.svg',
     title: 'KECEPATAN',
-    description: 'Kecepatan Dalam Pelayanan',
+    descriptionKey: 'features.speed',
   },
   {
     img: '/images/icons/pengemasan.svg',
     title: 'PENGEMASAN',
-    description: 'Pengemasan Rapi untuk Luar Pulau',
+    descriptionKey: 'features.packaging',
   },
   {
     img: '/images/icons/kualitas.svg',
     title: 'KUALITAS',
-    description: 'Kualitas Produk Terjamin ',
+    descriptionKey: 'features.quality',
   },
   {
     img: '/images/icons/team.svg',
     title: 'TIM',
-    description: 'Memiliki Tim Profesional',
+    descriptionKey: 'features.team',
   },
 ]
 
 const HeroFeature = () => {
+  const { t } = useTranslation() // 3. Panggil hook untuk mendapatkan fungsi `t`
+
   return (
     <section className="overflow-hidden">
       <div className="max-w-[1170px] w-full mx-auto px-4 sm:px-8 xl:px-0">
@@ -59,7 +62,7 @@ const HeroFeature = () => {
               <div className="w-10 h-10 relative">
                 <Image
                   src={item.img}
-                  alt={item.description}
+                  alt={t(item.descriptionKey)} // 4. Terjemahkan juga alt text
                   fill
                   className="object-contain [filter:brightness(0)_invert(1)]"
                 />
@@ -67,7 +70,7 @@ const HeroFeature = () => {
 
               <div className="flex-1 min-w-0">
                 <p className="text-xs text-white leading-relaxed">
-                  {item.description}
+                  {t(item.descriptionKey)} {/* 5. Ganti di sini */}
                 </p>
               </div>
             </div>

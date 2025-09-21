@@ -231,6 +231,7 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import SingleItem from './SingleItem'
 import SingleItemSkeleton from './SingleItemSkeleton'
+import { useTranslation } from 'react-i18next'
 
 interface DisplayJMarketItem {
   id: number
@@ -255,6 +256,7 @@ const JMarket = () => {
   const [jmarkets, setJmarkets] = useState<DisplayJMarketItem[]>([])
   const [loading, setLoading] = useState<boolean>(true)
   const [error, setError] = useState<string | null>(null)
+  const { t } = useTranslation()
 
   useEffect(() => {
     if (!TOKEN) {
@@ -357,10 +359,10 @@ const JMarket = () => {
                     </clipPath>
                   </defs>
                 </svg>
-                J Market
+                {t('jmarketSection.title')}
               </span>
               <h2 className="font-maven text-xl xl:text-heading-5 text-dark">
-                Browse by J Market
+                {t('jmarketSection.subtitle')}
               </h2>
             </div>
           </div>

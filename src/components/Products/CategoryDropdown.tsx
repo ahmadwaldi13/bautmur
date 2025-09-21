@@ -1,6 +1,6 @@
 'use client'
 import { useState } from 'react'
-
+import { useTranslation } from 'react-i18next'
 const CategoryItem = ({ category, isSelected, onChange }) => {
   const handleSelect = () => {
     onChange(category.id)
@@ -53,6 +53,7 @@ const CategoryItem = ({ category, isSelected, onChange }) => {
 // DIUBAH: Komponen utama sekarang menerima props baru
 const CategoryDropdown = ({ categories, selectedIds, onCategoryChange }) => {
   const [toggleDropdown, setToggleDropdown] = useState(true)
+  const { t } = useTranslation()
 
   return (
     <div className="bg-white shadow-1 rounded-lg">
@@ -62,7 +63,7 @@ const CategoryDropdown = ({ categories, selectedIds, onCategoryChange }) => {
           toggleDropdown && 'shadow-filter'
         }`}
       >
-        <p className="text-dark">Category</p>
+        <p className="text-dark">{t('shopPage.category')}</p>
         <button
           className={`text-dark ease-out duration-200 ${
             toggleDropdown && 'rotate-180'

@@ -1,5 +1,7 @@
 'use client'
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
+
 const JmarketItem = ({ jmarket, isSelected, onChange }) => {
   const handleSelect = () => {
     onChange(jmarket.id)
@@ -51,6 +53,7 @@ const JmarketItem = ({ jmarket, isSelected, onChange }) => {
 
 const JmarketDropdown = ({ jmarkets, selectedIds, onJmarketChange }) => {
   const [toggleDropdown, setToggleDropdown] = useState(true)
+  const { t } = useTranslation()
 
   return (
     <div className="bg-white shadow-1 rounded-lg">
@@ -60,7 +63,7 @@ const JmarketDropdown = ({ jmarkets, selectedIds, onJmarketChange }) => {
           toggleDropdown && 'shadow-filter'
         }`}
       >
-        <p className="text-dark">JMarket</p>
+        <p className="text-dark">{t('shopPage.jmarket')}</p>
         <button
           className={`text-dark ease-out duration-200 ${
             toggleDropdown && 'rotate-180'

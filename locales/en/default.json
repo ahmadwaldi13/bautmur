@@ -1,0 +1,139 @@
+{
+    "language": "Language",
+    "menu": {
+        "popular": "Popular",
+        "products": "Products",
+        "contact_us": "Contact Us",
+        "gallery": "Gallery",
+        "purchasing": "Purchasing",
+        "career": "Career",
+        "location": "Location",
+        "karapitan": "Karapitan",
+        "toha": "Toha"
+    },
+    "jmarkets": {
+        "Bengkel": "Workshop",
+        "Kontraktor": "Contractor",
+        "Manufaktur": "Manufacturing",
+        "Toko": "Retail Store"
+    },
+    "search": {
+        "placeholder": "I am shopping for..."
+    },
+    "features": {
+        "stock": "Complete Stock",
+        "service": "Responsive Customer Service via Phone, Email, and WhatsApp",
+        "experience": "Decades of experience in supplying projects, industrial suppliers, etc.",
+        "shipping": "Free Shipping* (Bandung Area)",
+        "speed": "Speed in Service",
+        "packaging": "Neat Packaging for Outer Islands",
+        "quality": "Guaranteed Product Quality",
+        "team": "Has a Professional Team"
+    },
+    "jmarketSection": {
+        "title": "JMarket Category",
+        "subtitle": "Browse by JMarket Category"
+    },
+    "newArrivals": {
+        "subtitle": "This Week’s",
+        "title": "New Arrivals",
+        "viewAll": "View All"
+    },
+    "bestSellers": {
+        "subtitle": "This Month",
+        "title": "Best Sellers",
+        "viewAll": "View All"
+    },
+    "testimonialsSection": {
+        "subtitle": "Testimonials",
+        "title": "User Feedbacks"
+    },
+    "testimonials": {
+        "reviewLeonard": "A place to find all kinds of bolts, concrete nails, dynabolts, of various sizes, very complete and affordable. Fast, friendly, and professional service.",
+        "reviewRay": "The items are quite complete. Can be purchased retail & wholesale. All the shopkeepers are alert & fast 👍 …",
+        "reviewAbraham": "A place to find all kinds of bolts and screws that is complete and cheap.. Prices for wholesale and retail depend on qty.. Many other bolt shops in Bandung source from this place.."
+    },
+    "sponsors": {
+        "subtitle": "Partners",
+        "title": "Our Trusted Partners"
+    },
+    "footer": {
+        "karapitan_address": "Jl. Karapitan No.16 B, Bandung 40261",
+        "toha_address": "Jl. M. Toha No. 266, Bandung 40243",
+        "opening_hours": "Opening Hours",
+        "monday_friday": "Monday - Friday",
+        "saturday": "Saturday",
+        "copyright": "&copy; {year}. All rights reserved by ZEX."
+    },
+    "breadcrumb": {
+        "home": "Home",
+        "products": "Products",
+        "contact": "Contact",
+        "gallery": "Gallery",
+        "purchasing": "Purchasing",
+        "career": "Career"
+    },
+    "jmarketPage": {
+        "errorTitle": "An Error Occurred:",
+        "emptyMessage": "No categories are available at this time."
+    },
+    "contactPage": {
+        "description": "Sinar Terang (ST) is present as a supplier of fastener products for construction, automotive, furniture and manufacturing, as well as equipment and tools for building materials in West Java and Indonesia with an established, complete, fast service and flexible prices.",
+        "karapitan_title": "Karapitan Store",
+        "toha_title": "M. Toha Store",
+        "phone": "Phone",
+        "email": "Email",
+        "address": "Address",
+        "view_maps": "View Maps",
+        "directions": "Directions"
+    },
+    "purchasingPage": {
+        "about_title": "About Us",
+        "about_desc": "Sinar Terang is a trusted distributor specializing in the supply of construction fasteners and hardware. We serve wholesale needs for high-quality bolts, nuts, screws, and building components with international standards.",
+        "experience_title": "Experience",
+        "experience_badge": "30+ Years of Experience",
+        "experience_desc": "With three decades of dedication, we have built a reputation as a leading hardware distributor. Our commitment to quality and partner satisfaction is the foundation of long-term success.",
+        "partnership_title": "Partnership",
+        "partnership_desc": "As a professional supplier, we have been trusted by various leading construction and industrial companies. A strong partnership network is proof of our credibility and service quality.",
+        "partners_title": "Our Trusted Partners",
+        "partners_desc": "Trusted by leading companies in the construction and manufacturing industries",
+        "contact_us_title": "Contact Us",
+        "contact_us_desc": "Interested in becoming an Investor or Partner? Contact us via social media or scan the QR code below to connect directly:",
+        "contact_us_scan": "Scan QR Code to contact us",
+        "contact_purchasing_title": "Contact Purchasing",
+        "contact_purchasing_desc": "Join our network of trusted partners and achieve sustainable business growth"
+    },
+    "careerPage": {
+        "hero_title": "Join Our Team",
+        "hero_desc": "We are always looking for talented and passionate individuals to grow with us. Let's build a better future together.",
+        "available_positions": "Available Positions",
+        "location": "Bandung",
+        "work_type": "Onsite",
+        "learn_more": "Learn More",
+        "no_jobs_title": "There are currently no job vacancies available.",
+        "no_jobs_desc": "Keep an eye on this page for updates."
+    },
+    "careerDetail": {
+        "applyNow": "Apply Now",
+        "location": "Bandung",
+        "workType": "Onsite",
+        "responsibilities": "Responsibilities",
+        "requirements": "Requirements"
+    },
+    "shopPage": {
+        "filters": "Filters:",
+        "cleanAll": "Clean All",
+        "showing": "Showing",
+        "of": "of",
+        "products": "Products",
+        "errorTitle": "An Error Occurred",
+        "productNotFound": "Product not found.",
+        "latestProducts": "Latest Products",
+        "bestSelling": "Best Selling",
+        "oldProducts": "Old Products",
+        "category": "Category",
+        "allProducts": "All Products",
+        "jmarket": "JMarket Category",
+        "subJmarket": "Sub JMarket"
+    }
+}

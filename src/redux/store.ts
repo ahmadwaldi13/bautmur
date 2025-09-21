@@ -1,11 +1,12 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore } from '@reduxjs/toolkit'
 
-import quickViewReducer from "./features/quickView-slice";
-import cartReducer from "./features/cart-slice";
-import wishlistReducer from "./features/wishlist-slice";
-import productDetailsReducer from "./features/product-details";
+import quickViewReducer from './features/quickView-slice'
+import cartReducer from './features/cart-slice'
+import wishlistReducer from './features/wishlist-slice'
+import productDetailsReducer from './features/product-details'
+import locationReducer from './features/location-slice'
 
-import { TypedUseSelectorHook, useSelector } from "react-redux";
+import { TypedUseSelectorHook, useSelector } from 'react-redux'
 
 export const store = configureStore({
   reducer: {
@@ -13,10 +14,11 @@ export const store = configureStore({
     cartReducer,
     wishlistReducer,
     productDetailsReducer,
+    locationReducer,
   },
-});
+})
 
-export type RootState = ReturnType<typeof store.getState>;
-export type AppDispatch = typeof store.dispatch;
+export type RootState = ReturnType<typeof store.getState>
+export type AppDispatch = typeof store.dispatch
 
-export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector

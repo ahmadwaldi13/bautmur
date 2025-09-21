@@ -3,6 +3,7 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import { useCallback, useRef } from 'react'
 import testimonialsData from './testimonialsData'
 import Image from 'next/image'
+import { useTranslation } from 'react-i18next'
 
 // Import Swiper styles
 import 'swiper/css/navigation'
@@ -11,6 +12,7 @@ import SingleItem from './SingleItem'
 
 const Testimonials = () => {
   const sliderRef = useRef(null)
+  const { t } = useTranslation()
 
   const handlePrev = useCallback(() => {
     if (!sliderRef.current) return
@@ -37,10 +39,10 @@ const Testimonials = () => {
                     width={17}
                     height={17}
                   />
-                  Testimonials
+                  {t('testimonialsSection.subtitle')}
                 </span>
                 <h2 className="font-maven text-xl xl:text-heading-5 text-dark">
-                  User Feedbacks
+                  {t('testimonialsSection.title')}
                 </h2>
               </div>
 

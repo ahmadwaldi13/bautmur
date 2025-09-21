@@ -1,5 +1,5 @@
 export type Testimonial = {
-  review: string
+  reviewKey: string
   authorName: string
   authorImg: string
 }

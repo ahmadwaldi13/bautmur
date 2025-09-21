@@ -9,6 +9,8 @@ import CategoryDropdown from './CategoryDropdown'
 import SubJmarketDropdown from './SubJmarketDropdown'
 import SkeletonItem from '../Shop/SkeletonItem'
 import AllProductDropdown from './AllProductDropdown'
+import Breadcrumb from '@/components/Common/Breadcrumb'
+import { useTranslation } from 'react-i18next'
 
 import { useSearchParams } from 'next/navigation'
 
@@ -16,10 +18,27 @@ const TOKEN = process.env.NEXT_PUBLIC_API_TOKEN
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE
 const ITEMS_PER_PAGE = 9
 
-const ShopWithSidebar = ({ categoryId }) => {
+const ShopWithSidebar = ({ categoryId, breadcrumbSlug, breadcrumbId }) => {
   const searchParams = useSearchParams()
-
+  const { t } = useTranslation()
   const searchQuery = searchParams.get('q')
+
+  const originalTitle = breadcrumbSlug
+    ?.replace(/-/g, ' ')
+    .replace(/\b\w/g, (l) => l.toUpperCase())
+
+  const breadcrumbPages = [
+    { title: t('breadcrumb.home'), path: '/' },
+    { title: t('breadcrumb.products'), path: '/products' },
+  ]
+
+  // Tambahkan item dinamis jika ada slug
+  if (originalTitle && breadcrumbId) {
+    breadcrumbPages.push({
+      title: t(`jmarkets.${originalTitle}`),
+      path: `/products/${breadcrumbSlug}/${breadcrumbId}`,
+    })
+  }
 
   const [productStyle, setProductStyle] = useState('grid')
   const [productSidebar, setProductSidebar] = useState(false)
@@ -234,14 +253,22 @@ const ShopWithSidebar = ({ categoryId }) => {
     setCurrentPage(1)
   }
 
-  const options = [
-    { label: 'Latest Products', value: '0' },
-    { label: 'Best Selling', value: '1' },
-    { label: 'Old Products', value: '2' },
-  ]
+  // const options = [
+  //   { label: t('shopPage.latestProducts'), value: '0' },
+  //   { label: t('shopPage.bestSelling'), value: '1' },
+  //   { label: t('shopPage.oldProducts'), value: '2' },
+  // ]
 
   return (
     <>
+      <Breadcrumb
+        title={
+          originalTitle
+            ? t(`jmarkets.${originalTitle}`)
+            : t('breadcrumb.products')
+        }
+        pages={breadcrumbPages}
+      />
       <section className="overflow-hidden relative pb-20 pt-5 lg:pt-20 xl:pt-28 bg-[#f3f4f6]">
         <div className="max-w-[1170px] w-full mx-auto px-4 sm:px-8 xl:px-0">
           <div className="flex gap-7.5">
@@ -287,13 +314,13 @@ const ShopWithSidebar = ({ categoryId }) => {
                 <div className="flex flex-col gap-6">
                   <div className="bg-white shadow-1 rounded-lg py-4 px-5">
                     <div className="flex items-center justify-between">
-                      <p>Filters:</p>
+                      <p>{t('shopPage.filters')}</p>
                       <button
                         type="button"
                         className="text-red"
                         onClick={handleClearFilters}
                       >
-                        Clean All
+                        {t('shopPage.cleanAll')}
                       </button>
                     </div>
                   </div>
@@ -325,15 +352,16 @@ const ShopWithSidebar = ({ categoryId }) => {
               <div className="rounded-lg bg-white shadow-1 pl-3 pr-2.5 py-2.5 mb-6">
                 <div className="flex items-center justify-between">
                   <div className="flex flex-wrap items-center gap-4">
-                    <CustomSelect options={options} />
+                    {/* <CustomSelect options={options} /> */}
                     <p>
                       {/* UPDATE: Teks jumlah produk dinamis */}
-                      Showing{' '}
+                      {t('shopPage.showing')}{' '}
                       <span className="text-dark font-medium">
                         {startItem}-{endItem}
                       </span>{' '}
-                      of <span className="font-medium">{products.length}</span>{' '}
-                      Products
+                      {t('shopPage.of')}{' '}
+                      <span className="font-medium">{products.length}</span>{' '}
+                      {t('shopPage.products')}
                     </p>
                   </div>
                 </div>
@@ -353,13 +381,13 @@ const ShopWithSidebar = ({ categoryId }) => {
                 ) : error ? (
                   <div className="col-span-full text-center text-red-500 bg-white p-10 rounded-lg shadow-md">
                     <h3 className="font-bold text-xl mb-2">
-                      Terjadi Kesalahan
+                      {t('shopPage.errorTitle')}
                     </h3>
                     <p>{error}</p>
                   </div>
                 ) : products.length === 0 ? (
                   <div className="col-span-full text-center text-gray-600 bg-white p-10 rounded-lg shadow-md">
-                    <p>Produk tidak ditemukan.</p>
+                    <p>{t('shopPage.productNotFound')}</p>
                   </div>
                 ) : (
                   products.map((item) =>

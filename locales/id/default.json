@@ -1,0 +1,139 @@
+{
+    "language": "Bahasa",
+    "menu": {
+        "popular": "Populer",
+        "products": "Produk",
+        "contact_us": "Hubungi Kami",
+        "gallery": "Galeri",
+        "purchasing": "Pembelian",
+        "career": "Karir",
+        "location": "Lokasi",
+        "karapitan": "Karapitan",
+        "toha": "Toha"
+    },
+    "jmarkets": {
+        "Bengkel": "Bengkel",
+        "Kontraktor": "Kontraktor",
+        "Manufaktur": "Manufaktur",
+        "Toko": "Toko"
+    },
+    "search": {
+        "placeholder": "Saya sedang mencari..."
+    },
+    "features": {
+        "stock": "Stok Lengkap",
+        "service": "Layanan Pelanggan Responsif Melalui Telepon, Email, dan WhatsApp",
+        "experience": "Berpengalaman Puluhan Tahun dalam memasok proyek, supplier industri, dll",
+        "shipping": "Pengiriman Gratis* (Area Bandung)",
+        "speed": "Kecepatan Dalam Pelayanan",
+        "packaging": "Pengemasan Rapi untuk Luar Pulau",
+        "quality": "Kualitas Produk Terjamin",
+        "team": "Memiliki Tim Profesional"
+    },
+    "jmarketSection": {
+        "title": "JMarket Category",
+        "subtitle": "Browse by JMarket Category"
+    },
+    "newArrivals": {
+        "subtitle": "Minggu Ini",
+        "title": "Produk Terbaru",
+        "viewAll": "Lihat Semua"
+    },
+    "bestSellers": {
+        "subtitle": "Bulan Ini",
+        "title": "Produk Terlaris",
+        "viewAll": "Lihat Semua"
+    },
+    "testimonialsSection": {
+        "subtitle": "Testimoni",
+        "title": "Ulasan Pengguna"
+    },
+    "testimonials": {
+        "reviewLeonard": "Tempat untuk mencari segala macam baut, paku beton, dynabolt, berbagai macam ukuran, terlengkap dan murah. Pelayanan cepat, ramah, dan profesional",
+        "reviewRay": "Barang terbilang lengkap. Bisa eceran & grosir. Penjaga toko semua sigap & cepat 👍 …",
+        "reviewAbraham": "Tempat mencari segala macam jenis baut dan sekrup yg lengkap dan murah.. Harga untuk grosir dan ecer tergantung qty.. Toko baut lain di Bandung banyak yg ambil dari tempat ini.."
+    },
+    "sponsors": {
+        "subtitle": "Mitra",
+        "title": "Mitra Terpercaya Kami"
+    },
+    "footer": {
+        "karapitan_address": "Jl. Karapitan No.16 B, Bandung 40261",
+        "toha_address": "Jl. M. Toha No. 266, Bandung 40243",
+        "opening_hours": "Jam Buka",
+        "monday_friday": "Senin - Jumat",
+        "saturday": "Sabtu",
+        "copyright": "&copy; {year}. Hak Cipta Dilindungi oleh ZEX."
+    },
+    "breadcrumb": {
+        "home": "Beranda",
+        "products": "Produk",
+        "contact": "Kontak",
+        "gallery": "Galeri",
+        "purchasing": "Purchasing",
+        "career": "Karir"
+    },
+    "jmarketPage": {
+        "errorTitle": "Terjadi Kesalahan:",
+        "emptyMessage": "Belum ada kategori yang tersedia saat ini."
+    },
+    "contactPage": {
+        "description": "Sinar Terang (ST) hadir sebagai penyedia pasokan produk fastener untuk konstruksi, otomotif, furnitur dan manufaktur, serta perlengkapan dan peralatan untuk bahan bangunan di Jawa Barat dan Indonesia dengan mapan, lengkap, cepat dan harga fleksibel.",
+        "karapitan_title": "Toko Karapitan",
+        "toha_title": "Toko M. Toha",
+        "phone": "Telepon",
+        "email": "Email",
+        "address": "Alamat",
+        "view_maps": "Lihat Peta",
+        "directions": "Arah"
+    },
+    "purchasingPage": {
+        "about_title": "Tentang Kami",
+        "about_desc": "Sinar Terang adalah distributor terpercaya yang mengkhususkan diri dalam penyediaan fastener dan hardware konstruksi. Kami melayani kebutuhan grosir untuk baut, mur, skrup, dan komponen bangunan berkualitas tinggi dengan standar internasional.",
+        "experience_title": "Pengalaman",
+        "experience_badge": "30+ Tahun Berpengalaman",
+        "experience_desc": "Dengan dedikasi selama tiga dekade, kami telah membangun reputasi sebagai distributor hardware terdepan. Komitmen kami terhadap kualitas dan kepuasan mitra bisnis menjadi fondasi kesuksesan jangka panjang.",
+        "partnership_title": "Kemitraan",
+        "partnership_desc": "Sebagai supplier profesional, kami telah dipercaya oleh berbagai perusahaan konstruksi dan industri terkemuka. Jaringan kemitraan yang kuat menjadi bukti kredibilitas dan kualitas layanan kami.",
+        "partners_title": "Mitra Terpercaya Kami",
+        "partners_desc": "Dipercaya oleh perusahaan-perusahaan terkemuka dalam industri konstruksi dan manufaktur",
+        "contact_us_title": "Hubungi Kami",
+        "contact_us_desc": "Berminat Menjadi Investor atau Mitra? Hubungi kami melalui media sosial atau pindai kode QR di bawah untuk terhubung langsung:",
+        "contact_us_scan": "Pindai QR Code untuk menghubungi kami",
+        "contact_purchasing_title": "Hubungi Purchasing",
+        "contact_purchasing_desc": "Bergabunglah dengan jaringan mitra terpercaya kami dan wujudkan pertumbuhan bisnis yang berkelanjutan"
+    },
+    "careerPage": {
+        "hero_title": "Bergabunglah dengan Tim Kami",
+        "hero_desc": "Kami selalu mencari individu berbakat dan bersemangat untuk tumbuh bersama. Mari bangun masa depan yang lebih baik bersama-sama.",
+        "available_positions": "Posisi yang Tersedia",
+        "location": "Bandung",
+        "work_type": "Onsite",
+        "learn_more": "Pelajari Selengkapnya",
+        "no_jobs_title": "Saat ini tidak ada lowongan pekerjaan yang tersedia.",
+        "no_jobs_desc": "Terus pantau halaman ini untuk pembaruan."
+    },
+    "careerDetail": {
+        "applyNow": "Lamar Sekarang",
+        "location": "Bandung",
+        "workType": "Onsite",
+        "responsibilities": "Tanggung Jawab",
+        "requirements": "Persyaratan"
+    },
+    "shopPage": {
+        "filters": "Filter:",
+        "cleanAll": "Bersihkan Semua",
+        "showing": "Menampilkan",
+        "of": "dari",
+        "products": "Produk",
+        "errorTitle": "Terjadi Kesalahan",
+        "productNotFound": "Produk tidak ditemukan.",
+        "latestProducts": "Produk Terbaru",
+        "bestSelling": "Terlaris",
+        "oldProducts": "Produk Lama",
+        "category": "Kategori",
+        "allProducts": "Semua Produk",
+        "jmarket": "Kategori JMarket",
+        "subJmarket": "Sub JMarket"
+    }
+}

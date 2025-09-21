@@ -3,13 +3,15 @@
 import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-
+import { useTranslation } from 'react-i18next'
 // Import Swiper dan CSS-nya
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Autoplay } from 'swiper/modules'
 import 'swiper/css'
 
 const Sponsors = () => {
+  const { t } = useTranslation()
+
   const sponsors = [
     {
       id: 1,
@@ -128,10 +130,10 @@ const Sponsors = () => {
                     width={17}
                     height={17}
                   />
-                  Partners
+                  {t('sponsors.subtitle')}
                 </span>
                 <h2 className="font-maven text-xl xl:text-heading-5 text-dark">
-                  Our Trusted Partners
+                  {t('sponsors.title')}
                 </h2>
               </div>
             </div>

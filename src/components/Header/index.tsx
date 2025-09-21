@@ -5,14 +5,17 @@ import Link from 'next/link'
 import axios from 'axios'
 import { useRouter, usePathname, useSearchParams } from 'next/navigation'
 import CustomSelect from './CustomSelect'
-import { menuData, menuLanguage, menuLocation } from './menuData'
+import { menuData } from './menuData'
 import Dropdown from './Dropdown'
-import DropdownForHead from './DropdownForHead'
 import { useAppSelector } from '@/redux/store'
 import { useSelector } from 'react-redux'
 import { selectTotalPrice } from '@/redux/features/cart-slice'
 import { useCartModalContext } from '@/app/context/CartSidebarModalContext'
 import Image from 'next/image'
+import { useTranslation } from 'react-i18next'
+// import i18n from '../../../i18n'
+import LanguageSwitcher from './LanguageSwtcher'
+import LocationSwitcher from './LocationSwtcher'
 
 const TOKEN = process.env.NEXT_PUBLIC_API_TOKEN
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE
@@ -21,6 +24,8 @@ const Header = () => {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
+
+  const { t } = useTranslation()
 
   const [searchQuery, setSearchQuery] = useState('')
   const [navigationOpen, setNavigationOpen] = useState(false)
@@ -82,7 +87,7 @@ const Header = () => {
           label: item.nama,
           value: item.id.toString(),
         }))
-
+        console.info(transformedOptions)
         setJmarketOptions(transformedOptions)
 
         if (transformedOptions.length > 0) {
@@ -104,7 +109,6 @@ const Header = () => {
     }
 
     let destinationUrl = ''
-
     if (selectedJmarket) {
       const selectedOption = jmarketOptions.find(
         (opt) => opt.value === selectedJmarket
@@ -156,7 +160,6 @@ const Header = () => {
                 height={36}
               />
             </Link>
-
             <div className="max-w-[475px] w-full">
               <form onSubmit={handleSearchSubmit}>
                 <div className="flex items-center">
@@ -174,7 +177,7 @@ const Header = () => {
                       type="search"
                       name="search"
                       id="search"
-                      placeholder="I am shopping for..."
+                      placeholder={t('search.placeholder')}
                       autoComplete="off"
                       className="custom-search w-full rounded-r-[5px] bg-gray-1 !border-l-0 border border-gray-3 py-2.5 pl-4 pr-10 outline-none ease-in duration-200"
                     />
@@ -212,7 +215,7 @@ const Header = () => {
           <div className="flex w-full lg:w-auto items-center gap-7.5">
             <div className="flex w-full lg:w-auto justify-end items-center gap-5">
               <div className="flex items-center gap-5">
-                <nav className="flex items-center gap-2.5">
+                {/* <nav className="flex items-center gap-2.5">
                   <svg
                     className="w-4 h-4"
                     fill="none"
@@ -258,45 +261,19 @@ const Header = () => {
                       )
                     )}
                   </ul>
+                </nav> */}
+
+                <nav>
+                  <ul className="flex xl:items-center flex-col xl:flex-row gap-5 xl:gap-6">
+                    <LocationSwitcher stickyMenu={stickyMenu} />
+                  </ul>
                 </nav>
 
                 <span className="hidden xl:block w-px h-7.5 bg-gray-4"></span>
 
-                <nav className="flex items-center gap-2.5">
-                  <svg
-                    className="w-4 h-4"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <circle cx="12" cy="12" r="10" />
-                    <line x1="2" y1="12" x2="22" y2="12" />
-                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
-                  </svg>
+                <nav>
                   <ul className="flex xl:items-center flex-col xl:flex-row gap-5 xl:gap-6">
-                    {menuLanguage.map((menuItem, i) =>
-                      menuItem.submenu ? (
-                        <DropdownForHead
-                          key={i}
-                          menuItem={menuItem}
-                          stickyMenu={stickyMenu}
-                        />
-                      ) : (
-                        <li
-                          key={i}
-                          className="group relative before:w-0 before:h-[3px]  before:absolute before:left-0 before:top-0 before:rounded-b-[3px] before:ease-out before:duration-200 hover:before:w-full "
-                        >
-                          <Link
-                            href={menuItem.path}
-                            className={`hover:text-blue text-custom-sm font-medium text-dark flex ${
-                              stickyMenu ? 'xl:py-4' : 'xl:py-6'
-                            }`}
-                          >
-                            {menuItem.title}
-                          </Link>
-                        </li>
-                      )
-                    )}
+                    <LanguageSwitcher stickyMenu={stickyMenu} />
                   </ul>
                 </nav>
               </div>
@@ -375,7 +352,7 @@ const Header = () => {
                             stickyMenu ? 'xl:py-4' : 'xl:py-6'
                           }`}
                         >
-                          {menuItem.title}
+                          {t(menuItem.titleKey)}
                         </Link>
                       </li>
                     )
