@@ -87,7 +87,6 @@ const Header = () => {
           label: item.nama,
           value: item.id.toString(),
         }))
-        console.info(transformedOptions)
         setJmarketOptions(transformedOptions)
 
         if (transformedOptions.length > 0) {

@@ -25,7 +25,7 @@ i18n
   .init({
     resources,
     fallbackLng: 'id', // Bahasa yang digunakan jika deteksi gagal
-    debug: true, // Set ke `false` saat production
+    debug: false, // Set ke `false` saat production
     interpolation: {
       escapeValue: false, // React sudah aman dari XSS
     },
