@@ -4,8 +4,6 @@ import { useState, useEffect } from 'react'
 import SingleItem from './SingleItem'
 import Image from 'next/image'
 import Link from 'next/link'
-// import shopData from "@/components/Shop/shopData";
-import bestSeller from '@/components/Shop/bestSeller'
 import axios from 'axios'
 import SingleItemSkeleton from './SingleItemSkeleton'
 import { useTranslation } from 'react-i18next'

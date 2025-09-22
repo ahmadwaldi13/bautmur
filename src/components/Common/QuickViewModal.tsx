@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux'
 import Image from 'next/image'
 import { usePreviewSlider } from '@/app/context/PreviewSliderContext'
 import { resetQuickView } from '@/redux/features/quickView-slice'
-import { updateproductDetails } from '@/redux/features/product-details'
+import { setProductDetails } from '@/redux/features/product-details'
 
 const QuickViewModal = () => {
   const { isModalOpen, closeModal } = useModalContext()
@@ -24,9 +24,14 @@ const QuickViewModal = () => {
 
   // preview modal
   const handlePreviewSlider = () => {
-    dispatch(updateproductDetails(product))
-
-    openPreviewModal()
+    // Tambahkan pengecekan untuk memastikan objek 'product' tidak kosong (sudah ada dari database)
+    if (product) {
+      dispatch(setProductDetails(product))
+      openPreviewModal()
+    } else {
+      // Baris ini opsional, berguna untuk debugging jika data tidak ditemukan
+      console.error('Gagal membuka pratinjau: Data produk tidak tersedia.')
+    }
   }
 
   // add to cart
@@ -174,10 +179,26 @@ const QuickViewModal = () => {
                 </span>
               )} */}
 
-              <h3 className="font-semibold text-xl xl:text-heading-5 text-dark mb-4">
+              <h3 className="font-semibold text-xl xl:text-heading-5 text-dark mb-0.5">
                 {product.nama_barang}
               </h3>
-
+              {product.referensi && (
+                <span className="flex items-center gap-1.5 text-sm md:text-base text-gray-600 mb-4">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-4 w-4 text-gray-500"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                  <span>{product.referensi}</span>
+                </span>
+              )}
               <div className="flex flex-wrap items-center gap-5 mb-6">
                 <div className="flex items-center gap-2">
                   <svg
@@ -208,10 +229,7 @@ const QuickViewModal = () => {
                 </div>
               </div>
 
-              <p>
-                {product.deskripsi ??
-                  'Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi provident exercitationem similique neque autem. Debitis amet iusto obcaecati tenetur autem!'}
-              </p>
+              <p>{product.deskripsi ?? ''}</p>
 
               <div className="flex flex-wrap justify-between gap-5 mt-6 mb-7.5">
                 <div>

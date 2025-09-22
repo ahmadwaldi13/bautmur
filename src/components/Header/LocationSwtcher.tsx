@@ -7,8 +7,8 @@ import { changeLocation } from '@/redux/features/location-slice' // <-- Impor ac
 
 // Data lokasi kita (gunakan titleKey untuk terjemahan dan value untuk state)
 const locations = [
-  { nameKey: 'menu.karapitan', value: 'Karapitan' },
-  { nameKey: 'menu.toha', value: 'Toha' },
+  { nameKey: 'karapitan', value: 'Karapitan' },
+  { nameKey: 'toha', value: 'Toha' },
 ]
 
 const LocationSwitcher = ({ stickyMenu }: { stickyMenu: boolean }) => {
@@ -78,7 +78,7 @@ const LocationSwitcher = ({ stickyMenu }: { stickyMenu: boolean }) => {
               onClick={() => handleLocationChange(loc.value)}
               className="flex text-custom-sm hover:text-[#FB4141] hover:bg-gray-1 py-[7px] px-4.5 transition-colors cursor-pointer"
             >
-              {t(loc.nameKey)}
+              {loc.nameKey}
             </a>
           </li>
         ))}

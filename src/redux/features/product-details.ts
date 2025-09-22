@@ -1,36 +1,32 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { Product } from "@/types/product";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { Product } from '@/types/product' // Pastikan tipe Product Anda sudah benar
 
-type InitialState = {
-  value: Product;
-};
+// 1. Tipe untuk state slice, value bisa berupa Product atau null
+type ProductDetailState = {
+  value: Product | null
+}
 
-const initialState = {
-  value: {
-    title: "",
-    reviews: 0,
-    price: 0,
-    discountedPrice: 0,
-    img: "",
-    images: [],
-    id: 0,
-    imgs: { thumbnails: [], previews: [] },
-  },
-} as InitialState;
+// 2. Gunakan null untuk menandakan belum ada produk yang dipilih
+const initialState: ProductDetailState = {
+  value: null,
+}
 
-export const productDetails = createSlice({
-  name: "productDetails",
+export const productDetailSlice = createSlice({
+  name: 'productDetail', // Nama slice bisa dibuat lebih singkat
   initialState,
   reducers: {
-    updateproductDetails: (_, action) => {
-      return {
-        value: {
-          ...action.payload,
-        },
-      };
+    // 3. Nama action lebih jelas dan menggunakan sintaks Immer yang lebih umum
+    setProductDetails: (state, action: PayloadAction<Product>) => {
+      state.value = action.payload
+    },
+    // Tambahkan reducer untuk membersihkan state jika perlu
+    clearProductDetails: (state) => {
+      state.value = null
     },
   },
-});
+})
 
-export const { updateproductDetails } = productDetails.actions;
-export default productDetails.reducer;
+// 4. Ekspor action yang sudah diganti namanya
+export const { setProductDetails, clearProductDetails } =
+  productDetailSlice.actions
+export default productDetailSlice.reducer

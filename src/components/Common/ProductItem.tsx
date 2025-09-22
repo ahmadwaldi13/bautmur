@@ -3,7 +3,7 @@ import React from 'react'
 import Image from 'next/image'
 import { useModalContext } from '@/app/context/QuickViewModalContext'
 import { updateQuickView } from '@/redux/features/quickView-slice'
-import { updateproductDetails } from '@/redux/features/product-details'
+import { setProductDetails } from '@/redux/features/product-details'
 import { useDispatch } from 'react-redux'
 import { AppDispatch } from '@/redux/store'
 import Link from 'next/link'
@@ -19,7 +19,7 @@ const ProductItem = ({ item }: { item: any }) => {
   }
 
   const handleProductDetails = () => {
-    dispatch(updateproductDetails({ ...item }))
+    dispatch(setProductDetails({ ...item }))
   }
 
   const slug = item.nama_barang.toLowerCase().replace(/\s+/g, '-')

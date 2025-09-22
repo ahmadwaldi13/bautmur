@@ -3,8 +3,11 @@ import React, { use, useEffect, useState } from 'react'
 import Breadcrumb from '../Common/Breadcrumb'
 import Image from 'next/image'
 import RecentlyViewdItems from './RecentlyViewd'
+import { useDispatch } from 'react-redux'
+import { setProductDetails } from '@/redux/features/product-details'
 import { usePreviewSlider } from '@/app/context/PreviewSliderContext'
 import axios from 'axios'
+import { useTranslation } from 'react-i18next'
 
 const TOKEN = process.env.NEXT_PUBLIC_API_TOKEN
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE
@@ -17,8 +20,9 @@ const ShopDetails = ({ product }) => {
 
   const [activePromo, setActivePromo] = useState(null)
   const [isPromoLoading, setIsPromoLoading] = useState(true)
+  const { t } = useTranslation()
 
-  console.info(product)
+  const dispatch = useDispatch()
 
   useEffect(() => {
     const checkPromo = async () => {
@@ -56,7 +60,7 @@ const ShopDetails = ({ product }) => {
   const tabs = [
     {
       id: 'tabOne',
-      title: 'Additional Information',
+      title: t('shopDetailsPage.additionalInfo'),
     },
   ]
 
@@ -70,15 +74,16 @@ const ShopDetails = ({ product }) => {
   }
 
   const handlePreviewSlider = () => {
+    dispatch(setProductDetails(product))
     openPreviewModal()
   }
   if (!isValidProduct(product)) {
     return (
       <>
         <div className="text-center py-20">
-          <p>Please add product</p>
+          <p>{t('shopDetailsPage.noProductTitle')}</p>
           <p className="text-sm text-gray-500 mt-2">
-            No valid product data found
+            {t('shopDetailsPage.noProductDesc')}
           </p>
         </div>
       </>
@@ -86,8 +91,8 @@ const ShopDetails = ({ product }) => {
   }
 
   const breadcrumbPages = [
-    { title: 'Home', path: '/' },
-    { title: 'Products', path: '/products' },
+    { title: t('breadcrumb.home'), path: '/' },
+    { title: t('breadcrumb.products'), path: '/products' },
   ]
 
   if (product.j_markets && product.j_markets.length > 0) {
@@ -110,7 +115,10 @@ const ShopDetails = ({ product }) => {
 
   return (
     <>
-      <Breadcrumb title={'product detail'} pages={breadcrumbPages} />
+      <Breadcrumb
+        title={t('shopDetailsPage.productDetail')}
+        pages={breadcrumbPages}
+      />
       {product.title === '' ? (
         'Please add product'
       ) : (
@@ -184,7 +192,8 @@ const ShopDetails = ({ product }) => {
 
                     {!isPromoLoading && activePromo && (
                       <div className="inline-flex font-medium text-custom-sm text-white bg-blue rounded py-0.5 px-2.5">
-                        {parseInt(activePromo.persentase_diskon)}% OFF
+                        {parseInt(activePromo.persentase_diskon)}
+                        {t('shopDetailsPage.promoDiscount')}
                       </div>
                     )}
                   </div>
@@ -255,7 +264,7 @@ const ShopDetails = ({ product }) => {
                         />
                       </svg>
                       <span className="text-gray-700">
-                        Free delivery information available
+                        {t('shopDetailsPage.freeDelivery')}
                       </span>
                     </div>
                     <div className="flex items-center gap-3">
@@ -278,7 +287,7 @@ const ShopDetails = ({ product }) => {
                         />
                       </svg>
                       <span className="text-gray-700">
-                        Detailed product specifications
+                        {t('shopDetailsPage.productSpecs')}
                       </span>
                     </div>
                     <div className="flex items-center gap-3">
@@ -301,14 +310,14 @@ const ShopDetails = ({ product }) => {
                         />
                       </svg>
                       <span className="text-gray-700">
-                        Product information and care guide
+                        {t('shopDetailsPage.careGuide')}
                       </span>
                     </div>
                     {product.diskripsi ?? (
                       <div className="mt-6">
                         <div className="bg-gray-100/70 rounded-lg">
                           <h6 className="font-semibold text-lg text-dark mb-2 mt-3">
-                            Description
+                            {t('shopDetailsPage.description')}
                           </h6>
                           <div className="prose prose-sm sm:prose-base max-w-none text-gray-700 leading-relaxed">
                             <p>{product.deskripsi}</p>
@@ -351,7 +360,9 @@ const ShopDetails = ({ product }) => {
                   {/* */}
                   <div className="rounded-md even:bg-gray-1 flex py-4 px-4 sm:px-5">
                     <div className="max-w-[450px] min-w-[140px] w-full">
-                      <p className="text-sm sm:text-base text-dark">Bahan</p>
+                      <p className="text-sm sm:text-base text-dark">
+                        {t('shopDetailsPage.material')}
+                      </p>
                     </div>
                     <div className="w-full">
                       <p className="text-sm sm:text-base text-dark">
@@ -363,7 +374,9 @@ const ShopDetails = ({ product }) => {
                   {/* */}
                   <div className="rounded-md even:bg-gray-1 flex py-4 px-4 sm:px-5">
                     <div className="max-w-[450px] min-w-[140px] w-full">
-                      <p className="text-sm sm:text-base text-dark">Drat</p>
+                      <p className="text-sm sm:text-base text-dark">
+                        {t('shopDetailsPage.thread')}
+                      </p>
                     </div>
                     <div className="w-full">
                       <p className="text-sm sm:text-base text-dark">
@@ -375,7 +388,9 @@ const ShopDetails = ({ product }) => {
                   {/* */}
                   <div className="rounded-md even:bg-gray-1 flex py-4 px-4 sm:px-5">
                     <div className="max-w-[450px] min-w-[140px] w-full">
-                      <p className="text-sm sm:text-base text-dark">Kemasan</p>
+                      <p className="text-sm sm:text-base text-dark">
+                        {t('shopDetailsPage.packaging')}
+                      </p>
                     </div>
                     <div className="w-full">
                       <p className="text-sm sm:text-base text-dark">
@@ -387,7 +402,9 @@ const ShopDetails = ({ product }) => {
                   {/* */}
                   <div className="rounded-md even:bg-gray-1 flex py-4 px-4 sm:px-5">
                     <div className="max-w-[450px] min-w-[140px] w-full">
-                      <p className="text-sm sm:text-base text-dark">Kategori</p>
+                      <p className="text-sm sm:text-base text-dark">
+                        {t('shopDetailsPage.category')}
+                      </p>
                     </div>
                     <div className="w-full">
                       <p className="text-sm sm:text-base text-dark">
@@ -399,7 +416,9 @@ const ShopDetails = ({ product }) => {
                   {/* */}
                   <div className="rounded-md even:bg-gray-1 flex py-4 px-4 sm:px-5">
                     <div className="max-w-[450px] min-w-[140px] w-full">
-                      <p className="text-sm sm:text-base text-dark">Jenis</p>
+                      <p className="text-sm sm:text-base text-dark">
+                        {t('shopDetailsPage.type')}
+                      </p>
                     </div>
                     <div className="w-full">
                       <p className="text-sm sm:text-base text-dark">
@@ -411,7 +430,9 @@ const ShopDetails = ({ product }) => {
                   {/* --- BARU: Menambahkan J-Market --- */}
                   <div className="rounded-md even:bg-gray-1 flex py-4 px-4 sm:px-5">
                     <div className="max-w-[450px] min-w-[140px] w-full">
-                      <p className="text-sm sm:text-base text-dark">J-Market</p>
+                      <p className="text-sm sm:text-base text-dark">
+                        {t('shopDetailsPage.jmarket')}
+                      </p>
                     </div>
                     <div className="w-full">
                       <p className="text-sm sm:text-base text-dark">
@@ -426,7 +447,7 @@ const ShopDetails = ({ product }) => {
                   <div className="rounded-md even:bg-gray-1 flex py-4 px-4 sm:px-5">
                     <div className="max-w-[450px] min-w-[140px] w-full">
                       <p className="text-sm sm:text-base text-dark">
-                        Sub J-Market
+                        {t('shopDetailsPage.subJmarket')}
                       </p>
                     </div>
                     <div className="w-full">
@@ -441,7 +462,9 @@ const ShopDetails = ({ product }) => {
                   {/* */}
                   <div className="rounded-md even:bg-gray-1 flex py-4 px-4 sm:px-5">
                     <div className="max-w-[450px] min-w-[140px] w-full">
-                      <p className="text-sm sm:text-base text-dark">Kunci</p>
+                      <p className="text-sm sm:text-base text-dark">
+                        {t('shopDetailsPage.key')}
+                      </p>
                     </div>
                     <div className="w-full">
                       <p className="text-sm sm:text-base text-dark">
@@ -453,7 +476,9 @@ const ShopDetails = ({ product }) => {
                   {/* */}
                   <div className="rounded-md even:bg-gray-1 flex py-4 px-4 sm:px-5">
                     <div className="max-w-[450px] min-w-[140px] w-full">
-                      <p className="text-sm sm:text-base text-dark">SKU</p>
+                      <p className="text-sm sm:text-base text-dark">
+                        {t('shopDetailsPage.sku')}
+                      </p>
                     </div>
                     <div className="w-full">
                       <p className="text-sm sm:text-base text-dark">
@@ -466,7 +491,7 @@ const ShopDetails = ({ product }) => {
                   <div className="rounded-md even:bg-gray-1 flex py-4 px-4 sm:px-5">
                     <div className="max-w-[450px] min-w-[140px] w-full">
                       <p className="text-sm sm:text-base text-dark">
-                        Nama Lain/Referensi
+                        {t('shopDetailsPage.otherNames')}
                       </p>
                     </div>
                     <div className="w-full">

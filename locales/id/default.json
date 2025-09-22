@@ -135,5 +135,27 @@
         "allProducts": "Semua Produk",
         "jmarket": "Kategori JMarket",
         "subJmarket": "Sub JMarket"
+    },
+    "shopDetailsPage": {
+        "productDetail": "Detail Produk",
+        "noProductTitle": "Mohon Tambahkan Produk",
+        "noProductDesc": "Data produk yang valid tidak ditemukan",
+        "promoDiscount": "% Diskon",
+        "freeDelivery": "Informasi pengiriman gratis tersedia",
+        "productSpecs": "Spesifikasi produk detail",
+        "careGuide": "Informasi produk dan panduan perawatan",
+        "description": "Deskripsi",
+        "additionalInfo": "Informasi Tambahan",
+        "material": "Bahan",
+        "thread": "Drat",
+        "packaging": "Kemasan",
+        "category": "Kategori",
+        "type": "Jenis",
+        "jmarket": "J-Market",
+        "subJmarket": "Sub J-Market",
+        "key": "Kunci",
+        "sku": "SKU",
+        "otherNames": "Nama Lain/Referensi",
+        "relatedProducts": "Produk Terkait Lainnya"
     }
 }
