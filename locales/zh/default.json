@@ -135,5 +135,27 @@
         "allProducts": "所有产品",
         "jmarket": "JMarket 类别",
         "subJmarket": "JMarket 子类别"
+    },
+    "shopDetailsPage": {
+        "productDetail": "产品详情",
+        "noProductTitle": "请添加产品",
+        "noProductDesc": "未找到有效的产品数据",
+        "promoDiscount": "% 折扣",
+        "freeDelivery": "提供免费送货信息",
+        "productSpecs": "详细产品规格",
+        "careGuide": "产品信息和保养指南",
+        "description": "描述",
+        "additionalInfo": "附加信息",
+        "material": "材料",
+        "thread": "螺纹",
+        "packaging": "包装",
+        "category": "类别",
+        "type": "类型",
+        "jmarket": "J-Market",
+        "subJmarket": "J-Market 子类别",
+        "key": "钥匙",
+        "sku": "SKU",
+        "otherNames": "其他名称/参考",
+        "relatedProducts": "其他相关产品"
     }
 }

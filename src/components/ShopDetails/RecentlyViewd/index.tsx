@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import ProductItem from '@/components/Common/ProductItem'
 import SkeletonGridItem from './SkeletonGridItem'
+import { useTranslation } from 'react-i18next'
 
 const TOKEN = process.env.NEXT_PUBLIC_API_TOKEN
 const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE
@@ -11,6 +12,7 @@ const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE
 const RecentlyViewdItems = ({ primaryCategoryId, currentProductId }) => {
   const [relatedProducts, setRelatedProducts] = useState([])
   const [loading, setLoading] = useState(true)
+  const { t } = useTranslation()
 
   useEffect(() => {
     const fetchRelatedProducts = async () => {
@@ -69,7 +71,7 @@ const RecentlyViewdItems = ({ primaryCategoryId, currentProductId }) => {
       <div className="max-w-[1170px] w-full mx-auto px-4 sm:px-8 xl:px-0 pb-15 border-b border-gray-3">
         <div className="mb-10">
           <h2 className="font-semibold text-xl xl:text-heading-5 text-dark">
-            Produk Terkait Lainnya
+            {t('shopDetailsPage.relatedProducts')}
           </h2>
         </div>
 

@@ -1,13 +1,14 @@
 export type Product = {
-  title: string
-  reviews: number
-  price: number
-  discountedPrice: number
   id: number
-  imgs?: {
-    thumbnails: string[]
-    previews: string[]
-  }
+  nama_barang: string // Bukan 'title'
+  harga: number // Bukan 'price'
+  image_url: string // Bukan 'img'
+  deskripsi: string | null
+  kategori?: Category
+  bahan?: Bahan
+  discountedPrice?: number
+  reviews?: number
+  referensi?: string
 }
 
 export interface Category {
@@ -33,4 +34,5 @@ export interface ProductDetail {
   bahan?: Bahan
   discountedPrice?: number
   reviews?: number
+  referensi?: string
 }

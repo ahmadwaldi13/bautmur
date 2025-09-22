@@ -35,7 +35,7 @@ const Footer = () => {
                     />
                   </svg>
                 </span>
-                {t('footer.karapitan_address')}
+                Jl. Karapitan No.16 B, Bandung 40261
               </li>
 
               <li>
@@ -136,7 +136,7 @@ const Footer = () => {
                     />
                   </svg>
                 </span>
-                {t('footer.toha_address')}
+                Jl. M. Toha No. 266, Bandung 40243
               </li>
 
               <li>

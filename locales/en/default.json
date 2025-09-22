@@ -135,5 +135,27 @@
         "allProducts": "All Products",
         "jmarket": "JMarket Category",
         "subJmarket": "Sub JMarket"
+    },
+    "shopDetailsPage": {
+        "productDetail": "Product Detail",
+        "noProductTitle": "Please Add Product",
+        "noProductDesc": "No valid product data found",
+        "promoDiscount": "% OFF",
+        "freeDelivery": "Free delivery information available",
+        "productSpecs": "Detailed product specifications",
+        "careGuide": "Product information and care guide",
+        "description": "Description",
+        "additionalInfo": "Additional Information",
+        "material": "Material",
+        "thread": "Thread",
+        "packaging": "Packaging",
+        "category": "Category",
+        "type": "Type",
+        "jmarket": "J-Market",
+        "subJmarket": "Sub J-Market",
+        "key": "Key",
+        "sku": "SKU",
+        "otherNames": "Other Names/Reference",
+        "relatedProducts": "Other Related Products"
     }
 }
