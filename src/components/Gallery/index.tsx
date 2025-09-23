@@ -1,18 +1,90 @@
 'use client'
 
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
 import Breadcrumb from '../Common/Breadcrumb'
-import { gallery } from './Gallery'
+import axios from 'axios'
 import { useTranslation } from 'react-i18next'
 
+// Tipe data untuk item galeri
+interface GalleryItem {
+  id: number
+  title: string
+  image_url: string
+  is_active: number
+}
+
+const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE
+const API_URL = `${apiBaseUrl}/api/v1/website/media-gallery`
+const TOKEN = process.env.NEXT_PUBLIC_API_TOKEN
+const ITEMS_PER_PAGE = 12
+
 const Gallery = () => {
-  const { t } = useTranslation() // 3. Panggil hook
+  const { t } = useTranslation()
+
+  const [allGalleryItems, setAllGalleryItems] = useState<GalleryItem[]>([])
+  const [loading, setLoading] = useState<boolean>(true)
+  const [error, setError] = useState<string | null>(null)
+
+  const [currentPage, setCurrentPage] = useState<number>(1)
 
   const breadcrumbData = [
-    { title: t('breadcrumb.home'), path: '/' }, // <-- 4. Terjemahkan
-    { title: t('breadcrumb.gallery'), path: '/gallery' }, // <-- 5. Terjemahkan
+    { title: t('breadcrumb.home'), path: '/' },
+    { title: t('breadcrumb.gallery'), path: '/gallery' },
   ]
+
+  useEffect(() => {
+    const fetchGallery = async () => {
+      try {
+        setLoading(true)
+        const response = await axios.get(API_URL, {
+          headers: {
+            Authorization: `Bearer ${TOKEN}`,
+          },
+        })
+
+        const activeItems = response.data.data.filter(
+          (item: GalleryItem) => item.is_active === 1
+        )
+
+        setAllGalleryItems(activeItems)
+      } catch (err) {
+        setError('Gagal memuat galeri. Silakan coba lagi nanti.')
+        console.error('Error fetching gallery data:', err)
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchGallery()
+  }, [])
+
+  const totalPages = Math.ceil(allGalleryItems.length / ITEMS_PER_PAGE)
+  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE
+  const endIndex = startIndex + ITEMS_PER_PAGE
+  const currentItems = allGalleryItems.slice(startIndex, endIndex)
+
+  const handlePageChange = (newPage: number) => {
+    if (newPage >= 1 && newPage <= totalPages) {
+      setCurrentPage(newPage)
+      window.scrollTo(0, 0)
+    }
+  }
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <p>Loading gallery...</p>
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div className="flex justify-center items-center h-screen text-red-500">
+        <p>{error}</p>
+      </div>
+    )
+  }
 
   return (
     <>
@@ -20,37 +92,52 @@ const Gallery = () => {
 
       <section className="overflow-hidden py-20 bg-gray-2">
         <div className="max-w-[1170px] w-full mx-auto px-4 sm:px-8 xl:px-0">
-          {/* Gallery Grid - 3 Columns */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {gallery.map((image) => (
+            {currentItems.map((image) => (
               <div
                 key={image.id}
                 className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300"
               >
-                {/* --- BAGIAN YANG DIPERBAIKI --- */}
-                {/* 1. Hapus h-64 sm:h-72 */}
-                {/* 2. Tambahkan kelas aspect-ratio, contoh: aspect-[4/3] */}
                 <div className="relative w-full aspect-[4/3]">
                   <Image
-                    src={image.path}
+                    src={image.image_url}
                     alt={image.title}
                     fill
-                    className="object-contain" // <-- UBAH INI
+                    className="object-cover"
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   />
                 </div>
-                {/* Anda bisa menambahkan judul atau teks lain di bawah div gambar ini */}
-                {/* <div className="p-4">
-                  <h3 className="font-bold">{image.title}</h3>
-                </div> */}
               </div>
             ))}
           </div>
 
-          {/* Empty state */}
-          {gallery.length === 0 && (
+          {!loading && allGalleryItems.length === 0 && (
             <div className="text-center py-12">
               <p className="text-gray-500">Tidak ada gambar tersedia</p>
+            </div>
+          )}
+
+          {totalPages > 1 && (
+            <div className="flex justify-center items-center mt-12 space-x-4">
+              <button
+                onClick={() => handlePageChange(currentPage - 1)}
+                disabled={currentPage === 1}
+                className="px-4 py-2 bg-white rounded-md shadow disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                Previous
+              </button>
+
+              <span className="text-gray-700">
+                Page {currentPage} of {totalPages}
+              </span>
+
+              <button
+                onClick={() => handlePageChange(currentPage + 1)}
+                disabled={currentPage === totalPages}
+                className="px-4 py-2 bg-white rounded-md shadow disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                Next
+              </button>
             </div>
           )}
         </div>

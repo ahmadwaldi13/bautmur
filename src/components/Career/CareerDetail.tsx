@@ -1,59 +1,86 @@
-'use client' // 1. Tambahkan ini untuk menjadikannya Client Component
+'use client'
 
 import React from 'react'
 import Breadcrumb from '@/components/Common/Breadcrumb'
-import { useTranslation } from 'react-i18next' // Sekarang Anda bisa pakai hook ini
+import { useTranslation } from 'react-i18next'
 
-// Komponen sekarang menerima 'job' sebagai prop, bukan 'id'
 const CareerDetailComponent = ({ job }: { job: any }) => {
-  const { t } = useTranslation() // 2. Gunakan hook seperti biasa
+  const { t } = useTranslation()
 
-  // 3. Terjemahkan breadcrumb di sini
   const breadcrumbData = [
     { title: t('breadcrumb.home'), path: '/' },
     { title: t('breadcrumb.career'), path: '/career' },
-    { title: job.title, path: `/career/${job.id}` }, // Data dari props
+    { title: job.title, path: `/career/${job.id}` },
   ]
 
-  const emailRecipient = 'sinarterang16b@gmail.com'
-  const emailSubject = `Lamaran Pekerjaan - ${job.title}`
-  const emailBody = `Halo,
+  // --- 1. Logika untuk Link Aplikasi ---
 
-Saya tertarik untuk melamar posisi sebagai ${job.title}.
-Terlampir adalah CV dan dokumen pendukung saya.
+  // Inisialisasi link
+  let gmailLink = ''
+  let whatsappLink = ''
 
-Terima kasih.
+  // Buat link email jika job.contact_email ada
+  if (job.contact_email) {
+    const emailSubject = `Lamaran Pekerjaan - ${job.title}`
+    const emailBody = `Halo,\n\nSaya tertarik untuk melamar posisi sebagai ${job.title}.\nTerlampir adalah CV dan dokumen pendukung saya.\n\nTerima kasih.\n\nHormat saya,\n[Nama Pelamar]`
+    gmailLink = `https://mail.google.com/mail/?view=cm&fs=1&to=${
+      job.contact_email
+    }&su=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(
+      emailBody
+    )}`
+  }
 
-Hormat saya,
-[Nama Pelamar]`
+  if (job.contact_phone) {
+    let formattedPhone = job.contact_phone.replace(/\D/g, '')
 
-  const gmailLink = `https://mail.google.com/mail/?view=cm&fs=1&to=${emailRecipient}&su=${encodeURIComponent(
-    emailSubject
-  )}&body=${encodeURIComponent(emailBody)}`
+    if (formattedPhone.startsWith('0')) {
+      formattedPhone = '62' + formattedPhone.substring(1)
+    }
 
-  // --- Tampilan / JSX ---
+    if (formattedPhone) {
+      const waMessage = `Halo, saya tertarik untuk melamar posisi sebagai ${job.title}.`
+      whatsappLink = `https://wa.me/${formattedPhone}?text=${encodeURIComponent(
+        waMessage
+      )}`
+    }
+  }
+
   return (
     <>
       <Breadcrumb title={job.title} pages={breadcrumbData} />
 
       <section className="bg-gray-2 py-20 px-4 md:px-8 xl:px-0">
         <div className="mx-auto max-w-[1170px] rounded-lg bg-white p-8 shadow-md sm:p-12">
-          {/* Header */}
           <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
             <h1 className="text-3xl font-bold text-dark sm:text-4xl">
               {job.title}
             </h1>
-            <a
-              href={gmailLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-block rounded-md bg-blue py-3 px-8 font-medium text-white transition-colors duration-300 hover:bg-blue-600"
-            >
-              {t('careerDetail.applyNow')}
-            </a>
+
+            <div className="flex flex-wrap gap-3">
+              {gmailLink && (
+                <a
+                  href={gmailLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block rounded-md bg-blue py-3 px-6 font-medium text-white transition-colors duration-300 hover:bg-blue-600"
+                >
+                  {t('careerDetail.applyViaEmail', 'Lamar via Email')}
+                </a>
+              )}
+
+              {whatsappLink && (
+                <a
+                  href={whatsappLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block rounded-md bg-green py-3 px-6 font-medium text-white transition-colors duration-300 hover:bg-green-600"
+                >
+                  {t('careerDetail.applyViaWhatsApp', 'Lamar via WhatsApp')}
+                </a>
+              )}
+            </div>
           </div>
 
-          {/* Body/Deskripsi */}
           {job.body && (
             <div
               className="prose mb-8 text-lg text-gray-700"
