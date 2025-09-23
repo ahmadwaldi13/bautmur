@@ -2,9 +2,11 @@ import Gallery from '@/components/Gallery'
 
 import { Metadata } from 'next'
 export const metadata: Metadata = {
-  title: 'Gallery Page | Sinar Terang',
+  title: 'Gallery Page',
   description: 'This is Gallery Page for Baut Mur',
-  // other metadata
+  icons: {
+    icon: '/logo-page.png',
+  },
 }
 
 const GalleryPage = () => {
