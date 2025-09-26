@@ -15,7 +15,8 @@
         "Bengkel": "作坊",
         "Kontraktor": "承包商",
         "Manufaktur": "制造业",
-        "Toko": "店铺"
+        "Toko": "店铺",
+        "Subagen": "子代理"
     },
     "search": {
         "placeholder": "我正在寻找..."

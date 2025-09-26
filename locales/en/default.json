@@ -15,7 +15,8 @@
         "Bengkel": "Workshop",
         "Kontraktor": "Contractor",
         "Manufaktur": "Manufacturing",
-        "Toko": "Retail Store"
+        "Toko": "Retail Store",
+        "Subagen": "Sub-agent"
     },
     "search": {
         "placeholder": "I am shopping for..."

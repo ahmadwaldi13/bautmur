@@ -19,8 +19,8 @@ const SingleItem = ({ item }: { item: DisplayJMarketItem }) => {
         {/* 'aspect-[40/34]' untuk mendapatkan rasio 400x340. */}
         <div className="relative w-full bg-gray-200 aspect-[40/34]">
           <Image
-            src={item.image_url}
-            alt={item.nama}
+            src={item.image_url || '/images/products2/default.jpg'}
+            alt={item.nama || 'default'}
             fill
             className="object-cover transition-transform duration-500 ease-in-out group-hover:scale-105"
             sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
