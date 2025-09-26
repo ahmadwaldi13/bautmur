@@ -10,6 +10,10 @@ export const metadata: Metadata = {
   },
 }
 
+
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 const API_URL = `${process.env.NEXT_PUBLIC_API_BASE}/api/v1/website/careers`
 const TOKEN = process.env.NEXT_PUBLIC_API_TOKEN
 
@@ -20,7 +24,6 @@ async function getCareers() {
         Authorization: `Bearer ${TOKEN}`,
       },
     })
-
     return response.data.data
   } catch (error) {
     console.error('Failed to fetch data:', error)
@@ -30,7 +33,6 @@ async function getCareers() {
 
 const CareerPage = async () => {
   const careers = await getCareers()
-
   return (
     <main>
       <Career careers={careers} />
