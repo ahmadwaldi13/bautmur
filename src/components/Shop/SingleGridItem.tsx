@@ -67,7 +67,8 @@ const SingleGridItem = ({ item }: { item: any }) => {
         <Link
           href={`/product/${item.nama_barang
             .toLowerCase()
-            .replace(/\s+/g, '-')}/${item.id}`}
+            .replace(/[^a-z0-9]+/g, '-')
+            .replace(/^-+|-+$/g, '')}/${item.id}`}
         >
           {' '}
           {item.nama_barang}{' '}
