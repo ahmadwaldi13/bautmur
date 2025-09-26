@@ -15,7 +15,8 @@
         "Bengkel": "Bengkel",
         "Kontraktor": "Kontraktor",
         "Manufaktur": "Manufaktur",
-        "Toko": "Toko"
+        "Toko": "Toko",
+        "Subagen": "Subagen"
     },
     "search": {
         "placeholder": "Saya sedang mencari..."

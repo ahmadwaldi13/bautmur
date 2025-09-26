@@ -18,7 +18,10 @@ const SingleItem = ({ item }: { item: any }) => {
     dispatch(updateQuickView({ ...item }))
   }
 
-  const slug = item.nama_barang.toLowerCase().replace(/\s+/g, '-')
+  const slug = item.nama_barang
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
 
   return (
     <div className="group">

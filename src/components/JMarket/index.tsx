@@ -132,8 +132,8 @@ const JMarket = () => {
           >
             <div className="relative flex h-39 items-center justify-center overflow-hidden rounded-t-lg bg-gray-100">
               <Image
-                src={jmarket.image_url}
-                alt={jmarket.nama}
+                src={jmarket.image_url || '/images/products2/default.jpg'}
+                alt={jmarket.nama || 'default'}
                 fill
                 className="object-cover transition-transform duration-300 group-hover:scale-105"
                 sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
