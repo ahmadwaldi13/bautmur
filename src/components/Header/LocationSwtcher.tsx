@@ -3,33 +3,44 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useDispatch } from 'react-redux'
-import { changeLocation } from '@/redux/features/location-slice' // <-- Impor action Redux kita
+import { changeLocation } from '@/redux/features/location-slice'
 
-// Data lokasi kita (gunakan titleKey untuk terjemahan dan value untuk state)
 const locations = [
-  { nameKey: 'karapitan', value: 'Karapitan' },
-  { nameKey: 'toha', value: 'Toha' },
+  {
+    nameKey: 'karapitan',
+    value: 'Karapitan',
+    mapQuery:
+      'Jl. Karapitan No.16B, Paledang, Kec. Lengkong, Kota Bandung, Jawa Barat 40261',
+  },
+  {
+    nameKey: 'toha',
+    value: 'Toha',
+    mapQuery:
+      'Jl. Moch. Toha No.266, Karasak, Kec. Astanaanyar, Kota Bandung, Jawa Barat 40243',
+  },
 ]
 
 const LocationSwitcher = ({ stickyMenu }: { stickyMenu: boolean }) => {
   const [dropdownToggler, setDropdownToggler] = useState(false)
   const { t } = useTranslation()
-  const dispatch = useDispatch() // Hook untuk mengirim action ke Redux
+  const dispatch = useDispatch()
 
-  // Fungsi untuk mengubah lokasi via Redux
-  const handleLocationChange = (locationValue: string) => {
-    dispatch(changeLocation(locationValue)) // <-- Mengirim perintah ganti lokasi
+  const handleLocationSelect = (locationValue: string) => {
+    dispatch(changeLocation(locationValue))
     setDropdownToggler(false)
   }
 
   return (
     <li
-      onClick={() => setDropdownToggler(!dropdownToggler)}
+      onMouseLeave={() => setDropdownToggler(false)}
       className="group relative before:w-0 before:h-[3px] before:absolute before:left-0 before:top-0 before:rounded-b-[3px] before:ease-out before:duration-200 hover:before:w-full"
     >
       <a
         href="#"
-        onClick={(e) => e.preventDefault()}
+        onClick={(e) => {
+          e.preventDefault()
+          setDropdownToggler(!dropdownToggler)
+        }}
         className={`hover:text-[#FB4141] text-custom-sm font-medium text-dark flex items-center gap-1.5 capitalize cursor-pointer ${
           stickyMenu ? 'xl:py-4' : 'xl:py-6'
         }`}
@@ -74,8 +85,12 @@ const LocationSwitcher = ({ stickyMenu }: { stickyMenu: boolean }) => {
         {locations.map((loc) => (
           <li key={loc.value}>
             <a
-              href="#"
-              onClick={() => handleLocationChange(loc.value)}
+              href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+                loc.mapQuery
+              )}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => handleLocationSelect(loc.value)}
               className="flex text-custom-sm hover:text-[#FB4141] hover:bg-gray-1 py-[7px] px-4.5 transition-colors cursor-pointer"
             >
               {loc.nameKey}

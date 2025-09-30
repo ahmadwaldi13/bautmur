@@ -13,7 +13,7 @@ import { selectTotalPrice } from '@/redux/features/cart-slice'
 import { useCartModalContext } from '@/app/context/CartSidebarModalContext'
 import Image from 'next/image'
 import { useTranslation } from 'react-i18next'
-// import i18n from '../../../i18n'
+
 import LanguageSwitcher from './LanguageSwtcher'
 import LocationSwitcher from './LocationSwtcher'
 
@@ -315,11 +315,9 @@ const Header = () => {
                   </span>
                 </span>
               </button>
-              {/* //   <!-- Hamburger Toggle BTN --> */}
             </div>
           </div>
         </div>
-        {/* <!-- header top end --> */}
       </div>
 
       <div className="border-t border-gray-3">
