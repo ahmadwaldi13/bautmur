@@ -69,6 +69,8 @@ const QuickViewModal = () => {
     return null
   }
 
+  console.info(product)
+
   return (
     <div
       className={`${
@@ -103,24 +105,6 @@ const QuickViewModal = () => {
             <div className="max-w-[526px] w-full">
               <div className="flex gap-5">
                 <div className="flex flex-col gap-5">
-                  {/* {product.imgs.thumbnails?.map((img, key) => (
-                    <button
-                      onClick={() => setActivePreview(key)}
-                      key={key}
-                      className={`flex items-center justify-center w-20 h-20 overflow-hidden rounded-lg bg-gray-1 ease-out duration-200 hover:border-2 hover:border-[#FB4141] ${
-                        activePreview === key && 'border-2 border-[#FB4141]'
-                      }`}
-                    >
-                      <Image
-                        src={img || ''}
-                        alt="thumbnail"
-                        width={61}
-                        height={61}
-                        className="aspect-square"
-                      />
-                    </button>
-                  ))} */}
-
                   <button
                     className={`flex items-center justify-center w-20 h-20 overflow-hidden rounded-lg bg-gray-1 ease-out duration-200 hover:border-2 hover:border-[#FB4141] 'border-2 border-[#FB4141]'
                       }`}
@@ -175,12 +159,6 @@ const QuickViewModal = () => {
             </div>
 
             <div className="max-w-[445px] w-full">
-              {/* {product.discountedPrice !== 0 && (
-                <span className="inline-block text-custom-xs font-medium text-white py-1 px-3 bg-green mb-6.5">
-                  SALE 20% OFF
-                </span>
-              )} */}
-
               <h3 className="font-semibold text-xl xl:text-heading-5 text-dark mb-0.5">
                 {product.nama_barang}
               </h3>
@@ -203,7 +181,7 @@ const QuickViewModal = () => {
               )}
               <div className="flex flex-wrap items-center gap-5 mb-6">
                 <div className="flex items-center gap-2">
-                  <svg
+                  {/* <svg
                     width="20"
                     height="20"
                     viewBox="0 0 20 20"
@@ -225,31 +203,76 @@ const QuickViewModal = () => {
                         <rect width="20" height="20" fill="white" />
                       </clipPath>
                     </defs>
-                  </svg>
-
-                  <span className="font-medium text-dark"> In Stock </span>
+                  </svg> */}
+                  {/* <span className="font-medium text-dark"> In Stock </span> */}
+                  {product.deskripsi && (
+                    <p className="text-base text-gray-700 mb-6">
+                      {product.deskripsi}
+                    </p>
+                  )}
                 </div>
               </div>
 
-              <p>{product.deskripsi ?? ''}</p>
+              {
+                /* Cek apakah ada data spesifikasi */
+                (product.kunci ||
+                  product.drat ||
+                  product.sku ||
+                  product.deskripsi) && (
+                  <div className="mt-3 border-t border-gray-200 pt-6">
+                    <h4 className="font-semibold text-base text-dark mb-3">
+                      Spesifikasi Teknis
+                    </h4>
+                    <div className="text-sm text-gray-700 space-y-2">
+                      {/* Selalu tampilkan semua label, isinya disesuaikan */}
+                      <p>
+                        <span className="font-medium text-gray-800 w-24 inline-block">
+                          Kunci
+                        </span>
+                        : {product.kunci || '-'}
+                      </p>
+                      <p>
+                        <span className="font-medium text-gray-800 w-24 inline-block">
+                          Drat
+                        </span>
+                        : {product.drat || '-'}
+                      </p>
+                      <p>
+                        <span className="font-medium text-gray-800 w-24 inline-block">
+                          SKU
+                        </span>
+                        : {product.sku || '-'}
+                      </p>
+                      {/* <p>
+                        <span className="font-medium text-gray-800 w-24 inline-block">
+                          Deskripsi
+                        </span>
+                        : {product.deskripsi || '-'}
+                      </p> */}
+                    </div>
+                  </div>
+                )
+              }
+
+              {/* ===== SATUAN KEMASAN START ===== */}
+              {product.kemasan && product.kemasan.length > 0 && (
+                <div className="mt-6 border-t border-gray-200 pt-6">
+                  <h4 className="font-semibold text-base text-dark mb-3">
+                    Satuan Kemasan
+                  </h4>
+                  <ul className="list-disc list-inside space-y-1 text-sm text-gray-700">
+                    {product.kemasan.map((item, index) => (
+                      <li key={index}>{item}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              {/* ===== SATUAN KEMASAN END ===== */}
 
               <div className="flex flex-wrap justify-between gap-5 mt-6 mb-7.5">
                 <div>
-                  {/* <h4 className="font-semibold text-lg text-dark mb-3.5">
-                    Price
-                  </h4>
-                 */}
-
                   <span className="flex items-center gap-2">
-                    {/* <span className="font-semibold text-dark text-xl xl:text-heading-4">
-                      Rp {product.harga?.toLocaleString('id-ID')}
-                    </span>
-                    {product.discountedPrice !== 0 && (
-                      <span className="font-medium text-dark-4 text-lg xl:text-2xl line-through">
-                        {product.discountedPrice?.toLocaleString('id-ID')}
-                      </span>
-                    )}
-                    */}
+                    {/* Price rendering logic */}
                   </span>
                 </div>
               </div>

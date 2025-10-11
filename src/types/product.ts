@@ -9,6 +9,10 @@ export type Product = {
   discountedPrice?: number
   reviews?: number
   referensi?: string
+  kunci?: string
+  drat?: string | null
+  sku?: string | null
+  kemasan?: string[]
 }
 
 export interface Category {
@@ -35,4 +39,8 @@ export interface ProductDetail {
   discountedPrice?: number
   reviews?: number
   referensi?: string
+  kunci?: string
+  drat?: string | null
+  sku?: string | null
+  kemasan?: string[]
 }
